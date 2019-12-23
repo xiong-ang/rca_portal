@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { A11yModule } from '@angular/cdk/a11y';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -45,35 +46,47 @@ import { MatTreeModule } from '@angular/material/tree';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderToolbarComponent } from './header-toolbar/header-toolbar.component';
-import { HomeComponentComponent } from './home//home-component.component';
-import { FilterComponentComponent } from './filter//filter-component.component';
-import { NotfoundComponentComponent } from './notfound-component/notfound-component.component';
-import { HomeFilterComponent } from './home/home-filter/home-filter.component';
-import { HomeRenderComponent } from './home/home-render/home-render.component';
-import { HomeCardListComponent } from './home/home-card-list/home-card-list.component';
-import { HomeCardComponent } from './home/home-card/home-card.component';
-import { FilterConditionComponent } from './filter/filter-condition/filter-condition.component';
-import { FilterResultListComponent } from './filter/filter-result-list/filter-result-list.component';
-import { CreateDialogComponent } from './create-dialog/create-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FilterResultItemComponent } from './filter/filter-result-item/filter-result-item.component';
+
+import { FilterComponent } from './pages/filter/filter.component';
+import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
+import { NotFoundComponent } from './pages/notFound/notFound.component';
+import { HomeHeaderComponent } from './pages/home/home-header/home-header.component';
+import { HomeFilterComponent } from './pages/home/home-filter/home-filter.component';
+import { HomeRankComponent } from './pages/home/home-rank/home-rank.component';
+import { FilterHeaderComponent } from './pages/filter/filter-header/filter-header.component';
+import { FilterConditionComponent } from './pages/filter/filter-condition/filter-condition.component';
+import { RcaDialogComponent } from './dialogs/rca-dialog/rca-dialog.component';
+import { FilterResultComponent } from './pages/filter/filter-result/filter-result.component';
+import { FilterResultItemComponent } from './pages/filter/filter-result/filter-result-item/filter-result-item.component';
+import { FilterResultDetailComponent } from './pages/filter/filter-result/filter-result-detail/filter-result-detail.component';
+import { HomeRcaRankComponent } from './pages/home/home-rank/home-rca-rank/home-rca-rank.component';
+import { HomeKeywordRankComponent } from './pages/home/home-rank/home-keyword-rank/home-keyword-rank.component';
+import { HomeKeywordItemComponent } from './pages/home/home-rank/home-keyword-rank/home-keyword-item/home-keyword-item.component';
+import { HomeRcaItemComponent } from './pages/home/home-rank/home-rca-rank/home-rca-item/home-rca-item.component';
 
 @NgModule({
    declarations: [
       AppComponent,
-      HeaderToolbarComponent,
-      HomeComponentComponent,
-      FilterComponentComponent,
-      NotfoundComponentComponent,
+      FilterComponent,
+      HomeComponent,
+      LoginComponent,
+      NotFoundComponent,
+      HomeHeaderComponent,
       HomeFilterComponent,
-      HomeRenderComponent,
-      HomeCardListComponent,
-      HomeCardComponent,
+      HomeRankComponent,
+      FilterHeaderComponent,
       FilterConditionComponent,
-      FilterResultListComponent,
+      RcaDialogComponent,
+      FilterResultComponent,
       FilterResultItemComponent,
-      CreateDialogComponent
+      FilterResultDetailComponent,
+      HomeRcaRankComponent,
+      HomeKeywordRankComponent,
+      HomeKeywordItemComponent,
+      HomeRcaItemComponent,
+
    ],
    imports: [
       BrowserModule,
@@ -121,7 +134,10 @@ import { FilterResultItemComponent } from './filter/filter-result-item/filter-re
       MatTreeModule,
       PortalModule,
       ScrollingModule,
+      FormsModule, 
+      ReactiveFormsModule,
    ],
+   entryComponents: [RcaDialogComponent],
    providers: [],
    bootstrap: [
       AppComponent

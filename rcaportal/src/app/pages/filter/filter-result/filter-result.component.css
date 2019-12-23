@@ -1,0 +1,44 @@
+.search-result-list-paneldock{
+    display: grid;
+    grid-template-columns: auto 400px;
+    grid-column-gap: 15px;
+}
+
+.rca-item-detail-paneldock{
+    border: 1px solid gray;
+    background: white;
+    min-height: 600px;
+    align-self: start;
+}
+
+.rca-item-detail-panelfloat{
+    border: 1px solid gray;
+    background: white;
+    min-height: 600px;
+    width: 400px;
+    position: absolute;
+    top: 340px;
+    right: 0;
+}
+
+.item-list{
+    justify-content: end;
+    display: grid;
+    grid-template-columns: 100%;
+}
+
+.panel-detail{
+    width: 100%;
+}
+
+.panel-detail-header{
+    width: 100%;
+    height: 40px;
+    display: grid;
+    justify-content: end;
+    align-content: center;
+}
+
+.operation-icon:hover{
+    cursor: pointer;
+}

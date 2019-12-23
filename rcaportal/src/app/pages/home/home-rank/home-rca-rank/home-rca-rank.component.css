@@ -1,0 +1,14 @@
+.rca-rank-title{
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.home-rca-rank-list{
+    min-height: 600px;
+    display: grid;
+    grid-template-columns: 90%;
+    justify-content: center;
+}

@@ -1,0 +1,15 @@
+.dialog-header{
+    text-align: center;
+    font-size: 24px;
+}
+
+.dialog-content{
+    height: 400px;
+    width: 100%;
+    background: yellow;
+}
+
+.dialog-actions{
+    display: grid;
+    justify-content: end;
+}

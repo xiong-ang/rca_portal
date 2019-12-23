@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponentComponent } from './home/home-component.component';
-import { FilterComponentComponent } from './filter/filter-component.component';
-import { NotfoundComponentComponent } from './notfound-component/notfound-component.component';
+import { FilterComponent } from './pages/filter/filter.component';
+import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
+import { NotFoundComponent } from './pages/notFound/notFound.component';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponentComponent },
+  { path: '', component: HomeComponent },
   { path: 'home',
     redirectTo: '',
     pathMatch: 'full'
   },
-  { path: 'filter', component: FilterComponentComponent },
-  { path: '**', component: NotfoundComponentComponent }
+  { path: 'filter', component: FilterComponent },
+  { path: 'login', component: LoginComponent },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
