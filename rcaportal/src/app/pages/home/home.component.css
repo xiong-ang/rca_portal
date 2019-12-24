@@ -52,4 +52,9 @@
 .home-hot-container{
     min-height: 600px;
     justify-self: center;
+    align-self: start;
+}
+
+.last-ele{
+    margin-bottom: 50px;
 }

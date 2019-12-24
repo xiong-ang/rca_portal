@@ -22,6 +22,7 @@
 }
 
 .item-list{
+    padding: 5px;
     justify-content: end;
     display: grid;
     grid-template-columns: 100%;
