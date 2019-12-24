@@ -16,8 +16,8 @@
     background: white;
     min-height: 600px;
     width: 400px;
-    position: absolute;
-    top: 340px;
+    position: fixed;
+    top: 80px;
     right: 0;
 }
 
