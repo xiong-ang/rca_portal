@@ -1,5 +1,29 @@
 .rca-item{
-    min-height: 70px;
-    margin-top: 10px;
-    background: beige;
+    height: 40px;
+    margin: 10px;
+    display: grid;
+    grid-template-columns: 40px auto;
+    align-content: center;
+}
+
+.rca-item:hover{
+    cursor: pointer;
+    color: cornflowerblue;
+}
+
+.rca-sort-number{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 26px;
+}
+
+.rca-content{
+    height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size: 14px
 }

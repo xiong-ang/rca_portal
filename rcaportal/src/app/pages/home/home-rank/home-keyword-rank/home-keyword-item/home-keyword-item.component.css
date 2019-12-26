@@ -1,5 +1,68 @@
 .hot-keywork-item{
-    height: 180px;
+    height: 140px;
     margin: 10px;
-    background: chartreuse;
+    border: 1px solid gainsboro;
+    border-radius: 3px;
+    display: grid;
+    grid-template-rows: 60% 40%;
+    justify-items: center;
+    align-content: center;
+}
+
+.keyword-content{
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+}
+
+.keyword-content:hover{
+    cursor: pointer;
+    color: cornflowerblue;
+}
+
+.hot-content{
+    height: 100%;
+    width: 100%;
+    background: gainsboro;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-items: start;
+}
+
+.hot-each-item{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.hot-progress-item{
+    width: 80%;
+}
+
+.center-align{
+    justify-self: center;
+    align-self: center;
+}
+
+.left-align{
+    justify-items: flex-start;
+    justify-content: flex-start;
+    align-self: center;
+}
+
+.right-align{
+    justify-items: flex-end;
+    justify-content: flex-end;
+    align-self: center;
+}
+
+.number-style{
+    padding-right: 10px;
 }

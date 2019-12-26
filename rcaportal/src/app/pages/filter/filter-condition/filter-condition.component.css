@@ -10,6 +10,29 @@
     margin: 5px;
 }
 
+.btn-expend{
+    height: 45px;
+    justify-self: end;
+    padding: 5px;
+    color:gray;
+    background: white;
+    border: 1px solid gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-collapse{
+    height: 45px;
+    justify-self: end;
+    padding: 5px;
+    color:white;
+    background:  gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .quick-search-input{
     grid-column-start: 1;
     grid-column-end: 3;

@@ -1,4 +1,6 @@
 .home-filter-page{
+    margin-top: 20px;
+    margin-bottom: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -8,6 +10,29 @@
 
 .filter-item{
     margin: 5px;
+}
+
+.btn-expend{
+    height: 45px;
+    justify-self: end;
+    padding: 5px;
+    color:gray;
+    background: white;
+    border: 1px solid gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-collapse{
+    height: 45px;
+    justify-self: end;
+    padding: 5px;
+    color:white;
+    background:  gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .apply-btn{
@@ -30,6 +55,7 @@
     grid-template-rows: 2fr 2fr 1fr;
     justify-content: center;
     align-content: center;
+    z-index: 1;
 }
 
 .readout-item{

@@ -36,7 +36,12 @@
     </mat-select>
   </mat-form-field>
 
-  <button mat-button class="filter-item" (click)="triggerDetailFilterPanel()">Expand/Collapse</button>
+  <button mat-button class="filter-item" [ngClass]="{'btn-expend': !isDetailFilterPanelOpen, 'btn-collapse': isDetailFilterPanelOpen}" (click)="triggerDetailFilterPanel()">
+    <i class="material-icons">filter_list</i>
+    More...
+    <i class="material-icons" *ngIf="!isDetailFilterPanelOpen">keyboard_arrow_down</i>
+    <i class="material-icons" *ngIf="isDetailFilterPanelOpen">keyboard_arrow_up</i>
+  </button>
   <button mat-button class="filter-item apply-btn" (click)="onApply()">Apply</button>
 </div>
 

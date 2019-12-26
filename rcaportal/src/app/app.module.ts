@@ -60,11 +60,11 @@ import { FilterConditionComponent } from './pages/filter/filter-condition/filter
 import { RcaDialogComponent } from './dialogs/rca-dialog/rca-dialog.component';
 import { FilterResultComponent } from './pages/filter/filter-result/filter-result.component';
 import { FilterResultItemComponent } from './pages/filter/filter-result/filter-result-item/filter-result-item.component';
-import { FilterResultDetailComponent } from './pages/filter/filter-result/filter-result-detail/filter-result-detail.component';
 import { HomeRcaRankComponent } from './pages/home/home-rank/home-rca-rank/home-rca-rank.component';
 import { HomeKeywordRankComponent } from './pages/home/home-rank/home-keyword-rank/home-keyword-rank.component';
 import { HomeKeywordItemComponent } from './pages/home/home-rank/home-keyword-rank/home-keyword-item/home-keyword-item.component';
 import { HomeRcaItemComponent } from './pages/home/home-rank/home-rca-rank/home-rca-item/home-rca-item.component';
+import { RcaPanelComponent } from './dialogs/rca-panel/rca-panel.component';
 
 @NgModule({
    declarations: [
@@ -81,12 +81,11 @@ import { HomeRcaItemComponent } from './pages/home/home-rank/home-rca-rank/home-
       RcaDialogComponent,
       FilterResultComponent,
       FilterResultItemComponent,
-      FilterResultDetailComponent,
       HomeRcaRankComponent,
       HomeKeywordRankComponent,
       HomeKeywordItemComponent,
       HomeRcaItemComponent,
-
+      RcaPanelComponent,
    ],
    imports: [
       BrowserModule,

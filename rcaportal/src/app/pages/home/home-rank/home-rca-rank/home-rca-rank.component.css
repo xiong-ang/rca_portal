@@ -11,4 +11,9 @@
     display: grid;
     grid-template-columns: 90%;
     justify-content: center;
+    align-content: start;
+}
+
+.material-icons{
+    margin-left: 5px;
 }

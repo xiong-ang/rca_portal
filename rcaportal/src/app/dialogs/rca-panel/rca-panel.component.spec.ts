@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { FilterResultDetailComponent } from './filter-result-detail.component';
+import { RcaPanelComponent } from './rca-panel.component';
 
-describe('FilterResultDetailComponent', () => {
-  let component: FilterResultDetailComponent;
-  let fixture: ComponentFixture<FilterResultDetailComponent>;
+describe('RcaPanelComponent', () => {
+  let component: RcaPanelComponent;
+  let fixture: ComponentFixture<RcaPanelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FilterResultDetailComponent ]
+      declarations: [ RcaPanelComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FilterResultDetailComponent);
+    fixture = TestBed.createComponent(RcaPanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

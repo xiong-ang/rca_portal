@@ -6,7 +6,7 @@
 .dialog-content{
     height: 400px;
     width: 100%;
-    background: yellow;
+    background: rgb(247, 247, 232);
 }
 
 .dialog-actions{

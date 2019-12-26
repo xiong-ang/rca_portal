@@ -1,24 +1,15 @@
 <div [ngClass]="{'search-result-list-paneldock': isPanelOpen && isPanelFixed}">
   <div class="item-list">
-    <app-filter-result-item  (click)="tiggerPanelStatus()"></app-filter-result-item>
+    <app-filter-result-item (click)="tiggerPanelStatus()"></app-filter-result-item>
     <app-filter-result-item></app-filter-result-item>
     <app-filter-result-item></app-filter-result-item>
     <app-filter-result-item></app-filter-result-item>
     <app-filter-result-item></app-filter-result-item>
     <app-filter-result-item></app-filter-result-item>
     <app-filter-result-item></app-filter-result-item>
-  </div> 
-
-
-  <div *ngIf="isPanelOpen" [ngClass]="{'rca-item-detail-paneldock': isPanelFixed, 'rca-item-detail-panelfloat': !isPanelFixed}">
-    <div class="panel-detail">
-      <div class="panel-detail-header">
-        <div>
-          <i class="material-icons operation-icon" (click)="triggerPanelPostion()">swap_horiz</i>
-          <i class="material-icons operation-icon" (click)="tiggerPanelStatus()">close</i>
-        </div>
-      </div>
-      <app-filter-result-detail></app-filter-result-detail>
-    </div>
   </div>
+
+  <app-rca-panel *ngIf="isPanelOpen"
+    [ngClass]="{'rca-item-detail-paneldock': isPanelFixed, 'rca-item-detail-panelfloat': !isPanelFixed}">
+  </app-rca-panel>
 </div>
