@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FilterService } from 'src/app/services/filter.service';
 
 @Component({
   selector: 'app-home-keyword-item',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeKeywordItemComponent implements OnInit {
 
-  constructor() { }
+  constructor(private filterSrv: FilterService) { }
 
   ngOnInit() {
   }
 
+  openKeyWordFilterResult(){
+    this.filterSrv.openFilterResultPage();
+  }
 }

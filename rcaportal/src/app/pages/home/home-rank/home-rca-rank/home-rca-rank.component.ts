@@ -11,5 +11,4 @@ export class HomeRcaRankComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

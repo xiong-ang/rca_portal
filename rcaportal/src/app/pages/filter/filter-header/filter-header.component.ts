@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RcaDialogService } from 'src/app/services/rca-dialog.service';
+import { FilterService } from 'src/app/services/filter.service';
 
 @Component({
   selector: 'app-filter-header',
@@ -9,7 +10,7 @@ import { RcaDialogService } from 'src/app/services/rca-dialog.service';
 })
 export class FilterHeaderComponent implements OnInit {
 
-  constructor(private router: Router, private rcaDialogSrv: RcaDialogService) { }
+  constructor(private router: Router, private rcaDialogSrv: RcaDialogService, private filterSrv: FilterService) { }
 
   ngOnInit() {
   }
@@ -19,10 +20,10 @@ export class FilterHeaderComponent implements OnInit {
   }
 
   onMyCRsClick(){
-    this.router.navigateByUrl('/filter');
+    this.filterSrv.openFilterResultPage();
   }
 
   onAddCRClick(){
-    this.rcaDialogSrv.openDialog();
+    this.rcaDialogSrv.openCreateDialog();
   }
 }

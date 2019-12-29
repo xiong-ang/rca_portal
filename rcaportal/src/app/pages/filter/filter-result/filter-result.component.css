@@ -1,26 +1,3 @@
-.search-result-list-paneldock{
-    display: grid;
-    grid-template-columns: auto 400px;
-    grid-column-gap: 15px;
-}
-
-.rca-item-detail-paneldock{
-    border: 1px solid gray;
-    background: white;
-    min-height: 600px;
-    align-self: start;
-}
-
-.rca-item-detail-panelfloat{
-    border: 1px solid gray;
-    background: white;
-    min-height: 600px;
-    width: 400px;
-    position: fixed;
-    top: 80px;
-    right: 0;
-}
-
 .item-list{
     padding: 5px;
     justify-content: end;

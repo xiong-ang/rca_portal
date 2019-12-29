@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
+import { FilterService } from 'src/app/services/filter.service';
 
 @Component({
   selector: 'app-home-filter',
@@ -8,7 +9,7 @@ import {FormControl, Validators} from '@angular/forms';
 })
 export class HomeFilterComponent implements OnInit {
   public isDetailFilterPanelOpen = false;
-  constructor() { }
+  constructor(private filterSrv: FilterService) { }
 
   ngOnInit() {
   }
@@ -37,5 +38,6 @@ export class HomeFilterComponent implements OnInit {
     this.isDetailFilterPanelOpen = false;
     // apply logic
     // clear
+    this.filterSrv.openFilterResultPage();
   }
 }

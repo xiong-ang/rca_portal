@@ -6,7 +6,7 @@
     <i class="material-icons">extension</i>
     <span>Grid Control</span>
   </div>
-  <div class="rca-desc link-item">
+  <div class="rca-desc link-item" (click)="openRCADetail()">
     [xxxxxx]Because MatDialog instantiates components at run-time, the Angular compiler needs extra information to create the necessary ComponentFactory for your dialog content component.Because MatDialog instantiates components at run-time, the Angular compiler needs extra information to create the necessary ComponentFactory for your dialog content component.
   </div>
   <div class="rca-keywords">
@@ -15,7 +15,7 @@
   </div>
   <div class="rca-others">
     <i class="material-icons delete-btn link-item">delete</i>
-    <i class="material-icons edit-btn link-item">edit</i>
+    <i class="material-icons edit-btn link-item" (click)="updateRCA()">edit</i>
     <span>CVBFTVIEW-2875</span>
   </div>
 </div>

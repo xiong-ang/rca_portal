@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RcaDetailService } from 'src/app/services/rca-detail.service';
 
 @Component({
   selector: 'app-home-rca-item',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeRcaItemComponent implements OnInit {
 
-  constructor() { }
+  constructor(private rcaDetailSrv: RcaDetailService) { }
 
   ngOnInit() {
   }
 
+  openRCADetail(){
+    this.rcaDetailSrv.openRCADetail();
+  }
 }

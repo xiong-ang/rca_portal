@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl } from '@angular/forms';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
+import { FilterService } from 'src/app/services/filter.service';
 
 
 @Component({
@@ -47,7 +48,7 @@ export class FilterConditionComponent implements OnInit {
 
   ///////////////////////////////////////////////////////////////////////////////////
   public isDetailFilterPanelOpen = false;
-  constructor() { }
+  constructor(private filterSrv: FilterService) { }
 
   ngOnInit() {
   }
@@ -78,6 +79,8 @@ export class FilterConditionComponent implements OnInit {
     this.isDetailFilterPanelOpen = false;
     // apply logic
     // clear
+
+    this.filterSrv.openFilterResultPage();
   }
 
 }

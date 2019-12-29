@@ -7,22 +7,34 @@ import { RcaDialogComponent } from '../dialogs/rca-dialog/rca-dialog.component';
 })
 export class RcaDialogService {
 
-constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog) { }
 
-animal: string;
-name: string;
-openDialog(): void {
-  const dialogRef = this.dialog.open(RcaDialogComponent, {
-    width: '800px',
-    minWidth:'800px',
-    maxHeight:'800px',
-    data: {title:'Create a new anomaly', name: this.name, animal: this.animal}
-  });
+  animal: string;
+  name: string;
+  openCreateDialog(): void {
+    const dialogRef = this.dialog.open(RcaDialogComponent, {
+      width: '1000px',
+      maxHeight: '800px',
+      data: { title: 'Create a new RCA', name: this.name, animal: this.animal }
+    });
 
-  dialogRef.afterClosed().subscribe(result => {
-    console.log('The dialog was closed');
-    this.animal = result;
-  });
-}
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
+
+  openUpdateDialog(): void {
+    const dialogRef = this.dialog.open(RcaDialogComponent, {
+      width: '1000px',
+      maxHeight: '800px',
+      data: { title: 'Update RCA', name: this.name, animal: this.animal }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
 
 }

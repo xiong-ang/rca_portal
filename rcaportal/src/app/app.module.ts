@@ -64,7 +64,8 @@ import { HomeRcaRankComponent } from './pages/home/home-rank/home-rca-rank/home-
 import { HomeKeywordRankComponent } from './pages/home/home-rank/home-keyword-rank/home-keyword-rank.component';
 import { HomeKeywordItemComponent } from './pages/home/home-rank/home-keyword-rank/home-keyword-item/home-keyword-item.component';
 import { HomeRcaItemComponent } from './pages/home/home-rank/home-rca-rank/home-rca-item/home-rca-item.component';
-import { RcaPanelComponent } from './dialogs/rca-panel/rca-panel.component';
+import { RcaDetailInfoComponent } from './pages/detail-rca/rca-detail-info/rca-detail-info.component';
+import { DetailRcaComponent } from './pages/detail-rca/detail-rca.component';
 
 @NgModule({
    declarations: [
@@ -85,7 +86,8 @@ import { RcaPanelComponent } from './dialogs/rca-panel/rca-panel.component';
       HomeKeywordRankComponent,
       HomeKeywordItemComponent,
       HomeRcaItemComponent,
-      RcaPanelComponent,
+      RcaDetailInfoComponent,
+      DetailRcaComponent,
    ],
    imports: [
       BrowserModule,

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RcaDialogService } from 'src/app/services/rca-dialog.service';
+import { RcaDetailService } from 'src/app/services/rca-detail.service';
 
 @Component({
   selector: 'app-filter-result-item',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilterResultItemComponent implements OnInit {
 
-  constructor() { }
+  constructor(private rcaDialogSrv: RcaDialogService, private rcaDetailSrv: RcaDetailService) { }
 
   ngOnInit() {
   }
 
+  openRCADetail(){
+    this.rcaDetailSrv.openRCADetail();
+  }
+
+  updateRCA(){
+    this.rcaDialogSrv.openUpdateDialog();
+  }
 }
