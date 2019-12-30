@@ -1,4 +1,4 @@
-<div class="my-login-page">
+<!-- <div class="my-login-page">
   <section class="h-100">
     <div class="container h-100">
       <div class="row justify-content-md-center h-100">
@@ -20,9 +20,6 @@
 
                 <div class="form-group">
                   <label for="password">Password
-                    <a href="#" class="float-right">
-                      Forgot Password?
-                    </a>
                   </label>
                   <input id="password" type="password" class="form-control" name="password" required data-eye>
                   <div class="invalid-feedback">
@@ -55,4 +52,58 @@
       </div>
     </div>
   </section>
+</div> -->
+<div class="my-login-page">
+<section class="h-100">
+  <div class="container h-100">
+    <div class="row justify-content-md-center h-100">
+        <div class="card-wrapper">
+          <div class="brand">
+            <img src="assets/rca.PNG" alt="logo">
+          </div>
+          <div class="card fat">
+              <h4 class="card-title">Login</h4>
+              <div class="card-body">
+                  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                      <div class="form-group">
+                          <label for="email">E-Mail Address</label>
+                          <input type="email" id="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" autofocus/>
+                          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                              <div>Email is invalid</div>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label for="password">Password</label>
+                          <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+                          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                              <div *ngIf="f.password.errors.required">Password is required</div>
+                          </div>
+                      </div>
+
+                      <!-- <div class="form-group">
+                        <mat-checkbox class="checkbox" formControlName="remember">Remeber Me</mat-checkbox>
+                      </div> -->
+
+                      <div class="form-group">
+                        <div class="custom-checkbox custom-control">
+                          <input type="checkbox" formControlName="remember" id="remember" class="custom-control-input">
+                          <label for="remember" class="custom-control-label">Remeber Me</label>
+                        </div>
+                      </div>
+
+                      <button [disabled]="loading" class="btn btn-primary">
+                          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                          Login
+                      </button>
+                      <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+                  </form>
+              </div>
+          </div>
+          <div class="footer">
+            Copyright &copy; 2020 &mdash; ROCKWELL-DALIAN
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
 </div>

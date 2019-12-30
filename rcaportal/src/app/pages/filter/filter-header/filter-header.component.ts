@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RcaDialogService } from 'src/app/services/rca-dialog.service';
+
 import { FilterService } from 'src/app/services/filter.service';
+
+import { AuthenticationService } from '@app/services/authentication.service';
+import { User } from '@app/entities/user';
+
 
 @Component({
   selector: 'app-filter-header',
@@ -10,9 +15,13 @@ import { FilterService } from 'src/app/services/filter.service';
 })
 export class FilterHeaderComponent implements OnInit {
 
-  constructor(private router: Router, private rcaDialogSrv: RcaDialogService, private filterSrv: FilterService) { }
+  currentUser: User;
+  // tslint:disable-next-line: max-line-length
+  constructor(private router: Router, private rcaDialogSrv: RcaDialogService, private filterSrv: FilterService, private authenticationService: AuthenticationService) { }
+
 
   ngOnInit() {
+    this.currentUser = this.authenticationService.currentUserValue;
   }
 
   onHomeClick(){
@@ -26,4 +35,9 @@ export class FilterHeaderComponent implements OnInit {
   onAddCRClick(){
     this.rcaDialogSrv.openCreateDialog();
   }
+
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
+}
 }

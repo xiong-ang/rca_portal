@@ -6,17 +6,38 @@ import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './pages/notFound/notFound.component';
 import { DetailRcaComponent } from './pages/detail-rca/detail-rca.component';
 
+import { AuthGuard } from './utl/auth.guard';
+
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'home',
+  {
+    path: '',
+    component: HomeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'home',
     redirectTo: '',
     pathMatch: 'full'
   },
-  { path: 'filter', component: FilterComponent },
-  { path: 'rca', component: DetailRcaComponent },
-  { path: 'login', component: LoginComponent },
-  { path: '**', component: NotFoundComponent }
+  {
+    path: 'filter',
+    component: FilterComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'rca',
+    component: DetailRcaComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
+  }
 ];
 
 @NgModule({

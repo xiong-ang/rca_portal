@@ -13,14 +13,20 @@
       <div class="link-item item-add" (click)="onAddCRClick()">
         <i class="material-icons">add</i><span>Create New RCA</span>
       </div>
-      
+
     </div>
     <div class="header-item-user">
-      <i class="material-icons link-item">help</i>
-      <div class="link-item">
-        <i class="material-icons">account_circle</i><span>Barret Xiong</span>
+      <div class="header-item-user">
+        <div class="link-item">
+          <i class="material-icons">help</i>
+        </div>
+        <div class="link-item">
+          <i class="material-icons">account_circle</i><span>{{currentUser.userName}}</span>
+        </div>
+        <div class="link-item" (click)="logout()">
+          <i class="material-icons" >logout</i><span>Logout</span>
+        </div>
       </div>
-      
     </div>
   </div>
 </div>

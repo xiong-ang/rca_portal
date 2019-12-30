@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { A11yModule } from '@angular/cdk/a11y';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -67,6 +68,11 @@ import { HomeRcaItemComponent } from './pages/home/home-rank/home-rca-rank/home-
 import { RcaDetailInfoComponent } from './pages/detail-rca/rca-detail-info/rca-detail-info.component';
 import { DetailRcaComponent } from './pages/detail-rca/detail-rca.component';
 
+// used to create fake backend
+import { fakeBackendProvider } from './utl/fake-backend';
+import { ErrorInterceptor } from './utl/error.interceptor';
+import { JwtInterceptor } from './utl/jwt.interceptor';
+
 @NgModule({
    declarations: [
       AppComponent,
@@ -91,8 +97,8 @@ import { DetailRcaComponent } from './pages/detail-rca/detail-rca.component';
    ],
    imports: [
       BrowserModule,
-      AppRoutingModule,
       BrowserAnimationsModule,
+      HttpClientModule,
       A11yModule,
       CdkStepperModule,
       CdkTableModule,
@@ -135,11 +141,16 @@ import { DetailRcaComponent } from './pages/detail-rca/detail-rca.component';
       MatTreeModule,
       PortalModule,
       ScrollingModule,
-      FormsModule, 
+      FormsModule,
       ReactiveFormsModule,
+      AppRoutingModule,
    ],
    entryComponents: [RcaDialogComponent],
-   providers: [],
+   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    fakeBackendProvider,
+   ],
    bootstrap: [
       AppComponent
    ]
