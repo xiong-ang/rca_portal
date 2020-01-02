@@ -39,7 +39,7 @@
 }
 
 .detail-filter{
-    min-height: 300px;
+    min-height: 280px;
     width: 100%;
     padding: 15px;
     position: relative;
@@ -51,6 +51,7 @@
     grid-template-rows: 2fr 2fr 2fr 2fr;
     justify-content: center;
     align-content: center;
+    grid-column-gap: 30px;
 }
 
 .readout-item{

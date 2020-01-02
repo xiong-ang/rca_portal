@@ -22,85 +22,57 @@
   </button>
 
   <mat-form-field class="filter-item quick-search-input">
-    <input matInput placeholder="Email" [formControl]="emailFormControl">
-    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-      Please enter a valid email address
-    </mat-error>
-    <mat-error *ngIf="emailFormControl.hasError('required')">
-      Email is <strong>required</strong>
-    </mat-error>
+    <input matInput placeholder="Quick Search" [formControl]="quickSearchFormControl">
   </mat-form-field>
 </div>
 
 <div class="detail-filter" *ngIf="isDetailFilterPanelOpen">
   <mat-form-field class="filter-item">
-    <input matInput placeholder="Email" [formControl]="emailFormControl">
-    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-      Please enter a valid email address
-    </mat-error>
-    <mat-error *ngIf="emailFormControl.hasError('required')">
+    <input matInput placeholder="ID" [formControl]="IDFormControl">
+    <mat-error *ngIf="IDFormControl.hasError('required')">
       Email is <strong>required</strong>
     </mat-error>
   </mat-form-field>
 
   <mat-form-field class="filter-item">
-    <mat-label>Favorite food</mat-label>
+    <mat-label>IMPACTED PRODUCT</mat-label>
     <mat-select>
-      <mat-option *ngFor="let food of foods" [value]="food.value">
-        {{food.viewValue}}
+      <mat-option *ngFor="let impactedProduct of impactedProducts" [value]="impactedProduct.value">
+        {{impactedProduct.viewValue}}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="filter-item">
-    <mat-label>Favorite food</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let food of foods" [value]="food.value">
-        {{food.viewValue}}
-      </mat-option>
+    <mat-label>FIX VERSIONS</mat-label>
+    <mat-select [formControl]="fixVersions" multiple>
+      <mat-option *ngFor="let fixVersion of fixVersionList" [value]="fixVersion">{{fixVersion}}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="filter-item">
-    <mat-label>Favorite food</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let food of foods" [value]="food.value">
-        {{food.viewValue}}
-      </mat-option>
+    <mat-label>COMPONENT</mat-label>
+    <mat-select [formControl]="components" multiple>
+      <mat-option *ngFor="let component of componentList" [value]="component">{{component}}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="filter-item">
-    <input matInput placeholder="Email" [formControl]="emailFormControl">
-    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-      Please enter a valid email address
-    </mat-error>
-    <mat-error *ngIf="emailFormControl.hasError('required')">
-      Email is <strong>required</strong>
-    </mat-error>
+    <input matInput placeholder="SUBMITTER" [formControl]="submitterFormControl">
   </mat-form-field>
+
   <mat-form-field class="filter-item">
-    <input matInput placeholder="Email" [formControl]="emailFormControl">
-    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-      Please enter a valid email address
-    </mat-error>
-    <mat-error *ngIf="emailFormControl.hasError('required')">
-      Email is <strong>required</strong>
-    </mat-error>
+    <input matInput placeholder="ROOT CAUSE CR" [formControl]="rootCauseCRFormControl">
   </mat-form-field>
+
   <div class="readout-item">
     <div class="readout-title">Is Readout?</div>
-    <mat-checkbox>Readout</mat-checkbox>
-    <mat-checkbox>Not Readout</mat-checkbox>
+    <mat-checkbox [(ngModel)]="isReadoutChecked">Readout</mat-checkbox>
+    <mat-checkbox [(ngModel)]="isNotReadoutChecked">Not Readout</mat-checkbox>
   </div>
+
   <mat-form-field class="filter-item whole-line-item">
-    <input matInput placeholder="Email" [formControl]="emailFormControl">
-    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-      Please enter a valid email address
-    </mat-error>
-    <mat-error *ngIf="emailFormControl.hasError('required')">
-      Email is <strong>required</strong>
-    </mat-error>
+    <input matInput placeholder="KEYWORDS" [formControl]="keywordsCRFormControl">
   </mat-form-field>
   
   <div class="oper-btn">

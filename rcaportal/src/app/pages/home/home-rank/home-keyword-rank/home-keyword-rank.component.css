@@ -6,7 +6,7 @@
 }
 
 .hot-keywork-list{
-    min-height: 600px;
+    min-height: 400px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-content: start;

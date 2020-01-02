@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { RCAItem } from '@app/entities/rcaItem';
 
 export interface DialogData {
   title: string;
-  animal: string;
-  name: string;
+  rcaData: RCAItem;
 }
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl } from '@angular/forms';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {MatChipInputEvent} from '@angular/material/chips';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { FilterService } from 'src/app/services/filter.service';
 
 
@@ -11,15 +11,65 @@ import { FilterService } from 'src/app/services/filter.service';
   styleUrls: ['./filter-condition.component.css']
 })
 export class FilterConditionComponent implements OnInit {
+  IDFormControl = new FormControl('', [
+    Validators.email, // need to implement validator
+  ]);
+
+  fixVersions = new FormControl();
+  fixVersionList: string[] = ['v1.0', 'v2.0', 'v3.0', 'v4.0', 'v4.1', 'v5.1'];
+  components = new FormControl();
+  componentList: string[] = ['component1', 'component2', 'component3', 'component4', 'component5', 'component6'];
+  impactedProducts = [
+    { value: 'FTView SE', viewValue: 'FTView SE' },
+    { value: 'FTView ME', viewValue: 'FTView ME' },
+    { value: 'CCW', viewValue: 'CCW' },
+  ];
+
+  submitterFormControl = new FormControl();
+
+  rootCauseCRFormControl = new FormControl();
+
+  isReadoutChecked = true;
+  isNotReadoutChecked = true;
+
+  keywordsCRFormControl = new FormControl();
+
+  quickSearchFormControl = new FormControl();
+
+  public isDetailFilterPanelOpen = false;
+
+
+  constructor(private filterSrv: FilterService) { }
+
+  ngOnInit() { }
+
+  triggerDetailFilterPanel() {
+    this.isDetailFilterPanelOpen = !this.isDetailFilterPanelOpen;
+  }
+
+  onCancel() {
+    this.isDetailFilterPanelOpen = false;
+    // clear
+  }
+
+  onApply() {
+    this.isDetailFilterPanelOpen = false;
+    // apply logic
+    // clear
+
+    this.filterSrv.openFilterResultPage();
+  }
+
+  /////////////////////////////////////////////////////////////////////
   visible = true;
   selectable = true;
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   fruits = [
-    {name: 'Lemon'},
-    {name: 'Lime'},
-    {name: 'Apple'},
+    { name: 'Lemon' },
+    { name: 'Lime' },
+    { name: 'Apple' },
   ];
 
   add(event: MatChipInputEvent): void {
@@ -28,7 +78,7 @@ export class FilterConditionComponent implements OnInit {
 
     // Add our fruit
     if ((value || '').trim()) {
-      this.fruits.push({name: value.trim()});
+      this.fruits.push({ name: value.trim() });
     }
 
     // Reset the input value
@@ -44,43 +94,4 @@ export class FilterConditionComponent implements OnInit {
       this.fruits.splice(index, 1);
     }
   }
-
-
-  ///////////////////////////////////////////////////////////////////////////////////
-  public isDetailFilterPanelOpen = false;
-  constructor(private filterSrv: FilterService) { }
-
-  ngOnInit() {
-  }
-
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
-
-  ///////////////////////////////////////////////////////////////////////////////////////
-  foods = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
-  ];
-
-  ////////////////////////////////////////////////////////////////////////////////////////
-  triggerDetailFilterPanel(){
-    this.isDetailFilterPanelOpen = !this.isDetailFilterPanelOpen;
-  }
-
-  onCancel(){
-    this.isDetailFilterPanelOpen = false;
-    // clear
-  }
-
-  onApply(){
-    this.isDetailFilterPanelOpen = false;
-    // apply logic
-    // clear
-
-    this.filterSrv.openFilterResultPage();
-  }
-
 }

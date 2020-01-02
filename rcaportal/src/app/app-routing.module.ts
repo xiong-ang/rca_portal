@@ -6,7 +6,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './pages/notFound/notFound.component';
 import { DetailRcaComponent } from './pages/detail-rca/detail-rca.component';
 
-import { AuthGuard } from './utl/auth.guard';
+import { AuthGuard } from './utils/auth.guard';
 
 
 const routes: Routes = [

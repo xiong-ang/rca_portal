@@ -69,9 +69,9 @@ import { RcaDetailInfoComponent } from './pages/detail-rca/rca-detail-info/rca-d
 import { DetailRcaComponent } from './pages/detail-rca/detail-rca.component';
 
 // used to create fake backend
-import { fakeBackendProvider } from './utl/fake-backend';
-import { ErrorInterceptor } from './utl/error.interceptor';
-import { JwtInterceptor } from './utl/jwt.interceptor';
+import { fakeBackendProvider } from './utils/fake-backend';
+import { ErrorInterceptor } from './utils/error.interceptor';
+import { JwtInterceptor } from './utils/jwt.interceptor';
 
 @NgModule({
    declarations: [
