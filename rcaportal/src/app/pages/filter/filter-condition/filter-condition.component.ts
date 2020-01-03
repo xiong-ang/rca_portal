@@ -3,6 +3,7 @@ import { Validators, FormControl } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { FilterService } from 'src/app/services/filter.service';
+import { FilterCondition } from '@app/entities/filterCondition';
 
 
 @Component({
@@ -49,15 +50,23 @@ export class FilterConditionComponent implements OnInit {
 
   onCancel() {
     this.isDetailFilterPanelOpen = false;
-    // clear
   }
 
   onApply() {
     this.isDetailFilterPanelOpen = false;
-    // apply logic
-    // clear
+    let filterCondition = new FilterCondition();
+    /*
+    filterCondition.ID = ;
+    filterCondition.ImpactedProduct = ;
+    filterCondition.Component = ;
+    filterCondition.FixVersion = ;
+    filterCondition.IsReadout = ;
+    filterCondition.Keywords = ;
+    filterCondition.RootCauseCR = ;
+    filterCondition.Submitter = ;
+    */
 
-    this.filterSrv.openFilterResultPage();
+    this.filterSrv.openFilterResultPage(filterCondition);
   }
 
   /////////////////////////////////////////////////////////////////////

@@ -1,9 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RCAItem } from '@app/entities/rcaItem';
+import { RequestProxyService } from '@app/services/httpRequest/request-proxy.service';
 
-export interface DialogData {
-  title: string;
+export interface RCADialogData {
+  type: string;
   rcaData: RCAItem;
 }
 
@@ -12,19 +13,32 @@ export interface DialogData {
   templateUrl: './rca-dialog.component.html',
   styleUrls: ['./rca-dialog.component.css']
 })
-export class RcaDialogComponent implements OnInit {
-  ngOnInit() {
-  }
-
+export class RcaDialogComponent {
+  public get isCreateMode(): boolean { return this.data.type == 'Create'; }
+  public get dialogTitle(): string { return this.isCreateMode ? 'Create a new RCA' : 'Update RCA'; }
+  public get testRCAData(): string { return JSON.stringify(this.data.rcaData); }
   constructor(
     public dialogRef: MatDialogRef<RcaDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    private requestProxyService: RequestProxyService,
+    @Inject(MAT_DIALOG_DATA) public data: RCADialogData) { }
 
   onCancelClick(): void {
     this.dialogRef.close();
   }
 
-  onApplyClick(): void {
+  onCreateClick(): void {
     this.dialogRef.close();
+
+    //TODO: Get RCAItem -> data.rcaData
+
+    this.requestProxyService.CreateRCA(this.data.rcaData);
+  }
+
+  onUpdateClick(): void {
+    this.dialogRef.close();
+
+    //TODO: Fetch RCAItem -> data.rcaData
+
+    this.requestProxyService.UpdateRCA(this.data.rcaData.ID, this.data.rcaData);
   }
 }

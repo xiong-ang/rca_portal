@@ -1,21 +1,19 @@
 <div class="result-item">
   <div class="rca-product-version">
-    FTView SE <span class="rca-version">v13.0</span>
+    {{RCAResult.ImpactedProduct}} <span class="rca-version">{{RCAResult.FixVersion}}</span>
   </div>
   <div class="rca-feature">
     <i class="material-icons">extension</i>
-    <span>Grid Control</span>
+    <span>{{RCAResult.Component}}</span>
   </div>
-  <div class="rca-desc link-item" (click)="openRCADetail()">
-    [xxxxxx]Because MatDialog instantiates components at run-time, the Angular compiler needs extra information to create the necessary ComponentFactory for your dialog content component.Because MatDialog instantiates components at run-time, the Angular compiler needs extra information to create the necessary ComponentFactory for your dialog content component.
-  </div>
+  <div class="rca-desc link-item" (click)="openRCADetail()">{{RCAResult.Header}}</div>
   <div class="rca-keywords">
-    <i class="material-icons">vpn_key</i>
-    <span>Crash, Memory Leak, .Net Issue</span>
+    <i class="material-icons key-icon">vpn_key</i>
+    <span>{{RCAResult.KeyWords}}</span>
   </div>
   <div class="rca-others">
-    <i class="material-icons delete-btn link-item">delete</i>
-    <i class="material-icons edit-btn link-item" (click)="updateRCA()">edit</i>
-    <span>CVBFTVIEW-2875</span>
+    <i class="material-icons delete-btn link-item" *ngIf="RCAResult.IsManagable" (click)="deleteRCA()">delete</i>
+    <i class="material-icons edit-btn link-item" *ngIf="RCAResult.IsManagable" (click)="updateRCA()">edit</i>
+    <span class="rca-id">CVBFTVIEW-2875</span>
   </div>
 </div>

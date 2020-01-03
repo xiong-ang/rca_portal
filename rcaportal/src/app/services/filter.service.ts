@@ -1,28 +1,44 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { FilterCondition } from '@app/entities/filterCondition';
+import { RCAItem } from '@app/entities/rcaItem';
+import { RequestProxyService } from './httpRequest/request-proxy.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilterService {
   public currentFilterCondition: FilterCondition;
+  public filterResults: Array<RCAItem> = [];
+  public currentMaxRCAResultCount = 10;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    private requestProxyService: RequestProxyService) { }
 
-  getProducts(){
-
-  }
-
-  getFixVersions(productNmae){
-
-  }
-
-  getComponents(productName){
+  getProducts() {
 
   }
 
-  openFilterResultPage() {
+  getFixVersions(productNmae) {
+
+  }
+
+  getComponents(productName) {
+
+  }
+
+  getCurrentFilterResults() {
+    this.requestProxyService.GetRCAs(this.currentFilterCondition, 0, this.currentMaxRCAResultCount).then(results => {
+      this.filterResults = results;
+    })
+  }
+
+  openFilterResultPage(filterCondition) {
+    this.currentFilterCondition = filterCondition;
+    this.filterResults = [];
+    this.currentMaxRCAResultCount = 10;
+
+    this.getCurrentFilterResults();
     this.router.navigateByUrl('/filter');
   }
 }

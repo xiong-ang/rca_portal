@@ -4,7 +4,7 @@
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-rows: 70px 240px 150px auto;
+    grid-template-rows: 70px 200px 150px auto;
     justify-content: stretch;
 }
 
@@ -20,6 +20,7 @@
 
 .notice{
     width: 100%;
+    height: 100%;
     justify-self: center;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -30,19 +31,28 @@
 }
 
 .notice-left{
+    height: 100%;
     background-color: rgb(57, 176, 245);
     background-image: linear-gradient(to right, white , rgb(57, 176, 245));
     display: grid;
     justify-content: end;
     align-content: center;
+    padding-right: 50px;
 }
 
 .notice-right{
+    height: 100%;
     background-color: gray; 
     background-image: linear-gradient(to right, grey , white);
     display: grid;
     justify-content: start;
     align-content: center;
+    padding-left: 50px;
+}
+
+.notice-img{
+    width: 100%;
+    height: 200px;
 }
 
 .filter{

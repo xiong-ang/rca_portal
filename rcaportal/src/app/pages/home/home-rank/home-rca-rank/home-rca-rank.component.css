@@ -14,6 +14,21 @@
     align-content: start;
 }
 
+.rca-more-btn{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 30px;
+}
+
+.rca-more-btn:hover{
+    cursor: pointer;
+    color: cornflowerblue;
+}
+
 .material-icons{
     margin-left: 5px;
+}
+
+.bug-icon{
+    color: brown;
 }

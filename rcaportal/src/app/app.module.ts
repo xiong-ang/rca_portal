@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { A11yModule } from '@angular/cdk/a11y';
@@ -72,6 +72,9 @@ import { DetailRcaComponent } from './pages/detail-rca/detail-rca.component';
 import { fakeBackendProvider } from './utils/fake-backend';
 import { ErrorInterceptor } from './utils/error.interceptor';
 import { JwtInterceptor } from './utils/jwt.interceptor';
+import { HotRCAsDialogComponent } from './dialogs/hotRCAs-Dialog/hotRCAs-Dialog.component';
+import { ProgressBarColor } from './directives/ProgressBarColor.directive';
+import { MsgDialogComponent } from './dialogs/msg-dialog/msg-dialog.component';
 
 @NgModule({
    declarations: [
@@ -94,6 +97,9 @@ import { JwtInterceptor } from './utils/jwt.interceptor';
       HomeRcaItemComponent,
       RcaDetailInfoComponent,
       DetailRcaComponent,
+      HotRCAsDialogComponent,
+      ProgressBarColor,
+      MsgDialogComponent,
    ],
    imports: [
       BrowserModule,
@@ -145,11 +151,15 @@ import { JwtInterceptor } from './utils/jwt.interceptor';
       ReactiveFormsModule,
       AppRoutingModule,
    ],
-   entryComponents: [RcaDialogComponent],
+   entryComponents: [
+      RcaDialogComponent,
+      HotRCAsDialogComponent,
+      MsgDialogComponent
+   ],
    providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    fakeBackendProvider,
+      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+      { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+      fakeBackendProvider,
    ],
    bootstrap: [
       AppComponent

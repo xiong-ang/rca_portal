@@ -10,15 +10,12 @@ export class RcaDetailService {
 
   constructor(private router: Router) { }
 
-  getRCAById() {
-
-  }
-
   getRCAByFilterCondition() {
 
   }
 
-  openRCADetail() {
+  openRCADetail(rcaItem: RCAItem) {
+    this.currentRCAItem = rcaItem;
     this.router.navigateByUrl('/rca');
   }
 }

@@ -1,0 +1,35 @@
+.dialog-header{
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.bug-icon{
+    color: brown;
+}
+
+.close-icon{
+    position: absolute;
+    z-index: 1;
+    right: -10px;
+    top: -10px;
+    font-size: 30px;
+    font-weight: bolder;
+    color: gray;
+    cursor: pointer;
+}
+
+.material-icons{
+    margin-left: 5px;
+}
+
+.dialog-content{
+    min-height: 400px;
+    max-height: 600px;
+    width: 100%;
+    overflow: auto;
+}

@@ -4,3 +4,19 @@
     display: grid;
     grid-template-columns: 100%;
 }
+
+.load-more{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    font-size: 22px;
+    font-style: italic;
+    color: gray;
+    background: rgb(235, 231, 231);
+    text-align: center;
+}
+
+.load-more:hover{
+    cursor: pointer;
+    color: cornflowerblue;
+}

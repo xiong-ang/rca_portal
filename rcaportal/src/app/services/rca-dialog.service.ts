@@ -3,41 +3,57 @@ import { MatDialog } from '@angular/material/dialog';
 import { RcaDialogComponent } from '../dialogs/rca-dialog/rca-dialog.component';
 import { RcaDetailService } from './rca-detail.service';
 import { RCAItem } from '@app/entities/rcaItem';
+import { HttpRequesterService } from './httpRequest/http-requester.service';
+import { HttpRequesterMockService } from './httpRequest/http-requester.mock.service';
+import { HotRCAsDialogComponent } from '@app/dialogs/hotRCAs-Dialog/hotRCAs-Dialog.component';
+import { AuthenticationService } from './authentication.service';
+import { MsgDialogComponent } from '@app/dialogs/msg-dialog/msg-dialog.component';
+import { RequestProxyService } from './httpRequest/request-proxy.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RcaDialogService {
-  public operationRCAItem: RCAItem;
-
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,
+    private authenticationService: AuthenticationService,
+    private requestProxyService: RequestProxyService) { }
 
   openCreateDialog(): void {
-    this.operationRCAItem = new RCAItem();
+    let newRCAItem = new RCAItem();
     //TODO: Init necessary items
+    newRCAItem.Submitter = this.authenticationService.currentUserValue.userName;
 
-    const dialogRef = this.dialog.open(RcaDialogComponent, {
+    this.dialog.open(RcaDialogComponent, {
       width: '1000px',
       maxHeight: '800px',
-      data: { title: 'Create a new RCA', rcaData: this.operationRCAItem }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      //TODO: Insert data to DB
+      data: { type: 'Create', rcaData: newRCAItem }
     });
   }
 
-  openUpdateDialog(): void {
-    //TODO: Get RCAItem by args
-
-    const dialogRef = this.dialog.open(RcaDialogComponent, {
+  openUpdateDialog(rcaItem: RCAItem): void {
+    this.dialog.open(RcaDialogComponent, {
       width: '1000px',
       maxHeight: '800px',
-      data: { title: 'Update RCA', rcaData: this.operationRCAItem }
+      data: { type:'Update', rcaData: rcaItem }
     });
+  }
 
-    dialogRef.afterClosed().subscribe(result => {
-      //TODO: Update data to DB
+  openDeleteDialog(rcaID: string): void {
+    this.dialog.open(MsgDialogComponent, {
+      data: { type: 'warning',
+        msg: `Do you want to delete RCA ${rcaID} ?`,
+        okAction: ()=>{
+          this.requestProxyService.DeleteRCA(rcaID);
+        },
+        cancelAction:()=>{}
+      }
+    });
+  }
+
+  openHotRCAsDialog(): void {
+    this.dialog.open(HotRCAsDialogComponent, {
+      width: '800px',
+      minHeight: '600px'
     });
   }
 }

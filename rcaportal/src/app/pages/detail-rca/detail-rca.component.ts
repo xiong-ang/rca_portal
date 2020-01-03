@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RCAItem } from '@app/entities/rcaItem';
+import { RcaDetailService } from '@app/services/rca-detail.service';
 
 @Component({
   selector: 'app-detail-rca',
@@ -6,8 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./detail-rca.component.css']
 })
 export class DetailRcaComponent implements OnInit {
+  public get RCADetail(): RCAItem { return this.rcaDetailService.currentRCAItem;}
 
-  constructor() { }
+  constructor(private rcaDetailService: RcaDetailService) { }
 
   ngOnInit() {
   }

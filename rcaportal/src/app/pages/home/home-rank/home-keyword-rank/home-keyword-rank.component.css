@@ -12,6 +12,21 @@
     align-content: start;
 }
 
+.kewword-more-btn{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+}
+
+.kewword-more-btn:hover{
+    cursor: pointer;
+    color: cornflowerblue;
+}
+
 .material-icons{
     margin-left: 5px;
+}
+
+.key-icon{
+    color: orange;
 }

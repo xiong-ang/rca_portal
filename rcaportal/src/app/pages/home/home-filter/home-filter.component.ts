@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { FilterService } from 'src/app/services/filter.service';
+import { FilterCondition } from '@app/entities/filterCondition';
 
 @Component({
   selector: 'app-home-filter',
@@ -48,13 +49,24 @@ export class HomeFilterComponent implements OnInit {
 
   onCancel() {
     this.isDetailFilterPanelOpen = false;
-    // clear
   }
 
   onApply() {
     this.isDetailFilterPanelOpen = false;
-    // apply logic
+    let filterCondition = new FilterCondition();
+    /*
+    filterCondition.ID = ;
+    filterCondition.ImpactedProduct = ;
+    filterCondition.Component = ;
+    filterCondition.FixVersion = ;
+    filterCondition.IsReadout = ;
+    filterCondition.Keywords = ;
+    filterCondition.RootCauseCR = ;
+    filterCondition.Submitter = ;
+    */
     // clear
-    this.filterSrv.openFilterResultPage();
+
+
+    this.filterSrv.openFilterResultPage(filterCondition);
   }
 }

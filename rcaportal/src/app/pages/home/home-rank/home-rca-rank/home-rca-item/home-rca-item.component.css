@@ -1,8 +1,9 @@
 .rca-item{
     height: 40px;
     margin: 10px;
+    margin-left: 0px;
     display: grid;
-    grid-template-columns: 40px auto;
+    grid-template-columns: 60px auto;
     align-content: center;
 }
 
@@ -13,8 +14,8 @@
 
 .rca-sort-number{
     display: flex;
-    align-items: center;
-    text-align: center;
+    justify-self: start;
+    align-self: center;
     font-size: 26px;
 }
 

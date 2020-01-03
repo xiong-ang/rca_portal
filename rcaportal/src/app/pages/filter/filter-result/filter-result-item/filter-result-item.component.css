@@ -29,6 +29,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    color: rgb(114,114,114);
 }
 
 .rca-desc{
@@ -43,13 +44,17 @@
 }
 
 .rca-desc:hover{
-    color: blue;
+    color: cornflowerblue;
 }
 
 .rca-keywords{
     display: flex;
     align-items: center;
-    color: cornflowerblue;
+    color: rgb(27,105,168);
+}
+
+.key-icon{
+    color: orange;
 }
 
 .rca-others{
@@ -59,13 +64,17 @@
 }
 
 .delete-btn{
-    color: red;
+    color: rgb(248,81,85);
 }
 
 .edit-btn{
-    color: deepskyblue;
+    color: rgb(48,113,194);
 }
 
 .link-item{
     cursor: pointer;
+}
+
+.rca-id{
+    color: rgb(114,114,114);
 }

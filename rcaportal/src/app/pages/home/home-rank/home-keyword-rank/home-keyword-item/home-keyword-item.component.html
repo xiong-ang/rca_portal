@@ -1,14 +1,14 @@
 <div class="hot-keywork-item">
-  <div class="keyword-content" (click)="openKeyWordFilterResult()">Crash</div>
+  <div class="keyword-content" (click)="openKeyWordFilterResult()">{{hotKeyword.KeywordValue}}</div>
 
   <div class="hot-content">
-    <i class="material-icons center-align">whatshot</i>
+    <i class="material-icons center-align" [ngStyle]="{'color': keywordColor}">whatshot</i>
     <div class="hot-each-item hot-progress-item left-align">
-      <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+      <mat-progress-bar mode="determinate" [appProgressBarColor]="keywordColor" value="{{hotKeyword.HotProp}}"></mat-progress-bar>
     </div>
-    <span class="hot-each-item hot-each-item right-align number-style">100000</span>
+    <span class="hot-each-item hot-each-item right-align number-style">{{hotKeyword.HotValue}}</span>
     <i class="material-icons center-align">bug_report</i>
     <span class="hot-each-item left-align">Total</span>
-    <span class="hot-each-item right-align number-style">9999</span>
+    <span class="hot-each-item right-align number-style">{{hotKeyword.RCACount}}</span>
   </div>
 </div>

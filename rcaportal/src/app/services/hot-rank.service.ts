@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
+import { RequestProxyService } from './httpRequest/request-proxy.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HotRankService {
+  constructor(private requestProxyService: RequestProxyService) { }
 
-  constructor() { }
-
-  getHotKeywords(start, count){
-
+  async getHotKeywords(start, count) {
+    return this.requestProxyService.GetHotKeywords(start, count);
   }
 
-  getHotRCAs(count){
-    
+  async getHotRCAs(count) {
+    return this.requestProxyService.GetHotRCAs(0, count);
   }
 }

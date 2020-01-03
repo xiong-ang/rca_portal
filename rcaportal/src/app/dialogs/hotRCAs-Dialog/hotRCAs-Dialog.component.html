@@ -1,0 +1,11 @@
+<div class="dialog-header">
+  HOT RCAs <i class="material-icons bug-icon">bug_report</i>
+  <i class="material-icons close-icon" (click)="onCloseClick()">close</i>
+</div>
+
+
+
+<div class="dialog-content">
+  <app-home-rca-item *ngFor="let hotRCA of RCAItems; let i= index" [hotRCA]="hotRCA" [rcaIndex]="i">
+  </app-home-rca-item>
+</div>

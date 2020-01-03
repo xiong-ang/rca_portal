@@ -6,6 +6,7 @@ import { FilterService } from 'src/app/services/filter.service';
 
 import { AuthenticationService } from '@app/services/authentication.service';
 import { User } from '@app/entities/user';
+import { FilterCondition } from '@app/entities/filterCondition';
 
 
 @Component({
@@ -29,7 +30,10 @@ export class FilterHeaderComponent implements OnInit {
   }
 
   onMyCRsClick(){
-    this.filterSrv.openFilterResultPage();
+    let filterCondition = new FilterCondition();
+    filterCondition.Submitter = this.currentUser.userName;
+
+    this.filterSrv.openFilterResultPage(filterCondition);
   }
 
   onAddCRClick(){
