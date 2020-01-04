@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { FilterService } from 'src/app/services/filter.service';
 import { FilterCondition } from '@app/entities/filterCondition';
+import { RequestProxyService } from '@app/services/httpRequest/request-proxy.service';
 
 @Component({
   selector: 'app-home-filter',
@@ -10,37 +11,58 @@ import { FilterCondition } from '@app/entities/filterCondition';
 })
 export class HomeFilterComponent implements OnInit {
   public isDetailFilterPanelOpen = false;
-  IDFormControl = new FormControl('', [
-    Validators.email, // need to implement validator
-  ]);
-  fixVersions = new FormControl();
-  fixVersionList: string[] = ['v1.0', 'v2.0', 'v3.0', 'v4.0', 'v4.1', 'v5.1'];
-  components = new FormControl();
-  componentList: string[] = ['component1', 'component2', 'component3', 'component4', 'component5', 'component6'];
-  impactedProducts = [
-    { value: 'FTView SE', viewValue: 'FTView SE' },
-    { value: 'FTView ME', viewValue: 'FTView ME' },
-    { value: 'CCW', viewValue: 'CCW' },
-  ];
+  impactedProducts = [];
+  fixVersionList: string[] = [];
+  componentList: string[] = [];
 
-  submitterFormControl = new FormControl('', [
-    Validators.email, // need to implement validator
-  ]);
 
-  rootCauseCRFormControl = new FormControl('', [
-    Validators.email, // need to implement validator
-  ]);
+  public inputID: string = '';
+  private _selectedProduct = null;
+  get selectedProduct() { return this._selectedProduct; }
+  set selectedProduct(value) {
+    if (value != this._selectedProduct) {
+      this._selectedProduct = value;
 
+      this.fixVersionList = [];
+      this.requestProxyService.GetProductVersions(this._selectedProduct).then(versions => {
+        this.fixVersionList = versions;
+      });
+
+      this.componentList = [];
+      this.requestProxyService.GetProductComponents(this._selectedProduct).then(components => {
+        this.componentList = components;
+      })
+    }
+  }
+  private selectedVersions = [];
+  private selectedComponents = [];
+  public inputSubmitter: string = '';
+  public inputRootCauseCR: string = '';
+
+  // TODO: Need to verify with joe and fleix
   isReadoutChecked = true;
   isNotReadoutChecked = true;
 
-  keywordsCRFormControl = new FormControl('', [
-    Validators.email, // need to implement validator
-  ]);
+  public inputKeywords: string = '';
 
-  constructor(private filterSrv: FilterService) { }
+  get isNothingInput() {
+    return !this.inputID &&
+      !this.selectedProduct &&
+      this.selectedVersions.length == 0 &&
+      this.selectedComponents.length == 0 &&
+      !this.inputSubmitter &&
+      !this.inputRootCauseCR;
+    // !this.inputIsReadout && //TODO
+    // !this.inputKeywords; //TODO
+  }
 
-  ngOnInit() {
+  constructor(private filterSrv: FilterService,
+    private requestProxyService: RequestProxyService) { }
+
+  loadProductInfo() {
+    this.requestProxyService.GetProducts().then(productNames => {
+      this.impactedProducts = productNames;
+    });
   }
 
   triggerDetailFilterPanel() {
@@ -54,19 +76,32 @@ export class HomeFilterComponent implements OnInit {
   onApply() {
     this.isDetailFilterPanelOpen = false;
     let filterCondition = new FilterCondition();
-    /*
-    filterCondition.ID = ;
-    filterCondition.ImpactedProduct = ;
-    filterCondition.Component = ;
-    filterCondition.FixVersion = ;
-    filterCondition.IsReadout = ;
-    filterCondition.Keywords = ;
-    filterCondition.RootCauseCR = ;
-    filterCondition.Submitter = ;
-    */
-    // clear
+    filterCondition.ID = this.inputID;
+    filterCondition.ImpactedProduct = this.selectedProduct;
+    filterCondition.Components = this.selectedComponents;
+    filterCondition.FixVersions = this.selectedVersions;
+    //filterCondition.IsReadout = ; // TODO: Need to verify with joe and fleix 
+    //filterCondition.Keywords = ; // TODO: Need to implement
+    filterCondition.RootCauseCR = this.inputRootCauseCR;
+    filterCondition.Submitter = this.inputSubmitter;
 
+    this.clear();
 
     this.filterSrv.openFilterResultPage(filterCondition);
+  }
+
+  clear() {
+    this.inputID = '';
+    this.selectedProduct = null;
+    this.selectedVersions = [];
+    this.selectedComponents = [];
+    this.inputSubmitter = '';
+    this.inputRootCauseCR = '';
+    //TODO: Clear isReadout
+    this.inputKeywords = '';
+  }
+
+  ngOnInit() {
+    this.loadProductInfo();
   }
 }

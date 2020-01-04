@@ -10,6 +10,11 @@
     margin: 5px;
 }
 
+.condition-key{
+    font-size: 10px;
+    color: gainsboro;
+}
+
 .btn-expend{
     height: 45px;
     justify-self: end;

@@ -11,13 +11,17 @@ import { RCAItem } from '@app/entities/rcaItem';
 export class HomeRcaRankComponent implements OnInit {
   public mostHotRCAs: Array<RCAItem> = [];
   public get isLoadAll(): boolean { return this.mostHotRCAs.length < 8 };
+  public isFirstLoading: boolean = true;
 
   constructor(private hotRankService: HotRankService,
     private rcaDialogService: RcaDialogService) {
     this.mostHotRCAs = [];
     this.hotRankService.getHotRCAs(8).then(hotRCAs => {
       this.mostHotRCAs = hotRCAs;
-    })
+      this.isFirstLoading = false;
+    },()=>{
+      this.isFirstLoading = false;
+    });
   }
 
   ngOnInit() {

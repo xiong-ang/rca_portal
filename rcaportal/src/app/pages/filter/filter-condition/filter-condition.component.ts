@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormControl } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material/chips';
 import { FilterService } from 'src/app/services/filter.service';
 import { FilterCondition } from '@app/entities/filterCondition';
+import { RequestProxyService } from '@app/services/httpRequest/request-proxy.service';
 
 
 @Component({
@@ -12,37 +11,60 @@ import { FilterCondition } from '@app/entities/filterCondition';
   styleUrls: ['./filter-condition.component.css']
 })
 export class FilterConditionComponent implements OnInit {
-  IDFormControl = new FormControl('', [
-    Validators.email, // need to implement validator
-  ]);
+  public isDetailFilterPanelOpen = false;
+  impactedProducts = [];
+  fixVersionList: string[] = [];
+  componentList: string[] = [];
 
-  fixVersions = new FormControl();
-  fixVersionList: string[] = ['v1.0', 'v2.0', 'v3.0', 'v4.0', 'v4.1', 'v5.1'];
-  components = new FormControl();
-  componentList: string[] = ['component1', 'component2', 'component3', 'component4', 'component5', 'component6'];
-  impactedProducts = [
-    { value: 'FTView SE', viewValue: 'FTView SE' },
-    { value: 'FTView ME', viewValue: 'FTView ME' },
-    { value: 'CCW', viewValue: 'CCW' },
-  ];
 
-  submitterFormControl = new FormControl();
+  public inputID: string = '';
+  private _selectedProduct = null;
+  get selectedProduct() { return this._selectedProduct; }
+  set selectedProduct(value) {
+    if (value != this._selectedProduct) {
+      this._selectedProduct = value;
 
-  rootCauseCRFormControl = new FormControl();
+      this.fixVersionList = [];
+      this.requestProxyService.GetProductVersions(this._selectedProduct).then(versions => {
+        this.fixVersionList = versions;
+      });
 
+      this.componentList = [];
+      this.requestProxyService.GetProductComponents(this._selectedProduct).then(components => {
+        this.componentList = components;
+      })
+    }
+  }
+  private selectedVersions = [];
+  private selectedComponents = [];
+  public inputSubmitter: string = '';
+  public inputRootCauseCR: string = '';
+
+  // TODO: Need to verify with joe and fleix
   isReadoutChecked = true;
   isNotReadoutChecked = true;
 
-  keywordsCRFormControl = new FormControl();
+  public inputKeywords: string = '';
 
-  quickSearchFormControl = new FormControl();
+  get isNothingInput() {
+    return !this.inputID &&
+      !this.selectedProduct &&
+      this.selectedVersions.length == 0 &&
+      this.selectedComponents.length == 0 &&
+      !this.inputSubmitter &&
+      !this.inputRootCauseCR;
+    // !this.inputIsReadout && //TODO
+    // !this.inputKeywords; //TODO
+  }
 
-  public isDetailFilterPanelOpen = false;
+  constructor(private filterSrv: FilterService,
+    private requestProxyService: RequestProxyService) { }
 
-
-  constructor(private filterSrv: FilterService) { }
-
-  ngOnInit() { }
+  loadProductInfo() {
+    this.requestProxyService.GetProducts().then(productNames => {
+      this.impactedProducts = productNames;
+    });
+  }
 
   triggerDetailFilterPanel() {
     this.isDetailFilterPanelOpen = !this.isDetailFilterPanelOpen;
@@ -55,52 +77,129 @@ export class FilterConditionComponent implements OnInit {
   onApply() {
     this.isDetailFilterPanelOpen = false;
     let filterCondition = new FilterCondition();
-    /*
-    filterCondition.ID = ;
-    filterCondition.ImpactedProduct = ;
-    filterCondition.Component = ;
-    filterCondition.FixVersion = ;
-    filterCondition.IsReadout = ;
-    filterCondition.Keywords = ;
-    filterCondition.RootCauseCR = ;
-    filterCondition.Submitter = ;
-    */
+    filterCondition.ID = this.inputID;
+    filterCondition.ImpactedProduct = this.selectedProduct;
+    filterCondition.Components = this.selectedComponents;
+    filterCondition.FixVersions = this.selectedVersions;
+    //filterCondition.IsReadout = ; // TODO: Need to verify with joe and fleix 
+    //filterCondition.Keywords = ; // TODO: Need to implement
+    filterCondition.RootCauseCR = this.inputRootCauseCR;
+    filterCondition.Submitter = this.inputSubmitter;
+
+    this.clear();
 
     this.filterSrv.openFilterResultPage(filterCondition);
   }
 
-  /////////////////////////////////////////////////////////////////////
+  clear() {
+    this.inputID = '';
+    this.selectedProduct = null;
+    this.selectedVersions = [];
+    this.selectedComponents = [];
+    this.inputSubmitter = '';
+    this.inputRootCauseCR = '';
+    //TODO: Clear isReadout
+    this.inputKeywords = '';
+  }
+
+  ngOnInit() {
+    this.loadProductInfo();
+
+    this.initDetailData();
+
+    this.initChipsData();
+
+    this.filterSrv.filterConditionChangeEvent.subscribe(() => {
+      this.initDetailData();
+
+      this.initChipsData();
+    });
+  }
+
+  initDetailData() {
+    let initFilterCondition = this.filterSrv.currentFilterCondition;
+
+    this.inputID = initFilterCondition.ID;
+    this.selectedProduct = initFilterCondition.ImpactedProduct;
+    this.selectedVersions = initFilterCondition.FixVersions;
+    this.selectedComponents = initFilterCondition.Components;
+    this.inputSubmitter = initFilterCondition.Submitter;
+    this.inputRootCauseCR = initFilterCondition.RootCauseCR;
+    // TODO: Clear isReadout
+    // this.inputKeywords = initFilterCondition.Keywords; // TODO
+  }
+
+  ///////////////////////////////For chips and Quick search//////////////////////////////////////
   visible = true;
   selectable = true;
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruits = [
-    { name: 'Lemon' },
-    { name: 'Lime' },
-    { name: 'Apple' },
-  ];
+  coditions: Array<ChipCondition> = [];
 
-  add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
+  initChipsData() {
+    this.coditions = [];
+    let initFilterCondition = this.filterSrv.currentFilterCondition;
 
-    // Add our fruit
-    if ((value || '').trim()) {
-      this.fruits.push({ name: value.trim() });
+    if (initFilterCondition.ID) {
+      this.coditions.push(new ChipCondition('ID', initFilterCondition.ID, 'accent'));
+      return;
     }
 
-    // Reset the input value
-    if (input) {
-      input.value = '';
+    if (initFilterCondition.ImpactedProduct) {
+      this.coditions.push(new ChipCondition('IMPACTED PRODUCT', initFilterCondition.ImpactedProduct, 'accent'));
+    }
+
+    if (initFilterCondition.FixVersions && initFilterCondition.FixVersions.length > 0) {
+      this.coditions.push(new ChipCondition('FIX VERSIONS', initFilterCondition.FixVersions, 'primary'));
+    }
+
+    if (initFilterCondition.Components && initFilterCondition.Components.length > 0) {
+      this.coditions.push(new ChipCondition('COMPONENTS', initFilterCondition.Components, 'primary'));
+    }
+
+    if (initFilterCondition.Submitter) {
+      this.coditions.push(new ChipCondition('SUBMITTER', initFilterCondition.Submitter, 'warn'));
+    }
+
+    if (initFilterCondition.RootCauseCR) {
+      this.coditions.push(new ChipCondition('ROOT CAUSE CR', initFilterCondition.RootCauseCR, 'warn'));
+    }
+
+    // TODO: Clear isReadout
+    // this.inputKeywords = initFilterCondition.Keywords; // TODO
+
+    // TODO: Quick search
+  }
+
+  remove(codition): void {
+    const index = this.coditions.indexOf(codition);
+    if (index >= 0) {
+      this.coditions.splice(index, 1);
+
+      //TODO: Open filter result page
     }
   }
 
-  remove(fruit): void {
-    const index = this.fruits.indexOf(fruit);
+  inputQuickSearch: string = '';
+  quickSearch(): void {
 
-    if (index >= 0) {
-      this.fruits.splice(index, 1);
+    if ((this.inputQuickSearch || '').trim()) {
+      //TODO: Open filter result page
     }
+
+    this.inputQuickSearch = '';
+  }
+}
+
+class ChipCondition {
+  key: string;
+  value: string;
+  color: string;
+
+  constructor(key, value, color) {
+    this.key = key;
+    this.value = value;
+    this.color = color;
   }
 }

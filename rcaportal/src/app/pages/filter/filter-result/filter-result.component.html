@@ -1,6 +1,10 @@
 <div>
   <div class="item-list">
-    <app-filter-result-item *ngFor="let filterResult of filterResults" [RCAResult]="filterResult"></app-filter-result-item>
+    <app-filter-result-item *ngFor="let filterResult of filterResults" [RCAResult]="filterResult">
+    </app-filter-result-item>
   </div>
+
+  <div class="loading" *ngIf="isLoading">Loading Hard...</div>
   <div class="load-more" (click)="onMoreClick()" *ngIf="!isLoadAll">Load More Result...</div>
+  <div class="no-result" *ngIf="isNoResult">No Result Found...</div>
 </div>

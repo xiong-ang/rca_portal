@@ -5,14 +5,14 @@
     grid-template-columns: 100%;
 }
 
-.load-more{
+.load-more, .no-result, .loading{
     width: 100%;
     height: 40px;
     line-height: 40px;
     font-size: 22px;
     font-style: italic;
     color: gray;
-    background: rgb(235, 231, 231);
+    background: rgb(255, 252, 252);
     text-align: center;
 }
 

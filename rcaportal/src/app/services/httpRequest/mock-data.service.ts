@@ -51,7 +51,7 @@ export class MockDataService {
       this.RCAItems.push({
         ID: `RCA-${index}`,
         Header: `[RCA-${index}]Because MatDialog instantiates components at run-time, Because MatDialog instantiates components at run-time, Because MatDialog instantiates components at run-time, Because MatDialog instantiates components at run-time`,
-        Submitter: index % 5 == 0 ? 'Admin': `People-${index}`,
+        Submitter: index % 5 == 0 ? 'Admin' : `People-${index}`,
         KeyWords: [`KEYWORD-${index}`, `KEYWORD-${99 - index}`],
         RootCauseCR: `RCA-${index}`,
         ImpactedProduct: randomProduct.name,
@@ -91,7 +91,7 @@ export class MockDataService {
             Name: `Attachment-${index}-2.dll`
           }
         ],
-        IsManagable: index % 2 == 0 ? true: false
+        IsManagable: index % 2 == 0 ? true : false
       });
     }
 
@@ -103,8 +103,9 @@ export class MockDataService {
       let filterResult = true;
       if (filterCondition.ID) return (filterCondition.ID == rca.ID);
 
-      if (filterCondition.FixVersion) filterResult = filterResult && (filterCondition.FixVersion == rca.FixVersion);
-      if (filterCondition.Component) filterResult = filterResult && (filterCondition.Component == rca.Component);
+      if (filterCondition.ImpactedProduct) filterResult = filterResult && (filterCondition.ImpactedProduct == rca.ImpactedProduct);
+      if (filterCondition.FixVersions && filterCondition.FixVersions.length > 0) filterResult = filterResult && (filterCondition.FixVersions.includes(rca.FixVersion));
+      if (filterCondition.Components && filterCondition.Components.length > 0) filterResult = filterResult && (filterCondition.Components.includes(rca.Component));
       if (filterCondition.Submitter) filterResult = filterResult && (filterCondition.Submitter == rca.Submitter);
       if (filterCondition.RootCauseCR) filterResult = filterResult && (filterCondition.RootCauseCR == rca.RootCauseCR);
       if (filterCondition.IsReadout) filterResult = filterResult && (filterCondition.IsReadout == rca.IsReadout);

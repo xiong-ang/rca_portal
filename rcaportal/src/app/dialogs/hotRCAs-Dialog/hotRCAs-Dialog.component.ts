@@ -11,7 +11,7 @@ import { HotRankService } from '@app/services/hot-rank.service';
 })
 export class HotRCAsDialogComponent {
   public RCAItems: Array<RCAItem>;
-
+  public isLoading: boolean = true;
   constructor(
     public dialogRef: MatDialogRef<HotRCAsDialogComponent>,
     private hotRankService: HotRankService) {
@@ -19,6 +19,9 @@ export class HotRCAsDialogComponent {
     this.RCAItems = [];
     this.hotRankService.getHotRCAs(100).then(hotRCAs => {
       this.RCAItems = hotRCAs;
+      this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
     });
   }
 

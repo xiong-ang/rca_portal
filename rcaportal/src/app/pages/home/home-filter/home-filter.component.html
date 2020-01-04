@@ -1,30 +1,27 @@
 <div class="home-filter-page">
   <mat-form-field class="filter-item">
-    <input matInput placeholder="ID" [formControl]="IDFormControl">
-    <mat-error *ngIf="IDFormControl.hasError('required')">
-      Email is <strong>required</strong>
-    </mat-error>
+    <input matInput placeholder="ID" [(ngModel)]="inputID">
   </mat-form-field>
 
   <mat-form-field class="filter-item">
     <mat-label>IMPACTED PRODUCT</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let impactedProduct of impactedProducts" [value]="impactedProduct.value">
-        {{impactedProduct.viewValue}}
+    <mat-select [(value)]="selectedProduct">
+      <mat-option *ngFor="let impactedProduct of impactedProducts" [value]="impactedProduct">
+        {{impactedProduct}}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="filter-item">
     <mat-label>FIX VERSIONS</mat-label>
-    <mat-select [formControl]="fixVersions" multiple>
+    <mat-select [(value)]="selectedVersions" multiple>
       <mat-option *ngFor="let fixVersion of fixVersionList" [value]="fixVersion">{{fixVersion}}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="filter-item">
-    <mat-label>COMPONENT</mat-label>
-    <mat-select [formControl]="components" multiple>
+    <mat-label>COMPONENTS</mat-label>
+    <mat-select [(value)]="selectedComponents" multiple>
       <mat-option *ngFor="let component of componentList" [value]="component">{{component}}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -37,16 +34,16 @@
     <i class="material-icons" *ngIf="!isDetailFilterPanelOpen">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="isDetailFilterPanelOpen">keyboard_arrow_up</i>
   </button>
-  <button mat-button class="filter-item apply-btn" (click)="onApply()">Apply</button>
+  <button mat-button class="filter-item apply-btn" [ngClass]="{'disable-btn': isNothingInput}" (click)="onApply()">Apply</button>
 </div>
 
 <div class="detail-filter" *ngIf="isDetailFilterPanelOpen">
   <mat-form-field class="filter-item">
-    <input matInput placeholder="SUBMITTER" [formControl]="submitterFormControl">
+    <input matInput placeholder="SUBMITTER" [(ngModel)]="inputSubmitter">
   </mat-form-field>
 
   <mat-form-field class="filter-item">
-    <input matInput placeholder="ROOT CAUSE CR" [formControl]="rootCauseCRFormControl">
+    <input matInput placeholder="ROOT CAUSE CR" [(ngModel)]="inputRootCauseCR">
   </mat-form-field>
 
   <div class="readout-item">
@@ -56,11 +53,11 @@
   </div>
 
   <mat-form-field class="filter-item whole-line-item">
-    <input matInput placeholder="KEYWORDS" [formControl]="keywordsCRFormControl">
+    <input matInput placeholder="KEYWORDS" [(ngModel)]="inputKeywords">
   </mat-form-field>
 
   <div class="oper-btn">
     <button mat-button class="filter-item" (click)="onCancel()">Cancel</button>
-    <button mat-button class="filter-item" (click)="onApply()">Apply</button>
+    <button mat-button class="filter-item" [ngClass]="{'disable-btn': isNothingInput}" (click)="onApply()">Apply</button>
   </div>
 </div>

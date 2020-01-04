@@ -8,8 +8,10 @@ import { HotRankService } from '@app/services/hot-rank.service';
   styleUrls: ['./home-keyword-rank.component.css']
 })
 export class HomeKeywordRankComponent implements OnInit {
-  public HotKeywords: Array<HotKeyword>;
+  public HotKeywords: Array<HotKeyword>=[];
   public get isLoadAll(): boolean { return this.HotKeywords.length < 9 * (1 + this.currentPage) };
+  public isLoading: boolean = false;
+  public isFirstLoading: boolean = true;
   public currentPage = 0;
 
   constructor(private hotRankService: HotRankService) {
@@ -25,8 +27,14 @@ export class HomeKeywordRankComponent implements OnInit {
   }
 
   private fetchKeywords() {
+    this.isLoading = true;
     this.hotRankService.getHotKeywords(0, 9 * (1 + this.currentPage)).then(keywords => {
       this.HotKeywords = keywords;
-    })
+      this.isLoading = false; 
+      this.isFirstLoading = false;
+    }, ()=>{
+      this.isLoading = false;
+      this.isFirstLoading = false;
+    });
   }
 }

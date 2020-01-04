@@ -1,5 +1,9 @@
 <div class="keyword-rank-title">HOT KEYWORD <i class="material-icons key-icon">vpn_key</i></div>
 <div class="hot-keywork-list">
   <app-home-keyword-item *ngFor="let keyword of HotKeywords; let i=index" [hotKeyword]="keyword" [keywordIndex]="i"></app-home-keyword-item>
+  <div class="first-loading" *ngIf="isFirstLoading">
+    Loading...
+  </div>
 </div>
 <div class="kewword-more-btn" (click)="onMoreClick()" *ngIf="!isLoadAll">More...</div>
+<div class="kewword-loading-btn" *ngIf="isLoading && !isFirstLoading">Loading...</div>

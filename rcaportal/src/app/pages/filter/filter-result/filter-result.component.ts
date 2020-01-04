@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { RCAItem } from '@app/entities/rcaItem';
-import { RequestProxyService } from '@app/services/httpRequest/request-proxy.service';
 import { FilterService } from '@app/services/filter.service';
 
 @Component({
@@ -11,9 +10,10 @@ import { FilterService } from '@app/services/filter.service';
 export class FilterResultComponent implements OnInit {
   public get filterResults(): Array<RCAItem> { return this.filterService.filterResults; };
   public get isLoadAll(): boolean { return this.filterResults.length < this.filterService.currentMaxRCAResultCount; }
+  public get isLoading(): boolean { return !this.filterService.isLoadFinished; }
+  public get isNoResult(): boolean { return !this.isLoading && (!this.filterResults || this.filterResults.length == 0);}
 
-  constructor(private filterService: FilterService) {
-  }
+  constructor(private filterService: FilterService) { }
 
   ngOnInit() {
   }

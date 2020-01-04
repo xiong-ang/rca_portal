@@ -85,3 +85,8 @@
     justify-self: end;
     align-self: center;
 }
+
+.disable-btn{
+    cursor: not-allowed;
+    color: gainsboro;
+}
