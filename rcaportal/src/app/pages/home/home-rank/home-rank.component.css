@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: 70% 30%;
     align-content: start;
+    margin-bottom: 50px;
 }
 
 .rca-rank{

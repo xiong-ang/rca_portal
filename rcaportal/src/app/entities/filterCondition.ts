@@ -6,7 +6,8 @@ export class FilterCondition {
     public Submitter: string;
     public RootCauseCR: string;
     public IsReadout: string;
-    public Keywords: Array<string> = [];
+    public Keywords: string[] = [];
+    public QuickSearch: string; //TODO
 
     public GetFilterEntity() {
         let result = new FilterEntity();
@@ -92,6 +93,7 @@ export class FilterCondition {
 
 export class FilterEntity {
     public FilterItems: Array<FilterItem>;
+    public QuickSearch: string; //TODO
 
     constructor() {
         this.FilterItems = [];

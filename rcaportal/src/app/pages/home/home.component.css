@@ -52,7 +52,7 @@
 
 .notice-img{
     width: 100%;
-    height: 200px;
+    height: 160px;
 }
 
 .filter{
@@ -63,8 +63,4 @@
     min-height: 400px;
     justify-self: center;
     align-self: start;
-}
-
-.last-ele{
-    margin-bottom: 50px;
 }

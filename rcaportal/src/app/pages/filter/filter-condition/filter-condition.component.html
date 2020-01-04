@@ -22,7 +22,8 @@
   </button>
 
   <mat-form-field class="filter-item quick-search-input">
-    <input matInput placeholder="Quick Search" [(ngModel)]="inputQuickSearch" (keydown.enter)="quickSearch()">
+    <input matInput placeholder="" [(ngModel)]="inputQuickSearch" (keydown.enter)="quickSearch()">
+    <div class="quickSearch-placeholder" *ngIf="!inputQuickSearch"><i class="material-icons seach-icon" *ngIf="!isDetailFilterPanelOpen">search</i>&nbsp;Quick Search</div>
   </mat-form-field>
 </div>
 
