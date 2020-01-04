@@ -87,7 +87,7 @@ export class HomeFilterComponent implements OnInit {
 
     this.clear();
 
-    this.filterSrv.openFilterResultPage(filterCondition);
+    this.filterSrv.showFilterResults(filterCondition);
   }
 
   clear() {

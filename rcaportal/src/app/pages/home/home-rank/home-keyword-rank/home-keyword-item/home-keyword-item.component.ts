@@ -18,7 +18,7 @@ export class HomeKeywordItemComponent {
     let filterCondition = new FilterCondition();
     filterCondition.Keywords = [this.hotKeyword.KeywordValue];
 
-    this.filterSrv.openFilterResultPage(filterCondition);
+    this.filterSrv.showFilterResults(filterCondition);
   }
 
   get keywordColor(): string {

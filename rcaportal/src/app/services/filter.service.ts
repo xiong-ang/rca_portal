@@ -27,7 +27,7 @@ export class FilterService {
     })
   }
 
-  openFilterResultPage(filterCondition) {
+  showFilterResults(filterCondition) {
     this.currentFilterCondition = filterCondition;
     this.filterConditionChangeEvent.emit();
 

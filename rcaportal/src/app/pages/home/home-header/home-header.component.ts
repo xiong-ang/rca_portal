@@ -32,7 +32,7 @@ export class HomeHeaderComponent implements OnInit {
     let filterCondition = new FilterCondition();
     filterCondition.Submitter = this.currentUser.userName;
 
-    this.filterSrv.openFilterResultPage(filterCondition);
+    this.filterSrv.showFilterResults(filterCondition);
   }
 
   onAddCRClick(){
