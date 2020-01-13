@@ -83,7 +83,7 @@ export class HttpRequesterMockService implements IHttpRequester {
   UpdateRCA(RCAID: string, newRCA: RCAItem): Promise<boolean> {
     return new Promise((reslove, reject) => {
       setTimeout(() => {
-        alert('CreateRCA with ID:\n' + RCAID + '\n Date:\n' + JSON.stringify(newRCA));
+        alert('UpdateRCA with ID:\n' + RCAID + '\n Date:\n' + JSON.stringify(newRCA));
         reslove(true);
       }, 1000);
 

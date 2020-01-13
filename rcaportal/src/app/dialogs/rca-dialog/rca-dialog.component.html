@@ -1,15 +1,161 @@
 <div class="dialog-header">{{dialogTitle}}</div>
 
 
-<div class="dialog-content">
-  {{testRCAData}}
-</div>
+<mat-dialog-content class="dialog-content">
+  <mat-form-field class="one-line-item full-width" >
+    <mat-label><span class="input-label">Head</span></mat-label>
+    <textarea  matInput name="Head" [(ngModel)]="rcaData.Header" required></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label><span class="input-label">ID</span><mat-icon>bug_report</mat-icon></mat-label>
+    <input matInput name="Id" [(ngModel)]="rcaData.ID" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label><span class="input-label">RootCauseCR </span><mat-icon>bug_report</mat-icon></mat-label>
+    <input matInput name="RootCauseCR" [(ngModel)]="rcaData.RootCauseCR" required>
+  </mat-form-field >
+
+  <mat-form-field class="one-line-item">
+    <mat-label><span class="input-label">Submitter</span></mat-label>
+    <input matInput name="Submitter" [(ngModel)]="rcaData.Submitter" required>
+  </mat-form-field>
+
+  <mat-form-field class="one-line-item">
+    <mat-label><span class="input-label">Impacted Product</span></mat-label>
+    <mat-select name="ImpactedProduct" [(value)]="selectedProduct" required>
+      <mat-option *ngFor="let impactedProduct of impactedProducts" [value]="impactedProduct">{{impactedProduct}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="one-line-item">
+    <mat-label><span class="input-label">Fix Version</span></mat-label>
+    <mat-select name="FixVersion" [disabled]="!isFixVersionListReady" [(value)]="rcaData.FixVersion" required>
+      <mat-option *ngFor="let fixVersion of fixVersionList" [value]="fixVersion">{{fixVersion}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="one-line-item">
+    <mat-label><span class="input-label">Component </span><mat-icon>extension</mat-icon></mat-label>
+    <mat-select name="Component" [disabled]="!isComponentListReady" [(value)]="rcaData.Component" required>
+      <mat-option *ngFor="let component of componentList" [value]="component">{{component}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="one-line-item">
+    <div><span class="input-label">Is Readout?</span></div>
+    <mat-radio-group [(value)]="rcaData.IsReadout" class="radio-group">
+      <mat-radio-button value="Level-1">Yes</mat-radio-button>
+      <mat-radio-button value="Level-2">No</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <mat-form-field class="one-line-item full-width">
+    <mat-label class="input-label"><span>Key Word</span><mat-icon>vpn_key</mat-icon></mat-label>
+    <mat-chip-list #chipList aria-label="Key Word">
+      <mat-chip
+        *ngFor="let keyWord of rcaData.KeyWords"
+        [selectable]="selectable"
+        [removable]="removable"
+        (removed)="remove(keyWord)">
+        {{keyWord}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input
+        placeholder="New Keyword..."
+        #keyWordInput
+        [formControl]="keyWordCtrl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="addOnBlur"
+        (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let keyWord of filteredKeyWords | async" [value]="keyWord">
+        {{keyWord}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-hint class="mat-hit-keyword">
+      <span class="keyWord-tip" *ngFor="let keyWordTip of keyWordTips" (click)="OnClickKeyWordTip(keyWordTip)">{{keyWordTip}}</span>
+    </mat-hint>
+  </mat-form-field>
+
+  <div class="one-line-item full-width" style="margin: 6px 0 0 0;">
+    <label ><span class="input-label">Root Cause Analyze</span></label>
+    <quill-editor [(ngModel)]="rcaData.RootCauseAnalyze" [styles]="{height: '100px'}" >
+    </quill-editor>
+  </div>
+
+  <div class="one-line-item full-width">
+    <button mat-button class="expand-button"
+    (click)="isRequirementPanelOpen=!isRequirementPanelOpen">
+    <span class="requirement-header">Requirement</span>
+    <i class="material-icons" *ngIf="!isRequirementPanelOpen">keyboard_arrow_down</i>
+    <i class="material-icons" *ngIf="isRequirementPanelOpen">keyboard_arrow_up</i>
+    </button>
+    <div class="full-width" *ngIf="isRequirementPanelOpen">
+      <label><span class="requirement-header">Root Cause</span></label>
+      <quill-editor [(ngModel)]="rcaData.RequirementCorrectAndPrevention.RootCause" [styles]="{height: '100px'}">
+      </quill-editor>
+      <label><span class="requirement-header">Correction</span></label>
+      <quill-editor [(ngModel)]="rcaData.RequirementCorrectAndPrevention.Correction" [styles]="{height: '100px'}">
+      </quill-editor>
+      <label><span class="requirement-header">Prevention</span></label>
+      <quill-editor [(ngModel)]="rcaData.RequirementCorrectAndPrevention.Prevention" [styles]="{height: '100px'}">
+      </quill-editor>
+    </div>
+  </div>
+
+  <div class="one-line-item full-width">
+    <button mat-button class="expand-button"
+    (click)="isDevPanelOpen=!isDevPanelOpen">
+    <span class="dev-header">Dev(Dev/InforDev/CM)</span>
+    <i class="material-icons" *ngIf="!isDevPanelOpen">keyboard_arrow_down</i>
+    <i class="material-icons" *ngIf="isDevPanelOpen">keyboard_arrow_up</i>
+    </button>
+    <div class="full-width" *ngIf="isDevPanelOpen">
+      <label><span class="dev-header">Root Cause</span></label>
+      <quill-editor [(ngModel)]="rcaData.DevCorrectAndPrevention.RootCause" [styles]="{height: '100px'}">
+      </quill-editor>
+      <label><span class="dev-header">Correction</span></label>
+      <quill-editor [(ngModel)]="rcaData.DevCorrectAndPrevention.Correction" [styles]="{height: '100px'}">
+      </quill-editor>
+      <label><span class="dev-header">Prevention</span></label>
+      <quill-editor [(ngModel)]="rcaData.DevCorrectAndPrevention.Prevention" [styles]="{height: '100px'}">
+      </quill-editor>
+    </div>
+  </div>
+
+  <div class="one-line-item full-width">
+    <button mat-button class="expand-button"
+    (click)="isTestPanelOpen=!isTestPanelOpen">
+    <span class="test-header">Test</span>
+    <i class="material-icons" *ngIf="!isTestPanelOpen">keyboard_arrow_down</i>
+    <i class="material-icons" *ngIf="isTestPanelOpen">keyboard_arrow_up</i>
+    </button>
+    <div class="full-width" *ngIf="isTestPanelOpen">
+      <label><span class="test-header">Root Cause</span></label>
+      <quill-editor [(ngModel)]="rcaData.TestCorrectAndPrevention.RootCause" [styles]="{height: '100px'}">
+      </quill-editor>
+      <label><span  class="test-header">Correction</span></label>
+      <quill-editor [(ngModel)]="rcaData.TestCorrectAndPrevention.Correction" [styles]="{height: '100px'}">
+      </quill-editor>
+      <label><span class="test-header">Prevention</span></label>
+      <quill-editor [(ngModel)]="rcaData.TestCorrectAndPrevention.Prevention" [styles]="{height: '100px'}">
+      </quill-editor>
+    </div>
+  </div>
+
+</mat-dialog-content>
 
 
 <div mat-dialog-actions class="dialog-actions">
   <div>
     <button mat-button (click)="onCancelClick()">Cancel</button>
-    <button mat-button (click)="onCreateClick()" *ngIf="isCreateMode">Create</button>
-    <button mat-button (click)="onUpdateClick()" *ngIf="!isCreateMode">Update</button>
+    <button mat-button (click)="onCreateClick()" [ngClass]="{'disable-btn': !isAllowApply}"  *ngIf="isCreateMode">Create</button>
+    <button mat-button (click)="onUpdateClick()" [ngClass]="{'disable-btn': !isAllowApply}"  *ngIf="!isCreateMode">Update</button>
   </div>
 </div>
+<!-- <div>{{testRCAData}}</div> -->

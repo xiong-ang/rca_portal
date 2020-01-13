@@ -4,63 +4,114 @@
   <div class="rca-info">
     <div class="rca-prop">
       <div class="rca-prop-key">Header</div>
-      <div class="rca-prop-value">Themeable, for when you need to stay on brand or just have a favorite color. Accessible and internationalized so that all users are welcome. Themeable, for when you need to stay on brand or just have a favorite color. Accessible and internationalized so that all users are welcome.</div>
+      <div class="rca-prop-value">{{RCADetail.Header}}</div>
     </div>
 
     <div class="rca-prop-container">
       <div class="rca-prop-container-left">
         <div class="rca-prop">
-          <div class="rca-prop-key">Header</div>
-          <div class="rca-prop-value">Themeable, for </div>
+          <div class="rca-prop-key rca-icon">ID<mat-icon>bug_report</mat-icon></div>
+          <div class="rca-prop-value">{{RCADetail.ID}}</div>
         </div>
-
         <div class="rca-prop">
-          <div class="rca-prop-key">Header</div>
-          <div class="rca-prop-value">Themeable, for</div>
+          <div class="rca-prop-key rca-icon">Submitter<mat-icon>account_circle</mat-icon></div>
+          <div class="rca-prop-value">{{RCADetail.Submitter}}</div>
         </div>
-
         <div class="rca-prop">
-          <div class="rca-prop-key">Header</div>
-          <div class="rca-prop-value">Themeable, for</div>
+          <div class="rca-prop-key rca-icon">Key word<mat-icon>vpn_key</mat-icon></div>
+          <div class="rca-prop-value">
+            <span *ngFor="let keyWord of RCADetail.KeyWords">{{keyWord}} </span></div>
+        </div>
+        <div class="rca-prop">
+          <div class="rca-prop-key rca-icon">Root Cause CR<mat-icon>bug_report</mat-icon></div>
+          <div class="rca-prop-value">{{RCADetail.RootCauseCR}}</div>
         </div>
       </div>
       <div class="rca-prop-container-right">
         <div class="rca-prop">
-          <div class="rca-prop-key">Header</div>
-          <div class="rca-prop-value">Themeable, for </div>
+          <div class="rca-prop-key">ImpactedProduct</div>
+          <div class="rca-prop-value">{{RCADetail.ImpactedProduct}}</div>
+        </div>
+        <div class="rca-prop">
+          <div class="rca-prop-key">Fix Version</div>
+          <div class="rca-prop-value">{{RCADetail.FixVersion}}</div>
         </div>
 
         <div class="rca-prop">
-          <div class="rca-prop-key">Header</div>
-          <div class="rca-prop-value">Themeable, for</div>
+          <div class="rca-prop-key rca-icon">Component<mat-icon>extension</mat-icon></div>
+          <div class="rca-prop-value">{{RCADetail.Component}}</div>
         </div>
 
         <div class="rca-prop">
-          <div class="rca-prop-key">Header</div>
-          <div class="rca-prop-value">Themeable, for</div>
+          <div class="rca-prop-key">Is Readout?</div>
+          <div class="rca-prop-value">{{RCADetail.IsReadout}}</div>
         </div>
       </div>
     </div>
 
     <div class="rca-prop">
-      <div class="rca-prop-key">Header</div>
-      <div class="rca-prop-value">Themeable, for when you need to stay on brand or just have a favorite color. Accessible and internationalized so that all users are welcome. Themeable, for when you need to stay on brand or just have a favorite color. Accessible and internationalized so that all users are welcome.</div>
+      <div class="rca-prop-key">Root Cause Analyze</div>
+      <div class="rca-prop-value"><quill-view [content]="RCADetail.RootCauseAnalyze"></quill-view></div>
     </div>
 
-    <div class="rca-prop">
-      <div class="rca-prop-key">Header</div>
-      <div class="rca-prop-value">Themeable, for when you need to stay on brand or just have a favorite color. Accessible and internationalized so that all users are welcome. Themeable, for when you need to stay on brand or just have a favorite color. Accessible and internationalized so that all users are welcome.</div>
+    <div class="rca-prop-group-label">
+      <div class="rca-prop-key">RCA Correction and Prevention</div>
+    </div>
+    <div class="rca-prop-group-label">
+      <div class="rca-prop-key">Requirement</div>
     </div>
 
-    <div class="rca-prop">
-      <div class="rca-prop-key">Header</div>
-      <div class="rca-prop-value">Themeable, for when you need to stay on brand or just have a favorite color. Accessible and internationalized so that all users are welcome. Themeable, for when you need to stay on brand or just have a favorite color. Accessible and internationalized so that all users are welcome.</div>
+    <div class="rca-prop left-margin">
+      <div class="rca-prop-key">Root Cause</div>
+      <div class="rca-prop-value"><quill-view [content]="RCADetail.RequirementCorrectAndPrevention.RootCause"></quill-view></div>
     </div>
 
-    <div class="rca-prop">
-      <div class="rca-prop-key">Header</div>
-      <div class="rca-prop-value">Themeable, for when you need to stay on brand or just have a favorite color. Accessible and internationalized so that all users are welcome. Themeable, for when you need to stay on brand or just have a favorite color. Accessible and internationalized so that all users are welcome.</div>
+    <div class="rca-prop left-margin">
+      <div class="rca-prop-key">Correction</div>
+      <div class="rca-prop-value"><quill-view [content]="RCADetail.RequirementCorrectAndPrevention.Correction"></quill-view></div>
+    </div>
+
+    <div class="rca-prop left-margin">
+      <div class="rca-prop-key">Prevention</div>
+      <div class="rca-prop-value"><quill-view [content]="RCADetail.RequirementCorrectAndPrevention.Prevention"></quill-view></div>
+    </div>
+
+    <div class="rca-prop-group-label">
+      <div class="rca-prop-key">Dev/Infor Dev/CM</div>
+    </div>
+    <div class="rca-prop left-margin">
+      <div class="rca-prop-key">Root Cause</div>
+      <div class="rca-prop-value"><quill-view [content]="RCADetail.DevCorrectAndPrevention.RootCause"></quill-view></div>
+    </div>
+
+    <div class="rca-prop left-margin">
+      <div class="rca-prop-key">Correction</div>
+      <div class="rca-prop-value"><quill-view [content]="RCADetail.DevCorrectAndPrevention.Correction"></quill-view></div>
+    </div>
+
+    <div class="rca-prop left-margin">
+      <div class="rca-prop-key">Prevention</div>
+      <div class="rca-prop-value"><quill-view [content]="RCADetail.DevCorrectAndPrevention.Prevention"></quill-view></div>
+    </div>
+
+    <div class="rca-prop-group-label">
+      <div class="rca-prop-key">Test</div>
+    </div>
+    <div class="rca-prop left-margin">
+      <div class="rca-prop-key">Root Cause</div>
+      <div class="rca-prop-value"><quill-view [content]="RCADetail.TestCorrectAndPrevention.RootCause"></quill-view></div>
+    </div>
+
+    <div class="rca-prop left-margin">
+      <div class="rca-prop-key">Correction</div>
+      <div class="rca-prop-value"><quill-view [content]="RCADetail.TestCorrectAndPrevention.Correction"></quill-view></div>
+    </div>
+
+    <div class="rca-prop left-margin">
+      <div class="rca-prop-key">Prevention</div>
+      <div class="rca-prop-value"><quill-view [content]="RCADetail.TestCorrectAndPrevention.Prevention"></quill-view></div>
     </div>
   </div>
-  {{RCADetailTest}}
+
+  <!-- {{RCADetailTest}} -->
 </div>
