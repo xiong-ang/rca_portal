@@ -11,6 +11,7 @@
     line-height: 80px;
     place-self: center center;
     font-size: 24px;
+    text-align: center
 }
 
 .rca-info{
@@ -24,7 +25,7 @@
     width: 100%;
     display: grid;
     align-items: center;
-    grid-template-columns: 120px auto;
+    grid-template-columns: 150px auto;
 }
 
 .rca-prop-key{
@@ -63,4 +64,8 @@
 
 .left-margin {
   margin: 0 0 0 15px;
+}
+
+mat-icon{
+    margin-left: 3px;
 }
