@@ -5,7 +5,7 @@ export class FilterCondition {
     public Components: string[] = [];
     public Submitter: string;
     public RootCauseCR: string;
-    public IsReadout: string;
+    public ReadoutLevels: string[] = [];
     public Keywords: string[] = [];
     public QuickSearch: string; //TODO
 
@@ -59,10 +59,10 @@ export class FilterCondition {
             });
         }
 
-        if (this.IsReadout) {
+        if (this.ReadoutLevels) {
             result.FilterItems.push({
-                key: 'Is Readout',
-                values: [this.IsReadout],
+                key: 'Readout Level',
+                values: this.ReadoutLevels,
                 Type: 'and'
             });
         }
@@ -85,7 +85,7 @@ export class FilterCondition {
         this.Components.length == 0 &&
         !this.Submitter &&
         !this.RootCauseCR &&
-        !this.IsReadout &&
+        this.ReadoutLevels.length == 0 &&
         this.Keywords.length == 0;
     }
 }

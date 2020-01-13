@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FilterService } from 'src/app/services/filter.service';
 import { FilterCondition } from '@app/entities/filterCondition';
 import { RequestProxyService } from '@app/services/httpRequest/request-proxy.service';
+import { MatChipInputEvent } from '@angular/material';
 
 @Component({
   selector: 'app-home-filter',
@@ -11,9 +12,15 @@ import { RequestProxyService } from '@app/services/httpRequest/request-proxy.ser
 })
 export class HomeFilterComponent implements OnInit {
   public isDetailFilterPanelOpen = false;
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   impactedProducts = [];
   fixVersionList: string[] = [];
   componentList: string[] = [];
+  readoutLevelList: string[] = [];
 
 
   public inputID: string = '';
@@ -39,11 +46,42 @@ export class HomeFilterComponent implements OnInit {
   public inputSubmitter: string = '';
   public inputRootCauseCR: string = '';
 
-  // TODO: Need to verify with joe and fleix
-  isReadoutChecked = true;
-  isNotReadoutChecked = true;
+  public selectedreadoutLevels = [];
 
-  public inputKeywords: string = '';
+  public inputKeywords: string[] = [];
+  public Keyword_tips: string[] = [];
+  addKeyword(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim() &&
+      !this.inputKeywords.includes(value) &&
+      this.inputKeywords.length < 3) {
+      this.inputKeywords.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeKeyword(Keyword: string): void {
+    const index = this.inputKeywords.indexOf(Keyword);
+
+    if (index >= 0) {
+      this.inputKeywords.splice(index, 1);
+    }
+  }
+
+  keyword_tip_click(keywordTip: string) {
+    if ((keywordTip || '').trim() &&
+      !this.inputKeywords.includes(keywordTip) &&
+      this.inputKeywords.length < 3) {
+      this.inputKeywords.push(keywordTip.trim());
+    }
+  }
 
   get isNothingInput() {
     return !this.inputID &&
@@ -51,9 +89,9 @@ export class HomeFilterComponent implements OnInit {
       this.selectedVersions.length == 0 &&
       this.selectedComponents.length == 0 &&
       !this.inputSubmitter &&
-      !this.inputRootCauseCR;
-    // !this.inputIsReadout && //TODO
-    // !this.inputKeywords; //TODO
+      !this.inputRootCauseCR &&
+      this.selectedreadoutLevels.length == 0 &&
+      this.inputKeywords.length == 0;
   }
 
   constructor(private filterSrv: FilterService,
@@ -63,6 +101,21 @@ export class HomeFilterComponent implements OnInit {
     this.requestProxyService.GetProducts().then(productNames => {
       this.impactedProducts = productNames;
     });
+  }
+
+  loadReadoutLevelInfo() {
+    this.requestProxyService.GetReadOutLevel().then(readoutLevels => {
+      this.readoutLevelList = readoutLevels;
+    });
+  }
+
+  loadKeyowrdTips() {
+    this.Keyword_tips = [];
+    this.requestProxyService.GetHotKeywords(0, 10).then(hotKeywords => {
+      hotKeywords.forEach(keyword => {
+        this.Keyword_tips.push(keyword.KeywordValue);
+      })
+    })
   }
 
   triggerDetailFilterPanel() {
@@ -80,8 +133,8 @@ export class HomeFilterComponent implements OnInit {
     filterCondition.ImpactedProduct = this.selectedProduct;
     filterCondition.Components = this.selectedComponents;
     filterCondition.FixVersions = this.selectedVersions;
-    //filterCondition.IsReadout = ; // TODO: Need to verify with joe and fleix 
-    //filterCondition.Keywords = ; // TODO: Need to implement
+    filterCondition.ReadoutLevels = this.selectedreadoutLevels;
+    filterCondition.Keywords = this.inputKeywords;
     filterCondition.RootCauseCR = this.inputRootCauseCR;
     filterCondition.Submitter = this.inputSubmitter;
 
@@ -97,11 +150,13 @@ export class HomeFilterComponent implements OnInit {
     this.selectedComponents = [];
     this.inputSubmitter = '';
     this.inputRootCauseCR = '';
-    //TODO: Clear isReadout
-    this.inputKeywords = '';
+    this.selectedreadoutLevels = [];
+    this.inputKeywords = [];
   }
 
   ngOnInit() {
     this.loadProductInfo();
+    this.loadReadoutLevelInfo();
+    this.loadKeyowrdTips();
   }
 }

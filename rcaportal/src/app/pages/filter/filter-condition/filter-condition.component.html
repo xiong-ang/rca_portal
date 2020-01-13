@@ -3,7 +3,7 @@
     <mat-chip-list #chipList aria-label="Filter Conditions">
       <mat-chip *ngFor="let condition of coditions" [selectable]="selectable" [removable]="removable"
         (removed)="remove(condition)" [color]="condition.color" selected>
-        <span class="condition-key">{{condition.key}}:&nbsp;</span>
+        <span class="condition-key" *ngIf="!!condition.key">{{condition.key}}:&nbsp;</span>
         <span class="condition-value">{{condition.value}}</span>
         <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
       </mat-chip>
@@ -23,59 +23,75 @@
 
   <mat-form-field class="filter-item quick-search-input">
     <input matInput placeholder="" [(ngModel)]="inputQuickSearch" (keydown.enter)="quickSearch()">
-    <div class="quickSearch-placeholder" *ngIf="!inputQuickSearch"><i class="material-icons seach-icon" *ngIf="!isDetailFilterPanelOpen">search</i>&nbsp;Quick Search</div>
-  </mat-form-field>
-</div>
-
-<div class="detail-filter" *ngIf="isDetailFilterPanelOpen">
-  <mat-form-field class="filter-item">
-    <input matInput placeholder="ID" [(ngModel)]="inputID">
+    <div class="quickSearch-placeholder" *ngIf="!inputQuickSearch"><i class="material-icons seach-icon"
+        *ngIf="!isDetailFilterPanelOpen">search</i>&nbsp;Quick Search</div>
   </mat-form-field>
 
-  <mat-form-field class="filter-item">
-    <mat-label>IMPACTED PRODUCT</mat-label>
-    <mat-select [(value)]="selectedProduct">
-      <mat-option *ngFor="let impactedProduct of impactedProducts" [value]="impactedProduct">
-        {{impactedProduct}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
 
-  <mat-form-field class="filter-item">
-    <mat-label>FIX VERSIONS</mat-label>
-    <mat-select [(value)]="selectedVersions" multiple>
-      <mat-option *ngFor="let fixVersion of fixVersionList" [value]="fixVersion">{{fixVersion}}</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div class="detail-filter" *ngIf="isDetailFilterPanelOpen">
+    <mat-form-field class="filter-item">
+      <input matInput placeholder="ID" [(ngModel)]="inputID">
+    </mat-form-field>
 
-  <mat-form-field class="filter-item">
-    <mat-label>COMPONENTS</mat-label>
-    <mat-select [(value)]="selectedComponents" multiple>
-      <mat-option *ngFor="let component of componentList" [value]="component">{{component}}</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field class="filter-item">
+      <mat-label>IMPACTED PRODUCT</mat-label>
+      <mat-select [(value)]="selectedProduct">
+        <mat-option *ngFor="let impactedProduct of impactedProducts" [value]="impactedProduct">
+          {{impactedProduct}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field class="filter-item">
-    <input matInput placeholder="SUBMITTER" [(ngModel)]="inputSubmitter">
-  </mat-form-field>
+    <mat-form-field class="filter-item">
+      <mat-label>FIX VERSIONS</mat-label>
+      <mat-select [(value)]="selectedVersions" multiple>
+        <mat-option *ngFor="let fixVersion of fixVersionList" [value]="fixVersion">{{fixVersion}}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field class="filter-item">
-    <input matInput placeholder="ROOT CAUSE CR" [(ngModel)]="inputRootCauseCR">
-  </mat-form-field>
+    <mat-form-field class="filter-item">
+      <mat-label>COMPONENTS</mat-label>
+      <mat-select [(value)]="selectedComponents" multiple>
+        <mat-option *ngFor="let component of componentList" [value]="component">{{component}}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <div class="readout-item">
-    <div class="readout-title">Is Readout?</div>
-    <mat-checkbox [(ngModel)]="isReadoutChecked">Readout</mat-checkbox>
-    <mat-checkbox [(ngModel)]="isNotReadoutChecked">Not Readout</mat-checkbox>
-  </div>
+    <mat-form-field class="filter-item">
+      <input matInput placeholder="SUBMITTER" [(ngModel)]="inputSubmitter">
+    </mat-form-field>
 
-  <mat-form-field class="filter-item whole-line-item">
-    <input matInput placeholder="KEYWORDS" [(ngModel)]="inputKeywords">
-  </mat-form-field>
+    <mat-form-field class="filter-item">
+      <input matInput placeholder="ROOT CAUSE CR" [(ngModel)]="inputRootCauseCR">
+    </mat-form-field>
 
-  <div class="oper-btn">
-    <button mat-button class="filter-item" (click)="onCancel()">Cancel</button>
-    <button mat-button class="filter-item" [ngClass]="{'disable-btn': isNothingInput}"
-      (click)="onApply()">Apply</button>
+    <mat-form-field class="filter-item readout-item">
+      <mat-label>READOUT LEVELS</mat-label>
+      <mat-select [(value)]="selectedreadoutLevels" multiple>
+        <mat-option *ngFor="let readoutLevel of readoutLevelList" [value]="readoutLevel">{{readoutLevel}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="filter-item whole-line-item keyword-items">
+      <mat-chip-list #kwchipList aria-label="Keyword selection">
+        <mat-chip *ngFor="let inputKeyword of inputKeywords" [selectable]="selectable" [removable]="true"
+          (removed)="removeKeyword(inputKeyword)">
+          {{inputKeyword}}
+          <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="KEWWORDS" [matChipInputFor]="kwchipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="addKeyword($event)">
+      </mat-chip-list>
+      <div class="keyword-tips">
+        <div class="keyword-tip-item" *ngFor="let keywordTip of Keyword_tips" (click)="keyword_tip_click(keywordTip)">
+          {{keywordTip}}</div>
+      </div>
+    </mat-form-field>
+
+    <div class="oper-btn">
+      <button mat-button class="filter-item" (click)="onCancel()">Cancel</button>
+      <button mat-button class="filter-item" [ngClass]="{'disable-btn': isNothingInput}"
+        (click)="onApply()">Apply</button>
+    </div>
   </div>
 </div>

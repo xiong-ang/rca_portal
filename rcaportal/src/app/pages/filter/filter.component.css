@@ -2,25 +2,34 @@
     margin: 0;
     padding: 0;
     width: 100%;
-    display: grid;
-    grid-template-rows: 70px 70px 200px auto;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
 }
 
 .content{
     width: 1100px;
-    justify-self: center;
 }
 
 .header{
+    height: 70px;
     width: 100%;
     background: rgb(77, 76, 76);
     justify-self: stretch;
 }
 
 .filter-title{
+    height: 70px;
     line-height: 70px;
     text-align: center;
     font-size: 26px;
+}
+
+.filter-condition{
+    min-height: 200px;
 }
 
 .last-ele{

@@ -19,7 +19,7 @@ export class HttpRequesterMockService implements IHttpRequester {
       });
 
       setTimeout(() => {
-        reslove(products);
+        reslove(products || []);
       }, 1000);
     });
   }
@@ -30,7 +30,7 @@ export class HttpRequesterMockService implements IHttpRequester {
       })
 
       setTimeout(() => {
-        reslove(currentProduct.versions);
+        reslove(currentProduct ? currentProduct.versions : []);
       }, 1000);
     });
   }
@@ -41,7 +41,14 @@ export class HttpRequesterMockService implements IHttpRequester {
       })
 
       setTimeout(() => {
-        reslove(currentProduct.components);
+        reslove(currentProduct ? currentProduct.components : []);
+      }, 1000);
+    });
+  }
+  GetReadOutLevel(): Promise<Array<string>> {
+    return new Promise((reslove, reject) => {
+      setTimeout(() => {
+        reslove(this.mockDataService.ReadOutLevels || []);
       }, 1000);
     });
   }

@@ -27,6 +27,9 @@ export class RequestProxyService implements IHttpRequester{
   GetProductComponents(productName: string): Promise<string[]> {
     return this.requestService.GetProductComponents(productName);
   }
+  GetReadOutLevel(): Promise<Array<string>>{
+    return this.requestService.GetReadOutLevel();
+  }
   UploadAttachment(rawData: any): Promise<Attachment> {
     return this.requestService.UploadAttachment(rawData);
   }

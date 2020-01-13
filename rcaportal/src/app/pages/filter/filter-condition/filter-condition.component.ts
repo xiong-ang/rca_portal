@@ -3,6 +3,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FilterService } from 'src/app/services/filter.service';
 import { FilterCondition } from '@app/entities/filterCondition';
 import { RequestProxyService } from '@app/services/httpRequest/request-proxy.service';
+import { MatChipInputEvent } from '@angular/material';
 
 
 @Component({
@@ -15,6 +16,7 @@ export class FilterConditionComponent implements OnInit {
   impactedProducts = [];
   fixVersionList: string[] = [];
   componentList: string[] = [];
+  readoutLevelList: string[] = [];
 
 
   public inputID: string = '';
@@ -40,11 +42,43 @@ export class FilterConditionComponent implements OnInit {
   public inputSubmitter: string = '';
   public inputRootCauseCR: string = '';
 
-  // TODO: Need to verify with joe and fleix
-  isReadoutChecked = true;
-  isNotReadoutChecked = true;
+  public selectedreadoutLevels = [];
 
-  public inputKeywords: string = '';
+
+  public inputKeywords: string[] = [];
+  public Keyword_tips: string[] = [];
+  addKeyword(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim() &&
+      !this.inputKeywords.includes(value) &&
+      this.inputKeywords.length < 3) {
+      this.inputKeywords.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeKeyword(Keyword: string): void {
+    const index = this.inputKeywords.indexOf(Keyword);
+
+    if (index >= 0) {
+      this.inputKeywords.splice(index, 1);
+    }
+  }
+
+  keyword_tip_click(keywordTip: string) {
+    if ((keywordTip || '').trim() &&
+      !this.inputKeywords.includes(keywordTip) &&
+      this.inputKeywords.length < 3) {
+      this.inputKeywords.push(keywordTip.trim());
+    }
+  }
 
   get isNothingInput() {
     return !this.inputID &&
@@ -52,9 +86,10 @@ export class FilterConditionComponent implements OnInit {
       this.selectedVersions.length == 0 &&
       this.selectedComponents.length == 0 &&
       !this.inputSubmitter &&
-      !this.inputRootCauseCR;
-    // !this.inputIsReadout && //TODO
-    // !this.inputKeywords; //TODO
+      !this.inputRootCauseCR &&
+      this.selectedreadoutLevels.length == 0 &&
+      this.inputKeywords.length == 0 &&
+      !this.inputQuickSearch;
   }
 
   constructor(private filterSrv: FilterService,
@@ -64,6 +99,21 @@ export class FilterConditionComponent implements OnInit {
     this.requestProxyService.GetProducts().then(productNames => {
       this.impactedProducts = productNames;
     });
+  }
+
+  loadReadoutLevelInfo() {
+    this.requestProxyService.GetReadOutLevel().then(readoutLevels => {
+      this.readoutLevelList = readoutLevels;
+    });
+  }
+
+  loadKeyowrdTips() {
+    this.Keyword_tips = [];
+    this.requestProxyService.GetHotKeywords(0, 10).then(hotKeywords => {
+      hotKeywords.forEach(keyword => {
+        this.Keyword_tips.push(keyword.KeywordValue);
+      })
+    })
   }
 
   triggerDetailFilterPanel() {
@@ -81,10 +131,11 @@ export class FilterConditionComponent implements OnInit {
     filterCondition.ImpactedProduct = this.selectedProduct;
     filterCondition.Components = this.selectedComponents;
     filterCondition.FixVersions = this.selectedVersions;
-    //filterCondition.IsReadout = ; // TODO: Need to verify with joe and fleix 
-    //filterCondition.Keywords = ; // TODO: Need to implement
+    filterCondition.ReadoutLevels = this.selectedreadoutLevels;
+    filterCondition.Keywords = this.inputKeywords;
     filterCondition.RootCauseCR = this.inputRootCauseCR;
     filterCondition.Submitter = this.inputSubmitter;
+    filterCondition.QuickSearch = this.inputQuickSearch;
 
     this.clear();
 
@@ -98,12 +149,15 @@ export class FilterConditionComponent implements OnInit {
     this.selectedComponents = [];
     this.inputSubmitter = '';
     this.inputRootCauseCR = '';
-    //TODO: Clear isReadout
-    this.inputKeywords = '';
+    this.selectedreadoutLevels = [];
+    this.inputKeywords = [];
+    this.inputQuickSearch = '';
   }
 
   ngOnInit() {
     this.loadProductInfo();
+    this.loadReadoutLevelInfo();
+    this.loadKeyowrdTips();
 
     this.initDetailData();
 
@@ -125,8 +179,9 @@ export class FilterConditionComponent implements OnInit {
     this.selectedComponents = initFilterCondition.Components;
     this.inputSubmitter = initFilterCondition.Submitter;
     this.inputRootCauseCR = initFilterCondition.RootCauseCR;
-    // TODO: Clear isReadout
-    // this.inputKeywords = initFilterCondition.Keywords; // TODO
+    this.selectedreadoutLevels = initFilterCondition.ReadoutLevels;
+    this.inputKeywords = initFilterCondition.Keywords;
+    this.inputQuickSearch = initFilterCondition.QuickSearch;
   }
 
   ///////////////////////////////For chips and Quick search//////////////////////////////////////
@@ -166,18 +221,55 @@ export class FilterConditionComponent implements OnInit {
       this.coditions.push(new ChipCondition('ROOT CAUSE CR', initFilterCondition.RootCauseCR, 'warn'));
     }
 
-    // TODO: Clear isReadout
-    // this.inputKeywords = initFilterCondition.Keywords; // TODO
+    if (initFilterCondition.ReadoutLevels && initFilterCondition.ReadoutLevels.length > 0) {
+      this.coditions.push(new ChipCondition('READOUT LEVELS', initFilterCondition.ReadoutLevels, 'warn'));
+    }
 
-    // TODO: Quick search
+    if (initFilterCondition.Keywords && initFilterCondition.Keywords.length > 0) {
+      this.coditions.push(new ChipCondition('KEYWORDS', initFilterCondition.Keywords, 'warn'));
+    }
+
+    if ((initFilterCondition.QuickSearch || '').trim()) {
+      this.coditions.push(new ChipCondition('', initFilterCondition.QuickSearch, 'normal'));
+    }
   }
 
-  remove(codition): void {
+  remove(codition: ChipCondition): void {
     const index = this.coditions.indexOf(codition);
     if (index >= 0) {
       this.coditions.splice(index, 1);
 
-      //TODO: Open filter result page
+      switch (codition.key) {
+        case 'ID':
+          this.inputID = null;
+          break;
+        case 'IMPACTED PRODUCT':
+          this.selectedProduct = null;
+          break;
+        case 'FIX VERSIONS':
+          this.selectedVersions = [];
+          break;
+        case 'COMPONENTS':
+          this.selectedComponents = [];
+          break;
+        case 'SUBMITTER':
+          this.inputSubmitter = null;
+          break;
+        case 'ROOT CAUSE CR':
+          this.inputRootCauseCR = null;
+          break;
+        case 'READOUT LEVELS':
+          this.selectedreadoutLevels = [];
+          break;
+        case 'KEYWORDS':
+          this.inputKeywords = [];
+          break;
+        case '':
+          this.inputQuickSearch = null;
+          break;
+      }
+
+      this.onApply();
     }
   }
 
@@ -185,10 +277,8 @@ export class FilterConditionComponent implements OnInit {
   quickSearch(): void {
 
     if ((this.inputQuickSearch || '').trim()) {
-      //TODO: Open filter result page
+      this.onApply();
     }
-
-    this.inputQuickSearch = '';
   }
 }
 
