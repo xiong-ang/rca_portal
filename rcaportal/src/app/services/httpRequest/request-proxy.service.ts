@@ -13,7 +13,7 @@ export class RequestProxyService implements IHttpRequester{
   private isMock = true;
   private requestService: IHttpRequester;
   constructor(private httpRequesterService: HttpRequesterService,
-    private httpRequesterMockService: HttpRequesterMockService) { 
+    private httpRequesterMockService: HttpRequesterMockService) {
 
       this.requestService = this.isMock ? this.httpRequesterMockService: this.httpRequesterService;
   }
@@ -27,8 +27,8 @@ export class RequestProxyService implements IHttpRequester{
   GetProductComponents(productName: string): Promise<string[]> {
     return this.requestService.GetProductComponents(productName);
   }
-  GetReadOutLevel(): Promise<Array<string>>{
-    return this.requestService.GetReadOutLevel();
+  GetReadOutLevels(): Promise<Array<string>>{
+    return this.requestService.GetReadOutLevels();
   }
   UploadAttachment(rawData: any): Promise<Attachment> {
     return this.requestService.UploadAttachment(rawData);

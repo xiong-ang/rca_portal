@@ -25,6 +25,7 @@ export class RcaDialogComponent  implements OnInit {
   public get testRCAData(): string { return JSON.stringify(this.data.rcaData); }
   rcaData: RCAItem;
   impactedProducts: string[] = [];
+  readoutLevels: string[] = [];
   fixVersionList: string[] = [];
   componentList: string[] = [];
   isFixVersionListReady = false;
@@ -54,6 +55,7 @@ export class RcaDialogComponent  implements OnInit {
   ngOnInit() {
     this.rcaData = this.data.rcaData;
     this.loadProductInfo();
+    this.loadReadOutInfo();
     if (this.data.type === 'Update') {
       this.loadVersionsAndComponents();
     }
@@ -86,6 +88,12 @@ export class RcaDialogComponent  implements OnInit {
       this.impactedProducts = productNames;
     });
   }
+  loadReadOutInfo() {
+    this.requestProxyService.GetReadOutLevels().then(readoutLevels => {
+      this.readoutLevels = readoutLevels;
+    });
+  }
+
 
   loadVersionsAndComponents() {
     this.fixVersionList = [];
@@ -158,7 +166,7 @@ export class RcaDialogComponent  implements OnInit {
 
     //TODO: Get RCAItem -> data.rcaData
 
-    this.requestProxyService.CreateRCA(this.data.rcaData);
+    this.requestProxyService.CreateRCA(this.rcaData);
   }
 
   onUpdateClick(): void {
@@ -166,7 +174,7 @@ export class RcaDialogComponent  implements OnInit {
 
     //TODO: Fetch RCAItem -> data.rcaData
 
-    this.requestProxyService.UpdateRCA(this.data.rcaData.ID, this.data.rcaData);
+    this.requestProxyService.UpdateRCA(this.rcaData.ID, this.rcaData);
   }
 
 }

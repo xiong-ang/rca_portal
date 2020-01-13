@@ -6,7 +6,7 @@ export interface IHttpRequester {
     GetProducts(): Promise<Array<string>>;
 	GetProductVersions(productName: string): Promise<Array<string>>;
     GetProductComponents(productName: string): Promise<Array<string>>;
-    GetReadOutLevel(): Promise<Array<string>>;
+    GetReadOutLevels(): Promise<Array<string>>;
 
     UploadAttachment(rawData: any): Promise<Attachment>;
     GetAttachment(attachmentID: string): Promise<any>;

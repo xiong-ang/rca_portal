@@ -61,21 +61,34 @@ justify-content: space-between;
   color: gray;
 }
 
-.requirement-header {
-  color: rgb(58,120,95)
+.requirement-color {
+  color: rgb(58,120,95);
 }
 
-.dev-header {
-  color: rgb(88,147,180)
+.dev-color {
+  color: rgb(88,147,180);
 }
 
-.test-header {
-  color: rgb(240,160,40)
+.test-color {
+  color: rgb(240,160,40);
 }
 
+.label-margin {
+  margin: 5px 0 0 0;
+}
 
-.expand-button {
+.expand-div {
   padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.expand-div:hover {
+  cursor: pointer;
+}
+
+.left-margin {
+  margin: 0 0 0 15px;
 }
 
 quill-editor {

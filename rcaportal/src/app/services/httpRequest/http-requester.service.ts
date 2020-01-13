@@ -16,7 +16,7 @@ export class HttpRequesterService implements IHttpRequester {
   GetProductComponents(productName: string): Promise<string[]> {
     throw new Error("Method not implemented.");
   }
-  GetReadOutLevel(): Promise<Array<string>>{
+  GetReadOutLevels(): Promise<Array<string>>{
     throw new Error("Method not implemented.");
   }
   UploadAttachment(rawData: any): Promise<import("../../entities/rcaItem").Attachment> {

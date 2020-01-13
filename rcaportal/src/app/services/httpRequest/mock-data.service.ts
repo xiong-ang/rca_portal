@@ -32,7 +32,7 @@ export class MockDataService {
       }
     ];
 
-    this.ReadOutLevels = ['NA', 'Level1', 'Level2', 'Level3', 'Level4'];
+    this.ReadOutLevels = ['NA', 'News Letter', 'PI Plan', 'Sprint Review', 'Team Meeting'];
     this.HotKeywords = [];
     this.HotRCAs = [];
     this.RCAItems = [];
@@ -59,7 +59,7 @@ export class MockDataService {
         ImpactedProduct: randomProduct.name,
         FixVersion: randomVersion,
         Component: randomComponent,
-        ReadoutLevel: this.ReadOutLevels[index % 4],
+        ReadoutLevel: this.ReadOutLevels[index % 5],
         RootCauseAnalyze: 'The root cause is ....The root cause is ....The root cause is ....The root cause is ....The root cause is ....The root cause is ....The root cause is ....The root cause is ....',
         RequirementCorrectAndPrevention: {
           RootCause: 'The root cause summary per this view with more details',

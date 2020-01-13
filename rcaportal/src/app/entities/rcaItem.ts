@@ -7,7 +7,7 @@ export class RCAItem {
     public ImpactedProduct = '';
     public FixVersion = '';
     public Component = '';
-    public ReadoutLevel = 'Level-2';
+    public ReadoutLevel = '';
     public RootCauseAnalyze = '';
     public RequirementCorrectAndPrevention: CorrectAndPrevention = new CorrectAndPrevention();
     public DevCorrectAndPrevention: CorrectAndPrevention = new CorrectAndPrevention();

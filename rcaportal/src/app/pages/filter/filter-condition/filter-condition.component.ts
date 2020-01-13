@@ -102,7 +102,7 @@ export class FilterConditionComponent implements OnInit {
   }
 
   loadReadoutLevelInfo() {
-    this.requestProxyService.GetReadOutLevel().then(readoutLevels => {
+    this.requestProxyService.GetReadOutLevels().then(readoutLevels => {
       this.readoutLevelList = readoutLevels;
     });
   }

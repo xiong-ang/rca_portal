@@ -43,13 +43,12 @@
     </mat-select>
   </mat-form-field>
 
-  <div class="one-line-item">
-    <div><span class="input-label">Is Readout?</span></div>
-    <mat-radio-group [(value)]="rcaData.ReadoutLevel" class="radio-group">
-      <mat-radio-button value="Level-1">Yes</mat-radio-button>
-      <mat-radio-button value="Level-2">No</mat-radio-button>
-    </mat-radio-group>
-  </div>
+  <mat-form-field class="one-line-item">
+    <mat-label><span class="input-label">Readout Level</span></mat-label>
+    <mat-select name="ReadoutLevel" [(value)]="rcaData.ReadoutLevel" required>
+      <mat-option *ngFor="let readoutLevel of readoutLevels" [value]="readoutLevel">{{readoutLevel}}</mat-option>
+    </mat-select>
+  </mat-form-field>
 
   <mat-form-field class="one-line-item full-width">
     <mat-label class="input-label"><span>Key Word</span><mat-icon>vpn_key</mat-icon></mat-label>
@@ -89,60 +88,60 @@
   </div>
 
   <div class="one-line-item full-width">
-    <button mat-button class="expand-button"
+    <div class="expand-div"
     (click)="isRequirementPanelOpen=!isRequirementPanelOpen">
-    <span class="requirement-header">Requirement</span>
+    <span class="requirement-color">Requirement</span>
     <i class="material-icons" *ngIf="!isRequirementPanelOpen">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="isRequirementPanelOpen">keyboard_arrow_up</i>
-    </button>
-    <div class="full-width" *ngIf="isRequirementPanelOpen">
-      <label><span class="requirement-header">Root Cause</span></label>
+    </div>
+    <div class="full-width left-margin" *ngIf="isRequirementPanelOpen">
+      <label class="requirement-color label-margin">Root Cause</label>
       <quill-editor [(ngModel)]="rcaData.RequirementCorrectAndPrevention.RootCause" [styles]="{height: '100px'}">
       </quill-editor>
-      <label><span class="requirement-header">Correction</span></label>
+      <label class="requirement-color label-margin">Correction</label>
       <quill-editor [(ngModel)]="rcaData.RequirementCorrectAndPrevention.Correction" [styles]="{height: '100px'}">
       </quill-editor>
-      <label><span class="requirement-header">Prevention</span></label>
+      <label class="requirement-color label-margin">Prevention</label>
       <quill-editor [(ngModel)]="rcaData.RequirementCorrectAndPrevention.Prevention" [styles]="{height: '100px'}">
       </quill-editor>
     </div>
   </div>
 
   <div class="one-line-item full-width">
-    <button mat-button class="expand-button"
+    <div class="expand-div"
     (click)="isDevPanelOpen=!isDevPanelOpen">
-    <span class="dev-header">Dev(Dev/InforDev/CM)</span>
+    <span class="dev-color">Dev(Dev/InforDev/CM)</span>
     <i class="material-icons" *ngIf="!isDevPanelOpen">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="isDevPanelOpen">keyboard_arrow_up</i>
-    </button>
-    <div class="full-width" *ngIf="isDevPanelOpen">
-      <label><span class="dev-header">Root Cause</span></label>
+    </div>
+    <div class="full-width left-margin" *ngIf="isDevPanelOpen">
+      <label class="dev-color label-margin">Root Cause</label>
       <quill-editor [(ngModel)]="rcaData.DevCorrectAndPrevention.RootCause" [styles]="{height: '100px'}">
       </quill-editor>
-      <label><span class="dev-header">Correction</span></label>
+      <label class="dev-color label-margin">Correction</label>
       <quill-editor [(ngModel)]="rcaData.DevCorrectAndPrevention.Correction" [styles]="{height: '100px'}">
       </quill-editor>
-      <label><span class="dev-header">Prevention</span></label>
+      <label class="dev-color label-margin">Prevention</label>
       <quill-editor [(ngModel)]="rcaData.DevCorrectAndPrevention.Prevention" [styles]="{height: '100px'}">
       </quill-editor>
     </div>
   </div>
 
   <div class="one-line-item full-width">
-    <button mat-button class="expand-button"
+    <div class="expand-div"
     (click)="isTestPanelOpen=!isTestPanelOpen">
-    <span class="test-header">Test</span>
+    <span class="test-color">Test</span>
     <i class="material-icons" *ngIf="!isTestPanelOpen">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="isTestPanelOpen">keyboard_arrow_up</i>
-    </button>
-    <div class="full-width" *ngIf="isTestPanelOpen">
-      <label><span class="test-header">Root Cause</span></label>
+    </div>
+    <div class="full-width left-margin" *ngIf="isTestPanelOpen">
+      <label class="test-color label-margin">Root Cause</label>
       <quill-editor [(ngModel)]="rcaData.TestCorrectAndPrevention.RootCause" [styles]="{height: '100px'}">
       </quill-editor>
-      <label><span  class="test-header">Correction</span></label>
+      <label class="test-color label-margin">Correction</label>
       <quill-editor [(ngModel)]="rcaData.TestCorrectAndPrevention.Correction" [styles]="{height: '100px'}">
       </quill-editor>
-      <label><span class="test-header">Prevention</span></label>
+      <label class="test-color label-margin">Prevention</label>
       <quill-editor [(ngModel)]="rcaData.TestCorrectAndPrevention.Prevention" [styles]="{height: '100px'}">
       </quill-editor>
     </div>

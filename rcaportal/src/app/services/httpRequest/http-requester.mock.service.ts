@@ -23,6 +23,7 @@ export class HttpRequesterMockService implements IHttpRequester {
       }, 1000);
     });
   }
+
   GetProductVersions(productName: string): Promise<string[]> {
     return new Promise((reslove, reject) => {
       let currentProduct = this.mockDataService.Products.find(productInfo => {
@@ -45,7 +46,7 @@ export class HttpRequesterMockService implements IHttpRequester {
       }, 1000);
     });
   }
-  GetReadOutLevel(): Promise<Array<string>> {
+  GetReadOutLevels(): Promise<Array<string>> {
     return new Promise((reslove, reject) => {
       setTimeout(() => {
         reslove(this.mockDataService.ReadOutLevels || []);
