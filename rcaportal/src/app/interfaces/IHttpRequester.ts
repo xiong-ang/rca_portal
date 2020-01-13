@@ -19,4 +19,6 @@ export interface IHttpRequester {
     GetHotKeywords(start: number, count: number): Promise<Array<HotKeyword>>; //To be designed by backend
 
     PostRCAClickEvent(RCAID: string): Promise<boolean>; // For hot value
+
+    GetReadOutLevels(): Promise<Array<string>>;
 }

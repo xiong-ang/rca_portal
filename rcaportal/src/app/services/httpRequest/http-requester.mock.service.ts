@@ -23,6 +23,20 @@ export class HttpRequesterMockService implements IHttpRequester {
       }, 1000);
     });
   }
+
+  GetReadOutLevels(): Promise<string[]> {
+    return new Promise((reslove, reject) => {
+      let readOutLevels = [];
+      this.mockDataService.ReadOutLevels.forEach(ReadOutLevel => {
+        readOutLevels.push(ReadOutLevel);
+      });
+
+      setTimeout(() => {
+        reslove(readOutLevels);
+      }, 1000);
+    });
+  }
+
   GetProductVersions(productName: string): Promise<string[]> {
     return new Promise((reslove, reject) => {
       let currentProduct = this.mockDataService.Products.find(productInfo => {

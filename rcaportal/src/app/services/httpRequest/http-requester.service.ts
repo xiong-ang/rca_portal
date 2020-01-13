@@ -43,6 +43,9 @@ export class HttpRequesterService implements IHttpRequester {
   PostRCAClickEvent(RCAID: string): Promise<boolean> {
     throw new Error("Method not implemented.");
   }
+  GetReadOutLevels(): Promise<string[]> {
+    throw new Error("Method not implemented.");
+  }
 
   constructor() { }
 }

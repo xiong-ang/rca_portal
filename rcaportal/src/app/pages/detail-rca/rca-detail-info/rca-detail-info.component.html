@@ -1,5 +1,5 @@
 <div class="rca-detail">
-  <div class="rca-title">Details of {{RCADetail.ID}}</div>
+  <div class="rca-title">Details of {{RCADetail.ID}}<i class="material-icons edit-btn link-item" *ngIf="RCADetail.IsManagable" (click)="updateRCA()">edit</i></div>
 
   <div class="rca-info">
     <div class="rca-prop">
@@ -10,7 +10,7 @@
     <div class="rca-prop-container">
       <div class="rca-prop-container-left">
         <div class="rca-prop">
-          <div class="rca-prop-key rca-icon">ID<mat-icon>bug_report</mat-icon></div>
+          <div class="rca-prop-key rca-icon">ID<mat-icon class="id-icon">bug_report</mat-icon></div>
           <div class="rca-prop-value">{{RCADetail.ID}}</div>
         </div>
         <div class="rca-prop">
@@ -18,13 +18,13 @@
           <div class="rca-prop-value">{{RCADetail.Submitter}}</div>
         </div>
         <div class="rca-prop">
-          <div class="rca-prop-key rca-icon">Key word<mat-icon>vpn_key</mat-icon></div>
+          <div class="rca-prop-key rca-icon">Key word<mat-icon class="keyword-icon">vpn_key</mat-icon></div>
           <div class="rca-prop-value">
-            <span *ngFor="let keyWord of RCADetail.KeyWords">{{keyWord}} </span></div>
+            <span class="rca-keyword link-item" *ngFor="let keyWord of RCADetail.KeyWords" (click)="onClickKeyword(keyWord)">{{keyWord}} </span></div>
         </div>
         <div class="rca-prop">
-          <div class="rca-prop-key rca-icon">Root Cause CR<mat-icon>bug_report</mat-icon></div>
-          <div class="rca-prop-value">{{RCADetail.RootCauseCR}}</div>
+          <div class="rca-prop-key rca-icon">Root Cause CR<mat-icon class="RootCauseCR-icon">bug_report</mat-icon></div>
+          <div class="rca-prop-value rca-RootCauseCR">{{RCADetail.RootCauseCR}}</div>
         </div>
       </div>
       <div class="rca-prop-container-right">
@@ -38,13 +38,13 @@
         </div>
 
         <div class="rca-prop">
-          <div class="rca-prop-key rca-icon">Component<mat-icon>extension</mat-icon></div>
+          <div class="rca-prop-key rca-icon">Component<mat-icon class="Component-icon">extension</mat-icon></div>
           <div class="rca-prop-value">{{RCADetail.Component}}</div>
         </div>
 
         <div class="rca-prop">
-          <div class="rca-prop-key">Is Readout?</div>
-          <div class="rca-prop-value">{{RCADetail.IsReadout}}</div>
+          <div class="rca-prop-key">Readout Level</div>
+          <div class="rca-prop-value">{{RCADetail.ReadoutLevel}}</div>
         </div>
       </div>
     </div>
@@ -58,7 +58,7 @@
       <div class="rca-prop-key">RCA Correction and Prevention</div>
     </div>
     <div class="rca-prop-group-label">
-      <div class="rca-prop-key">Requirement</div>
+      <div class="rca-prop-key requirement-color">Requirement</div>
     </div>
 
     <div class="rca-prop left-margin">
@@ -77,7 +77,7 @@
     </div>
 
     <div class="rca-prop-group-label">
-      <div class="rca-prop-key">Dev/Infor Dev/CM</div>
+      <div class="rca-prop-key dev-color">Dev/Infor Dev/CM</div>
     </div>
     <div class="rca-prop left-margin">
       <div class="rca-prop-key">Root Cause</div>
@@ -95,7 +95,7 @@
     </div>
 
     <div class="rca-prop-group-label">
-      <div class="rca-prop-key">Test</div>
+      <div class="rca-prop-key test-color">Test</div>
     </div>
     <div class="rca-prop left-margin">
       <div class="rca-prop-key">Root Cause</div>

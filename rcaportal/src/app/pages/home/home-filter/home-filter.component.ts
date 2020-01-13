@@ -80,7 +80,7 @@ export class HomeFilterComponent implements OnInit {
     filterCondition.ImpactedProduct = this.selectedProduct;
     filterCondition.Components = this.selectedComponents;
     filterCondition.FixVersions = this.selectedVersions;
-    //filterCondition.IsReadout = ; // TODO: Need to verify with joe and fleix 
+    //filterCondition.ReadoutLevel = ; // TODO: Need to verify with joe and fleix
     //filterCondition.Keywords = ; // TODO: Need to implement
     filterCondition.RootCauseCR = this.inputRootCauseCR;
     filterCondition.Submitter = this.inputSubmitter;

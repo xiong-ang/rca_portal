@@ -11,6 +11,7 @@ export class MockDataService {
   public HotKeywords: Array<HotKeyword>;
   public HotRCAs: Array<RCAItem>;
   public RCAItems: Array<RCAItem>;
+  public ReadOutLevels: Array<any>;
 
   constructor() {
     this.Products = [
@@ -30,7 +31,7 @@ export class MockDataService {
         components: ['CCW-Component-1', 'CCW-Component-2', 'CCW-Component-3', 'CCW-Component-4', 'CCW-Component-5'],
       }
     ];
-
+    this.ReadOutLevels = ['News Letter', 'PI Plan', 'Sprint Review', 'Team Meeting'];
     this.HotKeywords = [];
     this.HotRCAs = [];
     this.RCAItems = [];
@@ -57,7 +58,7 @@ export class MockDataService {
         ImpactedProduct: randomProduct.name,
         FixVersion: randomVersion,
         Component: randomComponent,
-        IsReadout: `Level-${index % 3}`,
+        ReadoutLevel: this.ReadOutLevels[index % 4],
         RootCauseAnalyze: 'The root cause is ....The root cause is ....The root cause is ....The root cause is ....The root cause is ....The root cause is ....The root cause is ....The root cause is ....',
         RequirementCorrectAndPrevention: {
           RootCause: 'The root cause summary per this view with more details',
@@ -108,7 +109,7 @@ export class MockDataService {
       if (filterCondition.Components && filterCondition.Components.length > 0) filterResult = filterResult && (filterCondition.Components.includes(rca.Component));
       if (filterCondition.Submitter) filterResult = filterResult && (filterCondition.Submitter == rca.Submitter);
       if (filterCondition.RootCauseCR) filterResult = filterResult && (filterCondition.RootCauseCR == rca.RootCauseCR);
-      if (filterCondition.IsReadout) filterResult = filterResult && (filterCondition.IsReadout == rca.IsReadout);
+      if (filterCondition.ReadoutLevel) filterResult = filterResult && (filterCondition.ReadoutLevel == rca.ReadoutLevel);
 
       if (filterCondition.Keywords && filterCondition.Keywords.length > 0) {
         filterResult = filterResult && this.ArrayIncludes(rca.KeyWords, filterCondition.Keywords);

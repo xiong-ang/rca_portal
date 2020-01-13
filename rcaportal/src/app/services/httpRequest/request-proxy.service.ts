@@ -13,13 +13,16 @@ export class RequestProxyService implements IHttpRequester{
   private isMock = true;
   private requestService: IHttpRequester;
   constructor(private httpRequesterService: HttpRequesterService,
-    private httpRequesterMockService: HttpRequesterMockService) { 
+    private httpRequesterMockService: HttpRequesterMockService) {
 
       this.requestService = this.isMock ? this.httpRequesterMockService: this.httpRequesterService;
   }
 
   GetProducts(): Promise<string[]> {
     return this.requestService.GetProducts();
+  }
+  GetReadOutLevels(): Promise<string[]> {
+    return this.requestService.GetReadOutLevels();
   }
   GetProductVersions(productName: string): Promise<string[]> {
     return this.requestService.GetProductVersions(productName);

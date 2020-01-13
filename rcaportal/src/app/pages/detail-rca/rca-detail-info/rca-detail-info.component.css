@@ -69,3 +69,50 @@
 mat-icon{
     margin-left: 3px;
 }
+
+.requirement-color {
+  color: rgb(58,120,95);
+}
+
+.dev-color {
+  color: rgb(88,147,180);
+}
+
+.test-color {
+  color: rgb(240,160,40);
+}
+
+.rca-keyword {
+  color: rgb(43,168,246);
+}
+
+.link-item:hover {
+  cursor: pointer;
+  color: gray;
+}
+
+.rca-RootCauseCR {
+  color: rgb(43,168,246);
+}
+
+.edit-btn{
+  color: rgb(48,113,194);
+}
+
+.material-icons{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.id-icon {
+  color: rgb(61,77,87);
+}
+.keyword-icon {
+  color: orange;
+}
+.RootCauseCR-icon {
+  color: rgb(12,83,148)
+}
+.Component-icon {
+  color: rgb(68,86,97)
+}
