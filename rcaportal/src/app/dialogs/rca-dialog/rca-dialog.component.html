@@ -94,7 +94,7 @@
     <i class="material-icons" *ngIf="!isRequirementPanelOpen">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="isRequirementPanelOpen">keyboard_arrow_up</i>
     </div>
-    <div class="full-width left-margin" *ngIf="isRequirementPanelOpen">
+    <div class="expand-panel full-width" *ngIf="isRequirementPanelOpen">
       <label class="requirement-color label-margin">Root Cause</label>
       <quill-editor [(ngModel)]="rcaData.RequirementCorrectAndPrevention.RootCause" [styles]="{height: '100px'}">
       </quill-editor>
@@ -114,7 +114,7 @@
     <i class="material-icons" *ngIf="!isDevPanelOpen">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="isDevPanelOpen">keyboard_arrow_up</i>
     </div>
-    <div class="full-width left-margin" *ngIf="isDevPanelOpen">
+    <div class="full-width expand-panel" *ngIf="isDevPanelOpen">
       <label class="dev-color label-margin">Root Cause</label>
       <quill-editor [(ngModel)]="rcaData.DevCorrectAndPrevention.RootCause" [styles]="{height: '100px'}">
       </quill-editor>
@@ -134,7 +134,7 @@
     <i class="material-icons" *ngIf="!isTestPanelOpen">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="isTestPanelOpen">keyboard_arrow_up</i>
     </div>
-    <div class="full-width left-margin" *ngIf="isTestPanelOpen">
+    <div class="full-width expand-panel" *ngIf="isTestPanelOpen">
       <label class="test-color label-margin">Root Cause</label>
       <quill-editor [(ngModel)]="rcaData.TestCorrectAndPrevention.RootCause" [styles]="{height: '100px'}">
       </quill-editor>

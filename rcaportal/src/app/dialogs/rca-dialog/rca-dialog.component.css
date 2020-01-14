@@ -78,17 +78,17 @@ justify-content: space-between;
 }
 
 .expand-div {
-  padding: 0;
+  padding: 2px 2px 2px 0px;
   display: flex;
   align-items: center;
 }
 
-.expand-div:hover {
-  cursor: pointer;
+.expand-panel {
+  padding: 0 0 0 15px;
 }
 
-.left-margin {
-  margin: 0 0 0 15px;
+.expand-div:hover {
+  cursor: pointer;
 }
 
 quill-editor {
