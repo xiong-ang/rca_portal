@@ -13,12 +13,7 @@ export class HomeRcaItemComponent implements OnInit {
   get RCARank(): string { return this.rcaIndex + 1 < 10 ? `0${this.rcaIndex + 1}` : `${this.rcaIndex + 1}`; }
   get RCAHeader(): string { return this.hotRCA.Header; }
 
-  constructor(private rcaDetailSrv: RcaDetailService) { }
+  constructor() { }
 
-  ngOnInit() {
-  }
-
-  openRCADetail() {
-    this.rcaDetailSrv.openRCADetail(this.hotRCA);
-  }
+  ngOnInit() {}
 }

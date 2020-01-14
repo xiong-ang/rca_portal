@@ -1,6 +1,6 @@
 <div class="rca-rank-title">HOT RCAs <i class="material-icons bug-icon">bug_report</i></div>
 <div class="home-rca-rank-list">
-  <app-home-rca-item *ngFor="let hotRCA of mostHotRCAs; let i= index" [hotRCA]="hotRCA" [rcaIndex]="i"></app-home-rca-item>
+  <app-home-rca-item *ngFor="let hotRCA of mostHotRCAs; let i= index" (click)="openRCADetail(hotRCA)" [hotRCA]="hotRCA" [rcaIndex]="i"></app-home-rca-item>
   <div class="first-loading" *ngIf="isFirstLoading">
     Loading...
   </div>

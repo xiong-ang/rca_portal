@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HotRankService } from '@app/services/hot-rank.service';
 import { RcaDialogService } from '@app/services/rca-dialog.service';
 import { RCAItem } from '@app/entities/rcaItem';
+import { RcaDetailService } from '@app/services/rca-detail.service';
 
 @Component({
   selector: 'app-home-rca-rank',
@@ -14,17 +15,22 @@ export class HomeRcaRankComponent implements OnInit {
   public isFirstLoading: boolean = true;
 
   constructor(private hotRankService: HotRankService,
+    private rcaDetailSrv: RcaDetailService,
     private rcaDialogService: RcaDialogService) {
     this.mostHotRCAs = [];
     this.hotRankService.getHotRCAs(8).then(hotRCAs => {
       this.mostHotRCAs = hotRCAs;
       this.isFirstLoading = false;
-    },()=>{
+    }, () => {
       this.isFirstLoading = false;
     });
   }
 
   ngOnInit() {
+  }
+
+  openRCADetail(hotRCA: RCAItem) {
+    this.rcaDetailSrv.openRCADetail(hotRCA);
   }
 
   onUnfoldHotRCAs() {

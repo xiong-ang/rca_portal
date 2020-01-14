@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RCAItem } from '@app/entities/rcaItem';
 import { HotRankService } from '@app/services/hot-rank.service';
+import { RcaDetailService } from '@app/services/rca-detail.service';
 
 
 @Component({
@@ -14,6 +15,7 @@ export class HotRCAsDialogComponent {
   public isLoading: boolean = true;
   constructor(
     public dialogRef: MatDialogRef<HotRCAsDialogComponent>,
+    private rcaDetailSrv: RcaDetailService,
     private hotRankService: HotRankService) {
 
     this.RCAItems = [];
@@ -23,6 +25,11 @@ export class HotRCAsDialogComponent {
     }, () => {
       this.isLoading = false;
     });
+  }
+
+  openRCADetail(hotRCA: RCAItem) {
+    this.rcaDetailSrv.openRCADetail(hotRCA);
+    this.dialogRef.close();
   }
 
   onCloseClick(): void {
