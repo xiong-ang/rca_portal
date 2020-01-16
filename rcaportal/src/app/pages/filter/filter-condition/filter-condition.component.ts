@@ -37,8 +37,8 @@ export class FilterConditionComponent implements OnInit {
       })
     }
   }
-  private selectedVersions = [];
-  private selectedComponents = [];
+  public selectedVersions = [];
+  public selectedComponents = [];
   public inputSubmitter: string = '';
   public inputRootCauseCR: string = '';
 

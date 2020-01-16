@@ -47,3 +47,6 @@ Thumbs.db
 
 # Document Files
 *.pdf
+
+# NGINX
+/nginx-1.16.1
