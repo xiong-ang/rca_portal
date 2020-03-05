@@ -6,7 +6,7 @@
 
 
 <div class="dialog-content">
-  <app-home-rca-item *ngFor="let hotRCA of RCAItems; let i= index" (click)="openRCADetail(hotRCA)" [hotRCA]="hotRCA" [rcaIndex]="i">
+  <app-home-rca-item *ngFor="let hotRCA of RCAItems; let i= index" (click)="openRCADetail(hotRCA.ID)" [hotRCA]="hotRCA" [rcaIndex]="i">
   </app-home-rca-item>
   <div class="loading" *ngIf="isLoading">
     Loading...

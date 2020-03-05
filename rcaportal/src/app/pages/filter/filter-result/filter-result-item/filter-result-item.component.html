@@ -14,6 +14,6 @@
   <div class="rca-others">
     <i class="material-icons delete-btn link-item" *ngIf="RCAResult.IsManagable" (click)="deleteRCA()">delete</i>
     <i class="material-icons edit-btn link-item" *ngIf="RCAResult.IsManagable" (click)="updateRCA()">edit</i>
-    <span class="rca-id">CVBFTVIEW-2875</span>
+    <span class="rca-id">{{RCAResult.RCAID}}</span>
   </div>
 </div>

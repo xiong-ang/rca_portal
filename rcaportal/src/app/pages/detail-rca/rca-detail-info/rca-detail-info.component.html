@@ -1,5 +1,5 @@
 <div class="rca-detail">
-  <div class="rca-title">Details of {{RCADetail.ID}}<i class="material-icons edit-btn link-item" *ngIf="RCADetail.IsManagable" (click)="updateRCA()">edit</i></div>
+  <div class="rca-title">Details of {{RCADetail.RCAID}}<i class="material-icons edit-btn link-item" *ngIf="RCADetail.IsManagable" (click)="updateRCA()">edit</i></div>
 
   <div class="rca-info">
     <div class="rca-prop">
@@ -11,7 +11,7 @@
       <div class="rca-prop-container-left">
         <div class="rca-prop">
           <div class="rca-prop-key rca-icon">ID<mat-icon class="id-icon">bug_report</mat-icon></div>
-          <div class="rca-prop-value">{{RCADetail.ID}}</div>
+          <div class="rca-prop-value">{{RCADetail.RCAID}}</div>
         </div>
         <div class="rca-prop">
           <div class="rca-prop-key rca-icon">Submitter<mat-icon>account_circle</mat-icon></div>
@@ -112,6 +112,9 @@
       <div class="rca-prop-value"><quill-view [content]="RCADetail.TestCorrectAndPrevention.Prevention"></quill-view></div>
     </div>
   </div>
-
+  <div class="rca-prop-group-label">
+    <div class="rca-prop-key rca-icon">Attachments<mat-icon  class="Component-icon">attachment</mat-icon></div>
+  </div>
+  <app-attachment [RCAID]="RCADetail.ID" [IsReadOnly]="true"></app-attachment>
   <!-- {{RCADetailTest}} -->
 </div>

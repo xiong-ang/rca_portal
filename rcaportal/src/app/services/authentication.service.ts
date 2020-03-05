@@ -1,44 +1,71 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
 import { User } from '@app/entities/user';
+import { ResPackage } from '@app/entities/ResPackage';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
-  constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-    this.currentUser = this.currentUserSubject.asObservable();
-}
+  private currentUserSubject: BehaviorSubject<string>;
+  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {
+    this.currentUserSubject = new BehaviorSubject<string>(cookieService.get('userName'));
+  }
 
-public get currentUserValue(): User {
-  return this.currentUserSubject.value;
-}
+  public get currentUserValue(): string {
+    return this.currentUserSubject.value;
+  }
 
-  login(email: string, password: string) {
-    return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { email, password })
-        .pipe(map(user => {
-            // login successful if there's a jwt token in the response
-            if (user && user.token) {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                this.currentUserSubject.next(user);
-            }
+  login(username: string, password: string, isremeber: boolean): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.http.post<ResPackage>('/api/v1/user/login', { UserName: username, Password: password })
+      .toPromise()
+      .then(res => {
+        if (res && res.status) {
+          this.currentUserSubject.next(this.cookieService.get('userName'));
+          if (!isremeber) {
+            this.cookieService.set('userName', this.cookieService.get('userName'), 0);
+          }
+          resolve(true);
+        } else {
+          reject(res && res.message);
+        }
+      })
+      .catch(this.handleError);
+    });
+  }
 
-            return user;
-        }));
+  private handleError(error: any): Promise<any> {
+    console.error('An error occured', error);
+    return Promise.reject(error.message || error);
   }
 
   logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
+    return new Promise((resolve, reject) => {
+      this.http.get<ResPackage>('/api/v1/user/logout')
+      .toPromise()
+      .then(res => {
+        if (res && res.status) {
+          this.currentUserSubject.next(null);
+          this.router.navigate(['/login']);
+          resolve(true);
+        } else {
+          reject(res && res.message);
+        }
+      })
+      .catch(this.handleError);
+    });
   }
 
+  logoutFontend () {
+    this.cookieService.delete('userName');
+    this.currentUserSubject.next(null);
+    this.router.navigate(['/login']);
+  }
 }

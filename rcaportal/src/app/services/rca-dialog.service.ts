@@ -9,49 +9,111 @@ import { HotRCAsDialogComponent } from '@app/dialogs/hotRCAs-Dialog/hotRCAs-Dial
 import { AuthenticationService } from './authentication.service';
 import { MsgDialogComponent } from '@app/dialogs/msg-dialog/msg-dialog.component';
 import { RequestProxyService } from './httpRequest/request-proxy.service';
+import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RcaDialogService {
   constructor(public dialog: MatDialog,
-    private authenticationService: AuthenticationService,
-    private requestProxyService: RequestProxyService) { }
+              private requestProxyService: RequestProxyService) { }
+  createDialogOpen = false;
+  updateDialogOpen = false;
+  deleteDialogOpen = false;
 
-  openCreateDialog(): void {
-    let newRCAItem = new RCAItem();
-    //TODO: Init necessary items
-    newRCAItem.Submitter = this.authenticationService.currentUserValue.userName;
-
-    this.dialog.open(RcaDialogComponent, {
-      width: '1000px',
-      maxHeight: '800px',
-      data: { type: 'Create', rcaData: newRCAItem }
-    });
-  }
-
-  openUpdateDialog(rcaItem: RCAItem): void {
-    this.dialog.open(RcaDialogComponent, {
-      width: '1000px',
-      maxHeight: '800px',
-      data: { type:'Update', rcaData: rcaItem }
-    });
-  }
-
-  openDeleteDialog(rcaID: string): void {
-    this.dialog.open(MsgDialogComponent, {
-      data: { type: 'warning',
-        msg: `Do you want to delete RCA ${rcaID} ?`,
-        okAction: ()=>{
-          this.requestProxyService.DeleteRCA(rcaID);
-        },
-        cancelAction:()=>{}
+  openCreateDialog(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      if (this.createDialogOpen) {
+        resolve();
       }
+
+      const dialogRef = this.dialog.open(RcaDialogComponent, {
+        width: '1000px',
+        maxHeight: '800px',
+        disableClose: true,
+        data: {
+          type: 'Create',
+          okAction: () => {
+            this.createDialogOpen = false;
+            resolve(true);
+          },
+          cancelAction: () => {
+            this.createDialogOpen = false;
+            resolve(false);
+          }
+        }
+      });
+      this.createDialogOpen = true;
+      dialogRef.afterClosed().subscribe(() => {
+        this.createDialogOpen = false;
+      });
+    });
+  }
+
+  openUpdateDialog(RCAID: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      if (this.updateDialogOpen) {
+        resolve();
+      }
+      const dialogRef = this.dialog.open(RcaDialogComponent, {
+        width: '1000px',
+        maxHeight: '800px',
+        disableClose: true,
+        data: {
+          type: 'Update',
+          rcaID: RCAID,
+          okAction: () => {
+            resolve(true);
+          },
+          cancelAction: () => {
+            resolve(false);
+          }
+        }
+      });
+      this.updateDialogOpen = true;
+      dialogRef.afterClosed().subscribe(() => {
+        this.updateDialogOpen = false;
+      });
+    });
+  }
+
+  openDeleteDialog(rcaID: string, RCAID: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      if (this.deleteDialogOpen) {
+        resolve();
+      }
+      const dialogRef = this.dialog.open(MsgDialogComponent, {
+        disableClose: true,
+        data: {
+          type: 'warning',
+          msg: `Do you want to delete RCA ${RCAID} ?`,
+          okAction: () => {
+            this.requestProxyService.DeleteRCA(rcaID).then((successed) => {
+              resolve(true);
+            },
+              (error) => {
+                if (error) {
+                  alert(error);
+                }
+              });
+          },
+          cancelAction: () => {
+            resolve(false);
+
+          }
+        }
+      });
+      this.deleteDialogOpen = true;
+      dialogRef.afterClosed().subscribe(() => {
+        this.deleteDialogOpen = false;
+      });
     });
   }
 
   openHotRCAsDialog(): void {
     this.dialog.open(HotRCAsDialogComponent, {
+      disableClose: true,
       width: '800px',
       minHeight: '600px'
     });

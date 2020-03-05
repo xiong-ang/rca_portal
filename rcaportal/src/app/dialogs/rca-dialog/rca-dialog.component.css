@@ -1,3 +1,9 @@
+
+.load-parent {
+  position: relative;
+  margin: 0;
+}
+
 .dialog-header{
   text-align: center;
   font-size: 24px;
@@ -98,4 +104,27 @@ quill-editor {
 .disable-btn{
   cursor: not-allowed;
   color: gainsboro;
+}
+
+.attachment-icon {
+  display: flex;
+  align-items: center;
+}
+
+.first-loading{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  font-style: italic;
+  font-weight: bold;
+  color: gainsboro;
+  background-color: white;
+  z-index: 1;
 }

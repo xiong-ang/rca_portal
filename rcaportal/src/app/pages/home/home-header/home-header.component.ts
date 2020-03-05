@@ -16,7 +16,7 @@ import { FilterCondition } from '@app/entities/filterCondition';
 })
 export class HomeHeaderComponent implements OnInit {
 
-  currentUser: User;
+  currentUser: string;
   // tslint:disable-next-line: max-line-length
   constructor(private router: Router, private rcaDialogSrv: RcaDialogService, private filterSrv: FilterService, private authenticationService: AuthenticationService) { }
 
@@ -30,7 +30,7 @@ export class HomeHeaderComponent implements OnInit {
 
   onMyCRsClick(){
     let filterCondition = new FilterCondition();
-    filterCondition.Submitter = this.currentUser.userName;
+    filterCondition.Submitter = this.currentUser;
 
     this.filterSrv.showFilterResults(filterCondition);
   }
@@ -41,6 +41,9 @@ export class HomeHeaderComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout();
-    this.router.navigate(['/login']);
+    // .then( bsucceed => {
+    //   if (bsucceed) {
+    //     this.router.navigate(['/login']);
+    //   }});
 }
 }

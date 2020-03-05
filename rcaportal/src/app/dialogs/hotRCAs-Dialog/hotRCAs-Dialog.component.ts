@@ -19,16 +19,18 @@ export class HotRCAsDialogComponent {
     private hotRankService: HotRankService) {
 
     this.RCAItems = [];
-    this.hotRankService.getHotRCAs(100).then(hotRCAs => {
-      this.RCAItems = hotRCAs;
+    this.hotRankService.getHotRCAs(100).then(
+      (hotRCAs) => {
+        this.RCAItems = hotRCAs;
+        this.isLoading = false;
+      },
+     (error) => {
       this.isLoading = false;
-    }, () => {
-      this.isLoading = false;
-    });
+      });
   }
 
-  openRCADetail(hotRCA: RCAItem) {
-    this.rcaDetailSrv.openRCADetail(hotRCA);
+  openRCADetail(hotRCAID: string) {
+    this.rcaDetailSrv.openRCADetail(hotRCAID);
     this.dialogRef.close();
   }
 

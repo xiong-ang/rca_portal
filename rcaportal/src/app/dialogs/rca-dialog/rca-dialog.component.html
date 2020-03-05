@@ -1,6 +1,7 @@
+
+
 <div class="dialog-header">{{dialogTitle}}</div>
-
-
+<div class="load-parent">
 <mat-dialog-content class="dialog-content">
   <mat-form-field class="one-line-item full-width" >
     <mat-label><span class="input-label">Head</span></mat-label>
@@ -9,12 +10,12 @@
 
   <mat-form-field>
     <mat-label><span class="input-label">ID</span><mat-icon>bug_report</mat-icon></mat-label>
-    <input matInput name="Id" [(ngModel)]="rcaData.ID" required>
+    <input matInput name="Id" [(ngModel)]="rcaData.RCAID" required>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label><span class="input-label">RootCauseCR </span><mat-icon>bug_report</mat-icon></mat-label>
-    <input matInput name="RootCauseCR" [(ngModel)]="rcaData.RootCauseCR" required>
+    <input matInput name="RootCauseCR" [(ngModel)]="rcaData.RootCauseCR">
   </mat-form-field >
 
   <mat-form-field class="one-line-item">
@@ -24,29 +25,29 @@
 
   <mat-form-field class="one-line-item">
     <mat-label><span class="input-label">Impacted Product</span></mat-label>
-    <mat-select name="ImpactedProduct" [(value)]="selectedProduct" required>
-      <mat-option *ngFor="let impactedProduct of impactedProducts" [value]="impactedProduct">{{impactedProduct}}</mat-option>
+    <mat-select name="ImpactedProduct" [(value)]="selectedProductID" required>
+      <mat-option *ngFor="let impactedProduct of impactedProducts" [value]="impactedProduct.ID">{{impactedProduct.ProductName}}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="one-line-item">
     <mat-label><span class="input-label">Fix Version</span></mat-label>
-    <mat-select name="FixVersion" [disabled]="!isFixVersionListReady" [(value)]="rcaData.FixVersion" required>
-      <mat-option *ngFor="let fixVersion of fixVersionList" [value]="fixVersion">{{fixVersion}}</mat-option>
+    <mat-select name="FixVersion" [disabled]="!isFixVersionListReady" [(value)]="rcaData.FixVersionID" required>
+      <mat-option *ngFor="let fixVersion of fixVersionList" [value]="fixVersion.ID">{{fixVersion.Version}}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="one-line-item">
     <mat-label><span class="input-label">Component </span><mat-icon>extension</mat-icon></mat-label>
-    <mat-select name="Component" [disabled]="!isComponentListReady" [(value)]="rcaData.Component" required>
-      <mat-option *ngFor="let component of componentList" [value]="component">{{component}}</mat-option>
+    <mat-select name="Component" [disabled]="!isComponentListReady" [(value)]="rcaData.ComponentID" required>
+      <mat-option *ngFor="let component of componentList" [value]="component.ID">{{component.ComponentName}}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="one-line-item">
     <mat-label><span class="input-label">Readout Level</span></mat-label>
-    <mat-select name="ReadoutLevel" [(value)]="rcaData.ReadoutLevel" required>
-      <mat-option *ngFor="let readoutLevel of readoutLevels" [value]="readoutLevel">{{readoutLevel}}</mat-option>
+    <mat-select name="ReadoutLevel" [(value)]="rcaData.ReadoutLevelID" required>
+      <mat-option *ngFor="let readoutLevel of readoutLevels" [value]="readoutLevel.ID">{{readoutLevel.ReadoutLevel}}</mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -147,14 +148,25 @@
     </div>
   </div>
 
+  <div *ngIf="!isCreateMode" class="one-line-item full-width">
+    <div class="attachment-icon" >
+      <span>Attachment</span><mat-icon>attachment</mat-icon>
+    </div>
+    <app-attachment [RCAID]="data.rcaID" [IsReadOnly]="false" (Loaded)=AttachmentLoaded()></app-attachment>
+  </div>
+  <div class="first-loading" *ngIf="isFirstLoading">
+    Loading...
+  </div>
+
 </mat-dialog-content>
+</div>
 
 
 <div mat-dialog-actions class="dialog-actions">
   <div>
     <button mat-button (click)="onCancelClick()">Cancel</button>
-    <button mat-button (click)="onCreateClick()" [ngClass]="{'disable-btn': !isAllowApply}"  *ngIf="isCreateMode">Create</button>
-    <button mat-button (click)="onUpdateClick()" [ngClass]="{'disable-btn': !isAllowApply}"  *ngIf="!isCreateMode">Update</button>
+    <button mat-button (click)="onCreateClick()" [ngClass]="{'disable-btn': !isAllowCreate}"   *ngIf="isCreateMode" [disabled]="!isAllowCreate" >Create</button>
+    <button mat-button (click)="onUpdateClick()" [ngClass]="{'disable-btn': !isAllowUpdate}"  *ngIf="!isCreateMode" [disabled]="!isAllowUpdate">Update</button>
   </div>
 </div>
-<!-- <div>{{testRCAData}}</div> -->
+

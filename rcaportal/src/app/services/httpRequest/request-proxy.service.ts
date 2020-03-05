@@ -5,12 +5,16 @@ import { HttpRequesterService } from './http-requester.service';
 import { HotKeyword } from '@app/entities/hotKeyword';
 import { RCAItem, Attachment } from '@app/entities/rcaItem';
 import { FilterCondition } from '@app/entities/filterCondition';
+import { ProductInfo } from '@app/entities/productInfo';
+import { VersionInfo } from '@app/entities/versionInfo';
+import { ComponentInfo } from '@app/entities/componentInfo';
+import { ReadoutInfo } from '@app/entities/readoutInfo';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RequestProxyService implements IHttpRequester{
-  private isMock = true;
+  private isMock = false;
   private requestService: IHttpRequester;
   constructor(private httpRequesterService: HttpRequesterService,
     private httpRequesterMockService: HttpRequesterMockService) {
@@ -18,23 +22,29 @@ export class RequestProxyService implements IHttpRequester{
       this.requestService = this.isMock ? this.httpRequesterMockService: this.httpRequesterService;
   }
 
-  GetProducts(): Promise<string[]> {
+  GetProducts(): Promise<ProductInfo[]> {
     return this.requestService.GetProducts();
   }
-  GetProductVersions(productName: string): Promise<string[]> {
-    return this.requestService.GetProductVersions(productName);
+  GetProductVersions(productID: string): Promise<VersionInfo[]> {
+    return this.requestService.GetProductVersions(productID);
   }
-  GetProductComponents(productName: string): Promise<string[]> {
-    return this.requestService.GetProductComponents(productName);
+  GetProductComponents(productID: string): Promise<ComponentInfo[]> {
+    return this.requestService.GetProductComponents(productID);
   }
-  GetReadOutLevels(): Promise<Array<string>>{
+  GetReadOutLevels(): Promise<ReadoutInfo[]>{
     return this.requestService.GetReadOutLevels();
   }
-  UploadAttachment(rawData: any): Promise<Attachment> {
-    return this.requestService.UploadAttachment(rawData);
+  UploadAttachment(rcaID: string, formData: any): Promise<boolean> {
+    return this.requestService.UploadAttachment(rcaID, formData);
   }
-  GetAttachment(attachmentID: string): Promise<any> {
-    return this.requestService.GetAttachment(attachmentID);
+  GetAttachments(rcaID: string): Promise<Attachment[]> {
+    return this.requestService.GetAttachments(rcaID);
+  }
+  DeleteAttachment(rcaID: string, attachmentID: string): Promise<boolean>{
+    return this.requestService.DeleteAttachment(rcaID, attachmentID);
+  }
+  GetAttachment( path: string): Promise<any> {
+    return this.requestService.GetAttachment(path);
   }
   CreateRCA(newRCA: RCAItem): Promise<boolean> {
     return this.requestService.CreateRCA(newRCA);
@@ -42,8 +52,11 @@ export class RequestProxyService implements IHttpRequester{
   DeleteRCA(RCAID: string): Promise<boolean> {
     return this.requestService.DeleteRCA(RCAID);
   }
-  UpdateRCA(RCAID: string, newRCA: RCAItem): Promise<boolean> {
-    return this.requestService.UpdateRCA(RCAID, newRCA);
+  UpdateRCA(RCAID: string, updateRCA: any): Promise<boolean> {
+    return this.requestService.UpdateRCA(RCAID, updateRCA);
+  }
+  GetRCA(RCAID: string): Promise<RCAItem> {
+    return this.requestService.GetRCA(RCAID);
   }
   GetRCAs(filterCondition: FilterCondition, start: number, count: number): Promise<RCAItem[]> {
     return this.requestService.GetRCAs(filterCondition, start, count);

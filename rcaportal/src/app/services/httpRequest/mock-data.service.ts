@@ -51,15 +51,20 @@ export class MockDataService {
       let randomVersion = randomProduct.versions[index % 8];
       let randomComponent = randomProduct.components[index % 5];
       this.RCAItems.push({
-        ID: `RCA-${index}`,
+        ID: `ID-${index}`,
+        RCAID: `RCA-${index}`,
         Header: `[RCA-${index}]Because MatDialog instantiates components at run-time, Because MatDialog instantiates components at run-time, Because MatDialog instantiates components at run-time, Because MatDialog instantiates components at run-time`,
         Submitter: index % 5 == 0 ? 'Admin' : `People-${index}`,
         KeyWords: [`KEYWORD-${index}`, `KEYWORD-${99 - index}`],
         RootCauseCR: `RCA-${index}`,
         ImpactedProduct: randomProduct.name,
+        ImpactedProductID:"",
         FixVersion: randomVersion,
+        FixVersionID:"",
         Component: randomComponent,
+        ComponentID:"",
         ReadoutLevel: this.ReadOutLevels[index % 5],
+        ReadoutLevelID:"",
         RootCauseAnalyze: 'The root cause is ....The root cause is ....The root cause is ....The root cause is ....The root cause is ....The root cause is ....The root cause is ....The root cause is ....',
         RequirementCorrectAndPrevention: {
           RootCause: 'The root cause summary per this view with more details',
@@ -103,14 +108,14 @@ export class MockDataService {
   GetFilteredRCAs(filterCondition: FilterCondition): Array<RCAItem> {
     return this.RCAItems.filter(rca => {
       let filterResult = true;
-      if (filterCondition.ID) return (filterCondition.ID == rca.ID);
+      if (filterCondition.RCAID) return (filterCondition.RCAID == rca.RCAID);
 
       if (filterCondition.ImpactedProduct) filterResult = filterResult && (filterCondition.ImpactedProduct == rca.ImpactedProduct);
-      if (filterCondition.FixVersions && filterCondition.FixVersions.length > 0) filterResult = filterResult && (filterCondition.FixVersions.includes(rca.FixVersion));
-      if (filterCondition.Components && filterCondition.Components.length > 0) filterResult = filterResult && (filterCondition.Components.includes(rca.Component));
+      if (filterCondition.FixVersion ) filterResult = filterResult && (filterCondition.FixVersion == rca.FixVersion);
+      if (filterCondition.Component ) filterResult = filterResult && (filterCondition.Component == rca.Component);
       if (filterCondition.Submitter) filterResult = filterResult && (filterCondition.Submitter == rca.Submitter);
       if (filterCondition.RootCauseCR) filterResult = filterResult && (filterCondition.RootCauseCR == rca.RootCauseCR);
-      if (filterCondition.ReadoutLevels && filterCondition.ReadoutLevels.length > 0) filterResult = filterResult && (filterCondition.ReadoutLevels.includes(rca.ReadoutLevel));
+      if (filterCondition.ReadoutLevel) filterResult = filterResult && (filterCondition.ReadoutLevel == rca.ReadoutLevel);
 
       if (filterCondition.Keywords && filterCondition.Keywords.length > 0) {
         filterResult = filterResult && this.ArrayIncludes(rca.KeyWords, filterCondition.Keywords);

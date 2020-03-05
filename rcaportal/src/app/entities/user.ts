@@ -2,9 +2,9 @@ import { Role } from './role';
 
 export class User {
   id: number;
-  email: string;
+  username: string;
   password: string;
-  userName: string;
+  userName: string; // Not use.
   role: Role;
   token?: string;
 }

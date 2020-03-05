@@ -15,14 +15,17 @@ export class FilterService {
   public filterConditionChangeEvent = new EventEmitter();
 
   constructor(private router: Router,
-    private requestProxyService: RequestProxyService) { }
+              private requestProxyService: RequestProxyService) { }
 
   getCurrentFilterResults() {
     this.isLoadFinished = false;
-    this.requestProxyService.GetRCAs(this.currentFilterCondition, 0, this.currentMaxRCAResultCount).then(results => {
+    this.requestProxyService.GetRCAs(this.currentFilterCondition, 1, this.currentMaxRCAResultCount)
+    .then(
+    (results) => {
       this.filterResults = results;
       this.isLoadFinished = true;
-    }, () => {
+    },
+    (err) => {
       this.isLoadFinished = true;
     })
   }

@@ -1,0 +1,24 @@
+<div class="container">
+
+  <div class="attachments">
+    <div class="attachmentItem" *ngFor="let attachment of attchmentArrays" (click)=onPreview(attachment)>
+
+      <div class="attachmentItemImage">
+        <img  height="100%" width="100%" [src]="'api/' + attachment.Type +'/' + attachment.Name">
+        <mat-icon class="delete-btn" (click)=onDelete($event,attachment) *ngIf= '!IsReadOnly'>delete</mat-icon>
+      </div>
+      <div class="attachmentItemName" [title]="attachment.Name">
+        <span>{{attachment.Name}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="upload" *ngIf= '!IsReadOnly'>
+      <input #upload type="file" name="image" (change)="fileChange($event)" style="display: none;" />
+      <button mat-stroked-button (click)="upload.click()">Upload a file</button>
+  </div>
+
+<div *ngIf="isPreviewOpened" class="preview">
+  <mat-icon class="close-btn"  (click)="onClosePreview()">close</mat-icon>
+  <img class="image" [src]="previewUrl">
+</div>
+

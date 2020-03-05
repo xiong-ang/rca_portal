@@ -28,9 +28,9 @@ export class HomeKeywordRankComponent implements OnInit {
 
   private fetchKeywords() {
     this.isLoading = true;
-    this.hotRankService.getHotKeywords(0, 9 * (1 + this.currentPage)).then(keywords => {
+    this.hotRankService.getHotKeywords(1, 9 * (1 + this.currentPage)).then(keywords => {
       this.HotKeywords = keywords;
-      this.isLoading = false; 
+      this.isLoading = false;
       this.isFirstLoading = false;
     }, ()=>{
       this.isLoading = false;

@@ -12,6 +12,6 @@ export class HotRankService {
   }
 
   async getHotRCAs(count) {
-    return this.requestProxyService.GetHotRCAs(0, count);
+    return this.requestProxyService.GetHotRCAs(1, count);
   }
 }

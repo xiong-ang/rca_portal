@@ -1,17 +1,23 @@
-import { Component, OnInit, Inject, ElementRef, ViewChild} from '@angular/core';
+import { Component, OnInit, Inject, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RCAItem } from '@app/entities/rcaItem';
 import { RequestProxyService } from '@app/services/httpRequest/request-proxy.service';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { FormControl } from '@angular/forms';
-import { Observable,of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { ProductInfo } from '@app/entities/productInfo';
+import { VersionInfo } from '@app/entities/versionInfo';
+import { ComponentInfo } from '@app/entities/componentInfo';
+import { ReadoutInfo } from '@app/entities/readoutInfo';
+import { AuthenticationService } from '@app/services/authentication.service';
 export interface RCADialogData {
   type: string;
-  rcaData: RCAItem;
+  rcaID: string;
+  okAction: any;
+  cancelAction: any;
 }
 
 @Component({
@@ -19,18 +25,35 @@ export interface RCADialogData {
   templateUrl: './rca-dialog.component.html',
   styleUrls: ['./rca-dialog.component.css']
 })
-export class RcaDialogComponent  implements OnInit {
+export class RcaDialogComponent implements OnInit {
   public get isCreateMode(): boolean { return this.data.type == 'Create'; }
   public get dialogTitle(): string { return this.isCreateMode ? 'Create a new RCA' : 'Update RCA'; }
-  public get testRCAData(): string { return JSON.stringify(this.data.rcaData); }
-  rcaData: RCAItem;
-  impactedProducts: string[] = [];
-  readoutLevels: string[] = [];
-  fixVersionList: string[] = [];
-  componentList: string[] = [];
+
+  public get isFirstLoading(): boolean {
+    return this.isKeywordLoading ||
+      this.isProductLoading ||
+      this.isAttachmentLoading ||
+      this.isReadOutLevelLoading;
+  }
+  rcaData: RCAItem = new RCAItem();
+  oldRcaData: RCAItem = new RCAItem();
+  impactedProducts: ProductInfo[] = [];
+  readoutLevels: ReadoutInfo[] = [];
+  fixVersionList: VersionInfo[] = [];
+  componentList: ComponentInfo[] = [];
   isFixVersionListReady = false;
   isComponentListReady = false;
   keyWordCtrl = new FormControl();
+
+  isRequirementPanelOpen = false;
+  isDevPanelOpen = false;
+  isTestPanelOpen = false;
+
+
+  isKeywordLoading = true;
+  isProductLoading = true;
+  isAttachmentLoading = false;
+  isReadOutLevelLoading = true;
 
   filteredKeyWords: Observable<string[]>;
   visible = true;
@@ -38,75 +61,141 @@ export class RcaDialogComponent  implements OnInit {
   removable = true;
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  allKeywords: string[] = ['AKeyword0', 'ABKeyword1', 'ABCKeyword2', 'ABCDKeyword3', 'Keyword4', 'Keyword5'];
-  keyWordTips: string[] = ['AKeyword0', 'ABKeyword1', 'ABCKeyword2','AKeyword0', 'AKeyword0', 'ABKeyword1', 'ABCKeyword2','AKeyword0', 'ABKeyword1', 'ABCKeyword2','ABKeyword1', 'ABCKeyword2','AKeyword0', 'ABKeyword1', 'ABCKeyword2', 'ABCDKeyword3', 'Keyword4', 'Keyword5',];
-  @ViewChild('keyWordInput', {static: false}) keyWordInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
+  allKeywords: string[] = [];
+  keyWordTips: string[] = [];
+  @ViewChild('keyWordInput', { static: false }) keyWordInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
   constructor(
     public dialogRef: MatDialogRef<RcaDialogComponent>,
     private requestProxyService: RequestProxyService,
-    @Inject(MAT_DIALOG_DATA) public data: RCADialogData) {
-      this.filteredKeyWords = this.keyWordCtrl.valueChanges.pipe(
-        startWith(null),
-        map((keyWord: string | null) => keyWord ? this._filter(keyWord) : this.allKeywords.slice()));
-     }
-
-  ngOnInit() {
-    this.rcaData = this.data.rcaData;
-    this.loadProductInfo();
-    this.loadReadOutInfo();
-    if (this.data.type === 'Update') {
-      this.loadVersionsAndComponents();
-    }
+    @Inject(MAT_DIALOG_DATA) public data: RCADialogData,
+    private authenticationService: AuthenticationService) {
+    this.filteredKeyWords = this.keyWordCtrl.valueChanges.pipe(
+      startWith(null),
+      map((keyWord: string | null) => keyWord ? this._filter(keyWord) : this.allKeywords.slice()));
   }
 
-  get isAllowApply() {
-    return this.rcaData.ID.length !== 0 &&
+  ngOnInit() {
+    this.loadProductInfo();
+    this.loadKeywordAndTips();
+    this.loadReadOutInfo();
+
+    if (this.data.type === 'Update') {
+      this.isAttachmentLoading = true;
+      this.requestProxyService.GetRCA(this.data.rcaID).then(rcaInfo => {
+      this.rcaData = rcaInfo;
+      this.oldRcaData = JSON.parse(JSON.stringify(rcaInfo));
+      this.loadVersionsAndComponents();
+    });
+  } else {
+    this.rcaData.Submitter = this.authenticationService.currentUserValue;
+  }
+
+  }
+
+  get isAllowCreate() {
+    return this.rcaData.RCAID.length !== 0 &&
       this.rcaData.Header.length !== 0 &&
       this.rcaData.Submitter.length !== 0 &&
       this.rcaData.KeyWords.length !== 0 &&
       this.rcaData.RootCauseAnalyze.length !== 0 &&
-      this.rcaData.FixVersion.length !== 0 &&
-      this.rcaData.ImpactedProduct.length !== 0 &&
-      this.rcaData.Component.length !== 0 ;
-      //To do
+      this.rcaData.FixVersionID.length !== 0 &&
+      this.rcaData.ImpactedProductID.length !== 0 &&
+      this.rcaData.ComponentID.length !== 0;
+    //To do
   }
 
-  get selectedProduct() { return this.rcaData.ImpactedProduct; }
-  set selectedProduct(value) {
+  get isAllowUpdate() {
+    return JSON.stringify(this.rcaData) !== JSON.stringify(this.oldRcaData);
+    //To do
+  }
 
-    if (value != this.rcaData.ImpactedProduct) {
+  get selectedProductID() { return this.rcaData.ImpactedProductID; }
+  set selectedProductID(value) {
+
+    if (value != this.rcaData.ImpactedProductID) {
       this.isComponentListReady = false;
       this.isFixVersionListReady = false;
-      this.rcaData.ImpactedProduct = value;
-      this.loadVersionsAndComponents();
+      this.rcaData.ImpactedProductID = value;
+      if(this.selectedProductID){
+        this.loadVersionsAndComponents();
+      }
     }
   }
   loadProductInfo() {
-    this.requestProxyService.GetProducts().then(productNames => {
-      this.impactedProducts = productNames;
-    });
+    this.requestProxyService.GetProducts()
+      .then((productNames) => {
+        this.impactedProducts = productNames;
+        this.isProductLoading = false;
+      },
+        (error) => {
+          this.isProductLoading = false;
+          if (error) {
+          alert(error);
+        }
+        })
+      .catch(error => console.log(error));
   }
   loadReadOutInfo() {
     this.requestProxyService.GetReadOutLevels().then(readoutLevels => {
       this.readoutLevels = readoutLevels;
-    });
+      this.isReadOutLevelLoading = false;
+    },
+      (error) => {
+        this.isReadOutLevelLoading = false;
+        if (error) {
+          alert(error);
+        }
+      });
   }
 
+  loadKeywordAndTips() {
+    this.allKeywords = [];
+    this.keyWordTips = [];
+    this.requestProxyService.GetHotKeywords(1, -1).then(hotKeywords => {
+      hotKeywords.forEach((keyword, index) => {
+        this.allKeywords.push(keyword.KeywordValue);
+        if (index < 10) {
+          this.keyWordTips.push(keyword.KeywordValue);
+        }
+      });
+      this.isKeywordLoading = false;
+    },
+      (error) => {
+        this.isKeywordLoading = false;
+        if (error) {
+          alert(error);
+        }
+      });
+  }
 
   loadVersionsAndComponents() {
     this.fixVersionList = [];
-    this.requestProxyService.GetProductVersions(this.rcaData.ImpactedProduct).then(versions => {
+    this.requestProxyService.GetProductVersions(this.selectedProductID).then(versions => {
       this.fixVersionList = versions;
       this.isFixVersionListReady = true;
-    });
+    },
+      (error) => {
+        if (error) {
+          alert(error);
+        }
+      });
 
     this.componentList = [];
-    this.requestProxyService.GetProductComponents(this.rcaData.ImpactedProduct).then(components => {
+    this.requestProxyService.GetProductComponents(this.selectedProductID).then(components => {
       this.componentList = components;
       this.isComponentListReady = true;
-    });
+    },
+      (error) => {
+        if (error) {
+          alert(error);
+        }
+      });
+  }
+
+  AttachmentLoaded() {
+    this.isAttachmentLoading = false;
   }
 
   add(event: MatChipInputEvent): void {
@@ -159,22 +248,93 @@ export class RcaDialogComponent  implements OnInit {
 
   onCancelClick(): void {
     this.dialogRef.close();
+    this.data.cancelAction();
   }
 
   onCreateClick(): void {
-    this.dialogRef.close();
-
-    //TODO: Get RCAItem -> data.rcaData
-
-    this.requestProxyService.CreateRCA(this.rcaData);
+    this.requestProxyService.CreateRCA(this.rcaData).then(
+      () => {
+        this.dialogRef.close();
+        this.data.okAction();
+      },
+      (error) => {
+        if (error) {
+          alert(error);
+        }
+      });
   }
 
   onUpdateClick(): void {
-    this.dialogRef.close();
 
-    //TODO: Fetch RCAItem -> data.rcaData
+    this.requestProxyService.UpdateRCA(this.rcaData.ID, this.FindUpdate(this.rcaData, this.oldRcaData)).then(
+      () => {
+        this.dialogRef.close();
+        this.data.okAction();
+      },
+      (error) => {
+        if (error) {
+          alert(error);
+        }
+      });
+  }
 
-    this.requestProxyService.UpdateRCA(this.rcaData.ID, this.rcaData);
+  FindUpdate(newOne: RCAItem, oldOne: RCAItem) {
+    const body: any = {};
+    if (newOne.RCAID !== oldOne.RCAID) {
+      body.RCAID = newOne.RCAID;
+    }
+    if (newOne.Header !== oldOne.Header) {
+      body.Header = newOne.Header;
+    }
+    if (newOne.ImpactedProductID !== oldOne.ImpactedProductID) {
+      body.ImpactedProductID = newOne.ImpactedProductID;
+    }
+    if (newOne.FixVersionID !== oldOne.FixVersionID) {
+      body.FixedVersionID = newOne.FixVersionID;
+    }
+    if (newOne.ComponentID !== oldOne.ComponentID) {
+      body.ComponentID = newOne.ComponentID;
+    }
+    if (newOne.KeyWords.toString() !== oldOne.KeyWords.toString()) {
+      body.Keywords = newOne.KeyWords.toString();
+    }
+    if (newOne.ReadoutLevelID !== oldOne.ReadoutLevelID) {
+      body.ReadoutLevelID = newOne.ReadoutLevelID;
+    }
+    if (newOne.RootCauseCR !== oldOne.RootCauseCR) {
+      body.RootCauseCR = newOne.RootCauseCR;
+    }
+    if (newOne.RootCauseAnalyze !== oldOne.RootCauseAnalyze) {
+      body.RootCauseAnalyze = newOne.RootCauseAnalyze;
+    }
+    if (newOne.RequirementCorrectAndPrevention.RootCause !== oldOne.RequirementCorrectAndPrevention.RootCause) {
+      body.RequirementRootCause = newOne.RequirementCorrectAndPrevention.RootCause;
+    }
+    if (newOne.RequirementCorrectAndPrevention.Correction !== oldOne.RequirementCorrectAndPrevention.Correction) {
+      body.RequirementCorrection = newOne.RequirementCorrectAndPrevention.Correction;
+    }
+    if (newOne.RequirementCorrectAndPrevention.Prevention !== oldOne.RequirementCorrectAndPrevention.Prevention) {
+      body.RequirementPrevention = newOne.RequirementCorrectAndPrevention.Prevention;
+    }
+    if (newOne.DevCorrectAndPrevention.RootCause !== oldOne.DevCorrectAndPrevention.RootCause) {
+      body.DevRootCause = newOne.DevCorrectAndPrevention.RootCause;
+    }
+    if (newOne.DevCorrectAndPrevention.Correction !== oldOne.DevCorrectAndPrevention.Correction) {
+      body.DevCorrection = newOne.DevCorrectAndPrevention.Correction;
+    }
+    if (newOne.DevCorrectAndPrevention.Prevention !== oldOne.DevCorrectAndPrevention.Prevention) {
+      body.DevPrevention = newOne.DevCorrectAndPrevention.Prevention;
+    }
+    if (newOne.TestCorrectAndPrevention.RootCause !== oldOne.TestCorrectAndPrevention.RootCause) {
+      body.TestRootCause = newOne.TestCorrectAndPrevention.RootCause;
+    }
+    if (newOne.TestCorrectAndPrevention.Correction !== oldOne.TestCorrectAndPrevention.Correction) {
+      body.TestCorrection = newOne.TestCorrectAndPrevention.Correction;
+    }
+    if (newOne.TestCorrectAndPrevention.Prevention !== oldOne.TestCorrectAndPrevention.Prevention) {
+      body.TestPrevention = newOne.TestCorrectAndPrevention.Prevention;
+    }
+    return body;
   }
 
 }

@@ -5,24 +5,24 @@
 
   <mat-form-field class="filter-item">
     <mat-label>IMPACTED PRODUCT</mat-label>
-    <mat-select [(value)]="selectedProduct">
-      <mat-option *ngFor="let impactedProduct of impactedProducts" [value]="impactedProduct">
-        {{impactedProduct}}
+    <mat-select [(value)]="selectedProductID">
+      <mat-option *ngFor="let impactedProduct of impactedProducts" [value]="impactedProduct.ID">
+        {{impactedProduct.ProductName}}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="filter-item">
     <mat-label>FIX VERSIONS</mat-label>
-    <mat-select [(value)]="selectedVersions" multiple>
-      <mat-option *ngFor="let fixVersion of fixVersionList" [value]="fixVersion">{{fixVersion}}</mat-option>
+    <mat-select [(value)]="selectedVersionID">
+      <mat-option *ngFor="let fixVersion of fixVersionList" [value]="fixVersion.ID">{{fixVersion.Version}}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="filter-item">
     <mat-label>COMPONENTS</mat-label>
-    <mat-select [(value)]="selectedComponents" multiple>
-      <mat-option *ngFor="let component of componentList" [value]="component">{{component}}</mat-option>
+    <mat-select [(value)]="selectedComponentID">
+      <mat-option *ngFor="let component of componentList" [value]="component.ID">{{component.ComponentName}}</mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -39,9 +39,9 @@
 </div>
 
 <div class="detail-filter" *ngIf="isDetailFilterPanelOpen">
-  <mat-form-field class="filter-item">
+  <!-- <mat-form-field class="filter-item">
     <input matInput placeholder="SUBMITTER" [(ngModel)]="inputSubmitter">
-  </mat-form-field>
+  </mat-form-field> -->
 
   <mat-form-field class="filter-item">
     <input matInput placeholder="ROOT CAUSE CR" [(ngModel)]="inputRootCauseCR">
@@ -49,8 +49,8 @@
 
   <mat-form-field class="filter-item">
     <mat-label>READOUT LEVELS</mat-label>
-    <mat-select [(value)]="selectedreadoutLevels" multiple>
-      <mat-option *ngFor="let readoutLevel of readoutLevelList" [value]="readoutLevel">{{readoutLevel}}</mat-option>
+    <mat-select [(value)]="selectedreadoutLevelID" >
+      <mat-option *ngFor="let readoutLevel of readoutLevelList" [value]="readoutLevel.ID">{{readoutLevel.ReadoutLevel}}</mat-option>
     </mat-select>
   </mat-form-field>
 

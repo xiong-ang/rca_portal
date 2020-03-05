@@ -4,7 +4,11 @@ import { FilterService } from 'src/app/services/filter.service';
 import { FilterCondition } from '@app/entities/filterCondition';
 import { RequestProxyService } from '@app/services/httpRequest/request-proxy.service';
 import { MatChipInputEvent } from '@angular/material';
-
+import { ProductInfo } from '@app/entities/productInfo';
+import { VersionInfo } from '@app/entities/versionInfo';
+import { ComponentInfo } from '@app/entities/componentInfo';
+import { ReadoutInfo } from '@app/entities/readoutInfo';
+import { copyArrayItem } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-home-filter',
   templateUrl: './home-filter.component.html',
@@ -17,36 +21,44 @@ export class HomeFilterComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  impactedProducts = [];
-  fixVersionList: string[] = [];
-  componentList: string[] = [];
-  readoutLevelList: string[] = [];
+  impactedProducts: ProductInfo[] = [];
+  fixVersionList: VersionInfo[] = [];
+  componentList: ComponentInfo[] = [];
+  readoutLevelList: ReadoutInfo[] = [];
 
 
   public inputID: string = '';
   private _selectedProduct = null;
-  get selectedProduct() { return this._selectedProduct; }
-  set selectedProduct(value) {
+  get selectedProductID() { return this._selectedProduct; }
+  set selectedProductID(value) {
     if (value != this._selectedProduct) {
       this._selectedProduct = value;
-
-      this.fixVersionList = [];
-      this.requestProxyService.GetProductVersions(this._selectedProduct).then(versions => {
-        this.fixVersionList = versions;
-      });
-
-      this.componentList = [];
-      this.requestProxyService.GetProductComponents(this._selectedProduct).then(components => {
-        this.componentList = components;
-      })
+      if (this.selectedProductID) {
+        this.requestProxyService.GetProductVersions(this.selectedProductID).then(versions => {
+          this.fixVersionList = versions;
+        },
+        (error) => {
+          if (error) {
+          alert(error);
+        }
+        });
+        this.requestProxyService.GetProductComponents(this.selectedProductID).then(components => {
+          this.componentList = components;
+        },
+        (error) => {
+          if (error) {
+          alert(error);
+        }
+        });
+      }
     }
   }
-  public selectedVersions = [];
-  public selectedComponents = [];
+  public selectedVersionID = null;
+  public selectedComponentID = null;
   public inputSubmitter: string = '';
   public inputRootCauseCR: string = '';
 
-  public selectedreadoutLevels = [];
+  public selectedreadoutLevelID = null;
 
   public inputKeywords: string[] = [];
   public Keyword_tips: string[] = [];
@@ -85,12 +97,12 @@ export class HomeFilterComponent implements OnInit {
 
   get isNothingInput() {
     return !this.inputID &&
-      !this.selectedProduct &&
-      this.selectedVersions.length == 0 &&
-      this.selectedComponents.length == 0 &&
+      !this.selectedProductID &&
+      this.selectedVersionID &&
+      this.selectedComponentID &&
       !this.inputSubmitter &&
       !this.inputRootCauseCR &&
-      this.selectedreadoutLevels.length == 0 &&
+      this.selectedreadoutLevelID &&
       this.inputKeywords.length == 0;
   }
 
@@ -98,24 +110,39 @@ export class HomeFilterComponent implements OnInit {
     private requestProxyService: RequestProxyService) { }
 
   loadProductInfo() {
-    this.requestProxyService.GetProducts().then(productNames => {
-      this.impactedProducts = productNames;
+    this.requestProxyService.GetProducts().then((products) => {
+      this.impactedProducts = products;
+    },
+    (error) => {
+      if (error) {
+          alert(error);
+        }
     });
   }
 
   loadReadoutLevelInfo() {
     this.requestProxyService.GetReadOutLevels().then(readoutLevels => {
       this.readoutLevelList = readoutLevels;
+    },
+    (error) => {
+      if (error) {
+          alert(error);
+        }
     });
   }
 
   loadKeyowrdTips() {
     this.Keyword_tips = [];
-    this.requestProxyService.GetHotKeywords(0, 10).then(hotKeywords => {
+    this.requestProxyService.GetHotKeywords(1, 10).then(hotKeywords => {
       hotKeywords.forEach(keyword => {
         this.Keyword_tips.push(keyword.KeywordValue);
-      })
-    })
+      });
+    },
+    (error) => {
+      if (error) {
+          alert(error);
+        }
+    });
   }
 
   triggerDetailFilterPanel() {
@@ -129,28 +156,42 @@ export class HomeFilterComponent implements OnInit {
   onApply() {
     this.isDetailFilterPanelOpen = false;
     let filterCondition = new FilterCondition();
-    filterCondition.ID = this.inputID;
-    filterCondition.ImpactedProduct = this.selectedProduct;
-    filterCondition.Components = this.selectedComponents;
-    filterCondition.FixVersions = this.selectedVersions;
-    filterCondition.ReadoutLevels = this.selectedreadoutLevels;
+    filterCondition.RCAID = this.inputID;
+
+    filterCondition.ImpactedProductID = this.selectedProductID;
+    let ProductInfo = this.impactedProducts && this.impactedProducts.find(x => x.ID == this.selectedProductID);
+    filterCondition.ImpactedProduct = ProductInfo && ProductInfo.ProductName;
+
+    filterCondition.ComponentID = this.selectedComponentID;
+    let ComponentInfo = this.componentList && this.componentList.find(x =>  x.ID == this.selectedComponentID);;
+    filterCondition.Component = ComponentInfo && ComponentInfo.ComponentName;
+
+    filterCondition.FixVersionID = this.selectedVersionID;
+    let VersionInfo = this.fixVersionList && this.fixVersionList.find(x =>  x.ID == this.selectedVersionID);
+    filterCondition.FixVersion = VersionInfo  && VersionInfo.Version;
+
+    filterCondition.ReadoutLevelID = this.selectedreadoutLevelID;
+    let ReadoutInfo = this.readoutLevelList && this.readoutLevelList.find(x =>  x.ID == this.selectedreadoutLevelID);
+    filterCondition.ReadoutLevel = ReadoutInfo && ReadoutInfo.ReadoutLevel;
+
+
     filterCondition.Keywords = this.inputKeywords;
     filterCondition.RootCauseCR = this.inputRootCauseCR;
     filterCondition.Submitter = this.inputSubmitter;
 
-    this.clear();
+    //this.clear();
 
     this.filterSrv.showFilterResults(filterCondition);
   }
 
   clear() {
     this.inputID = '';
-    this.selectedProduct = null;
-    this.selectedVersions = [];
-    this.selectedComponents = [];
+    this.selectedProductID = null;
+    this.selectedVersionID = null;
+    this.selectedComponentID = null;
     this.inputSubmitter = '';
     this.inputRootCauseCR = '';
-    this.selectedreadoutLevels = [];
+    this.selectedreadoutLevelID = null;
     this.inputKeywords = [];
   }
 

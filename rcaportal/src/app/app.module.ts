@@ -70,14 +70,15 @@ import { HomeKeywordItemComponent } from './pages/home/home-rank/home-keyword-ra
 import { HomeRcaItemComponent } from './pages/home/home-rank/home-rca-rank/home-rca-item/home-rca-item.component';
 import { RcaDetailInfoComponent } from './pages/detail-rca/rca-detail-info/rca-detail-info.component';
 import { DetailRcaComponent } from './pages/detail-rca/detail-rca.component';
+import { AttachmentComponent } from './pages/attachment/attachment.component';
 
 // used to create fake backend
 import { fakeBackendProvider } from './utils/fake-backend';
 import { ErrorInterceptor } from './utils/error.interceptor';
-import { JwtInterceptor } from './utils/jwt.interceptor';
 import { HotRCAsDialogComponent } from './dialogs/hotRCAs-Dialog/hotRCAs-Dialog.component';
 import { ProgressBarColor } from './directives/ProgressBarColor.directive';
 import { MsgDialogComponent } from './dialogs/msg-dialog/msg-dialog.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
    declarations: [
@@ -103,6 +104,7 @@ import { MsgDialogComponent } from './dialogs/msg-dialog/msg-dialog.component';
       HotRCAsDialogComponent,
       ProgressBarColor,
       MsgDialogComponent,
+      AttachmentComponent,
    ],
    imports: [
       BrowserModule,
@@ -181,10 +183,10 @@ import { MsgDialogComponent } from './dialogs/msg-dialog/msg-dialog.component';
       MsgDialogComponent
    ],
    providers: [
-      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
       { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
       { provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: {float: 'always'}},
-      fakeBackendProvider,
+      //fakeBackendProvider,
+      CookieService,
    ],
    bootstrap: [
       AppComponent

@@ -1,7 +1,8 @@
 .filter-condition-page{
     display: grid;
     grid-template-columns: 4fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    /* grid-template-rows: 1fr 1fr; */
+    /* For QuickSerach*/
     justify-content: center;
     align-content: center;
     position: relative;
@@ -81,7 +82,7 @@
 }
 
 .readout-item{
-    grid-column: 3/5;
+    grid-column: 2/4;
 }
 
 .whole-line-item{

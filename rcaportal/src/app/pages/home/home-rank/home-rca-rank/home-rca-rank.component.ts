@@ -18,19 +18,21 @@ export class HomeRcaRankComponent implements OnInit {
     private rcaDetailSrv: RcaDetailService,
     private rcaDialogService: RcaDialogService) {
     this.mostHotRCAs = [];
-    this.hotRankService.getHotRCAs(8).then(hotRCAs => {
+    this.hotRankService.getHotRCAs(8).then(
+      (hotRCAs) => {
       this.mostHotRCAs = hotRCAs;
       this.isFirstLoading = false;
-    }, () => {
+      },
+      (error) => {
       this.isFirstLoading = false;
-    });
+      });
   }
 
   ngOnInit() {
   }
 
-  openRCADetail(hotRCA: RCAItem) {
-    this.rcaDetailSrv.openRCADetail(hotRCA);
+  openRCADetail(hotRCAID: string ) {
+    this.rcaDetailSrv.openRCADetail(hotRCAID);
   }
 
   onUnfoldHotRCAs() {

@@ -1,20 +1,24 @@
 export class FilterCondition {
-    public ID: string;
+    public RCAID: string;
     public ImpactedProduct: string;
-    public FixVersions: string[] = [];
-    public Components: string[] = [];
+    public ImpactedProductID: string;
+    public FixVersion: string;
+    public FixVersionID: string;
+    public Component: string;
+    public ComponentID: string;
     public Submitter: string;
     public RootCauseCR: string;
-    public ReadoutLevels: string[] = [];
+    public ReadoutLevel: string;
+    public ReadoutLevelID: string;
     public Keywords: string[] = [];
     public QuickSearch: string; //TODO
 
     public GetFilterEntity() {
         let result = new FilterEntity();
-        if (this.ID) {
+        if (this.RCAID) {
             result.FilterItems.push({
-                key: 'ID',
-                values: [this.ID],
+                key: 'RCAID',
+                values: [this.RCAID],
                 Type: 'only'
             });
         }
@@ -27,18 +31,18 @@ export class FilterCondition {
             });
         }
 
-        if (this.FixVersions) {
+        if (this.FixVersion) {
             result.FilterItems.push({
                 key: 'Fix Version',
-                values: Array.from(new Set(this.FixVersions)),
+                values: [this.FixVersion],
                 Type: 'and'
             });
         }
 
-        if (this.Components) {
+        if (this.Component) {
             result.FilterItems.push({
                 key: 'Component',
-                values: Array.from(new Set(this.Components)),
+                values: [this.Component],
                 Type: 'and'
             });
         }
@@ -59,10 +63,10 @@ export class FilterCondition {
             });
         }
 
-        if (this.ReadoutLevels) {
+        if (this.ReadoutLevel) {
             result.FilterItems.push({
                 key: 'Readout Level',
-                values: this.ReadoutLevels,
+                values: [this.ReadoutLevel],
                 Type: 'and'
             });
         }
@@ -79,13 +83,17 @@ export class FilterCondition {
     }
 
     public isEmpty(): boolean{
-        return !this.ID &&
+        return !this.RCAID &&
         !this.ImpactedProduct &&
-        this.FixVersions.length == 0 &&
-        this.Components.length == 0 &&
+        !this.ImpactedProductID &&
+        !this.FixVersion &&
+        !this.FixVersionID &&
+        !this.Component &&
+        !this.ComponentID &&
         !this.Submitter &&
         !this.RootCauseCR &&
-        this.ReadoutLevels.length == 0 &&
+        this.ReadoutLevel &&
+        this.ReadoutLevelID &&
         this.Keywords.length == 0;
     }
 }
