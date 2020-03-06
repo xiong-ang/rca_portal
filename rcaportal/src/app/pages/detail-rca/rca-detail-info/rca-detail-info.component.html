@@ -115,6 +115,6 @@
   <div class="rca-prop-group-label">
     <div class="rca-prop-key rca-icon">Attachments<mat-icon  class="Component-icon">attachment</mat-icon></div>
   </div>
-  <app-attachment [RCAID]="RCADetail.ID" [IsReadOnly]="true"></app-attachment>
+  <app-attachment [RCAID]="RCADetail.ID" [IsReadOnly]="true" [updateEvent]="updateAttachmentSubject.asObservable()"></app-attachment>
   <!-- {{RCADetailTest}} -->
 </div>

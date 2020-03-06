@@ -1,31 +1,40 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { RequestProxyService } from "@app/services/httpRequest/request-proxy.service";
 import { Attachment } from "@app/entities/rcaItem";
+import { Observable, Subscription } from "rxjs";
 
 @Component({
   selector: 'app-attachment',
   templateUrl: './attachment.component.html',
   styleUrls: ['./attachment.component.css']
 })
-export class AttachmentComponent implements OnInit {
+export class AttachmentComponent implements OnInit, OnDestroy {
 
   constructor(private http: HttpClient,
               private requestProxyService: RequestProxyService) { }
 
   @Input() IsReadOnly = true;
   @Input() RCAID: string;
+  @Input() updateEvent: Observable<void> = new Observable<void>();
   @Output() Loaded = new EventEmitter();
+
 
   attchmentArrays: Attachment[] = [];
   previewUrl: string = null;
   previewName: string = null;
   isPreviewOpened = false;
+  private updateEventSubscription: Subscription;
 
   ngOnInit() {
+    this.updateEventSubscription = this.updateEvent.subscribe(() => this.refreshAttachments());
     if (this.RCAID) {
       this.refreshAttachments();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.updateEventSubscription.unsubscribe();
   }
 
   refreshAttachments() {

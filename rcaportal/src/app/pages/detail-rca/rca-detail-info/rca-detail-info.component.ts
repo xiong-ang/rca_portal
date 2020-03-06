@@ -4,6 +4,7 @@ import { FilterService } from 'src/app/services/filter.service';
 import { FilterCondition } from '@app/entities/filterCondition';
 import { RcaDialogService } from 'src/app/services/rca-dialog.service';
 import { RequestProxyService } from '@app/services/httpRequest/request-proxy.service';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-rca-detail-info',
   templateUrl: './rca-detail-info.component.html',
@@ -16,7 +17,7 @@ export class RcaDetailInfoComponent implements OnInit {
   constructor(private filterSrv: FilterService,
               private rcaDialogSrv: RcaDialogService,
               private requestProxyService: RequestProxyService) { }
-
+  public updateAttachmentSubject: Subject<void> = new Subject<void>();
   onClickKeyword(keyWord: string) {
     const filterCondition = new FilterCondition();
     filterCondition.Keywords.push(keyWord);
@@ -29,7 +30,10 @@ export class RcaDetailInfoComponent implements OnInit {
           this.requestProxyService.GetRCA(this.RCADetail.ID).then(
             rcaItem => {
               this.RCADetail = rcaItem;
+              this.updateAttachmentSubject.next();
             });
+        } else {
+          this.updateAttachmentSubject.next();
         }});
   }
   ngOnInit() {}
