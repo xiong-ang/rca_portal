@@ -24,7 +24,7 @@ export class AttachmentComponent implements OnInit, OnDestroy {
   previewUrl: string = null;
   previewName: string = null;
   isPreviewOpened = false;
-  private updateEventSubscription: Subscription;
+  private updateEventSubscription: Subscription = new Subscription();
 
   ngOnInit() {
     this.updateEventSubscription = this.updateEvent.subscribe(() => this.refreshAttachments());
