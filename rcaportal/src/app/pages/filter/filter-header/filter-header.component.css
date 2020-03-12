@@ -47,7 +47,7 @@
 
 .link-item{
     display: flex;
-    align-items: center; 
+    align-items: center;
     margin: 10px;
 }
 
@@ -56,7 +56,12 @@
     color: gray;
 }
 
-
+.no-link-item{
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  color: gray;
+}
 /*filter special from home*/
 .header{
     color: white;

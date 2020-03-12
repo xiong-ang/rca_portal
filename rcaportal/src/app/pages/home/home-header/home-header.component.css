@@ -47,11 +47,18 @@
 
 .link-item{
     display: flex;
-    align-items: center; 
+    align-items: center;
     margin: 10px;
 }
 
 .link-item:hover{
     cursor: pointer;
     color: gray;
+}
+
+.no-link-item{
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  color: gray;
 }

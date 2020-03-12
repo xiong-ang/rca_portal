@@ -4,7 +4,7 @@
       <img height="40px" style="user-select: none;" src="assets/Logo1.svg">
     </div>
     <div class="header-item-oper">
-      <div class="link-item" (click)="onHomeClick()">
+      <div class="no-link-item" (click)="onHomeClick()">
         <i class="material-icons">home</i><span>Home</span>
       </div>
       <div class="link-item" (click)="onMyCRsClick()">
@@ -15,10 +15,10 @@
       </div>
     </div>
     <div class="header-item-user">
-      <div class="link-item">
+      <!-- <div class="link-item">
         <i class="material-icons">help</i>
-      </div>
-      <div class="link-item">
+      </div> -->
+      <div class="no-link-item">
         <i class="material-icons">account_circle</i><span>{{currentUser}}</span>
       </div>
       <div class="link-item" (click)="logout()">
