@@ -383,14 +383,18 @@ export class HttpRequesterService implements IHttpRequester {
       .then(res => {
         if (res && res.status) {
           const HotKeywords: HotKeyword[] = [];
-          res.data.forEach(KeywordItem => {
-            const hotkeyword = new HotKeyword();
-            hotkeyword.ID = KeywordItem.ID;
-            hotkeyword.KeywordValue = KeywordItem.Keyword;
-            hotkeyword.HotValue = KeywordItem.QueriedTimes;
-            hotkeyword.RCACount = KeywordItem.ReferenceTimes;
-            HotKeywords.push(hotkeyword);
-          });
+          if (res.data) {
+            const maxQueriedTime = res.data[0].ReferenceTimes;
+            res.data.forEach(KeywordItem => {
+              const hotkeyword = new HotKeyword();
+              hotkeyword.ID = KeywordItem.ID;
+              hotkeyword.KeywordValue = KeywordItem.Keyword;
+              hotkeyword.HotValue = KeywordItem.QueriedTimes;
+              hotkeyword.RCACount = KeywordItem.ReferenceTimes;
+              hotkeyword.HotProp = 100 * KeywordItem.QueriedTimes / maxQueriedTime;
+              HotKeywords.push(hotkeyword);
+            });
+          }
           resolve(HotKeywords);
         } else {
           reject(res && res.message);
