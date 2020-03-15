@@ -160,6 +160,9 @@ export class RcaDialogComponent implements OnInit {
           this.keyWordTips.push(keyword.KeywordValue);
         }
       });
+      this.allKeywords.sort((a, b) => {
+        return a.toLowerCase().localeCompare(b.toLowerCase());
+      });
       this.isKeywordLoading = false;
     },
       (error) => {
