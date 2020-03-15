@@ -90,7 +90,7 @@
 
     <div class="oper-btn">
       <button mat-button class="filter-item" (click)="onCancel()">Cancel</button>
-      <button mat-button class="filter-item" [ngClass]="{'disable-btn': isNothingInput}"
+      <button mat-button class="filter-item" [ngClass]="{'disable-btn': isNothingInput}" [disabled]="isNothingInput"
         (click)="onApply()">Apply</button>
     </div>
   </div>

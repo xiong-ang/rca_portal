@@ -25,7 +25,8 @@
       <mat-option *ngFor="let component of componentList" [value]="component.ID">{{component.ComponentName}}</mat-option>
     </mat-select>
   </mat-form-field>
-
+  <button mat-button class="filter-item apply-btn" [ngClass]="{'disable-btn': isNothingInput || isDetailFilterPanelOpen, 'highlight': !isNothingInput && !isDetailFilterPanelOpen}" [disabled]="isNothingInput || isDetailFilterPanelOpen"
+    (click)="onApply()">Apply</button>
   <button mat-button class="filter-item"
     [ngClass]="{'btn-expend': !isDetailFilterPanelOpen, 'btn-collapse': isDetailFilterPanelOpen}"
     (click)="triggerDetailFilterPanel()">
@@ -34,8 +35,6 @@
     <i class="material-icons" *ngIf="!isDetailFilterPanelOpen">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="isDetailFilterPanelOpen">keyboard_arrow_up</i>
   </button>
-  <button mat-button class="filter-item apply-btn" [ngClass]="{'disable-btn': isNothingInput}"
-    (click)="onApply()">Apply</button>
 </div>
 
 <div class="detail-filter" *ngIf="isDetailFilterPanelOpen">
@@ -72,7 +71,7 @@
 
   <div class="oper-btn">
     <button mat-button class="filter-item" (click)="onCancel()">Cancel</button>
-    <button mat-button class="filter-item" [ngClass]="{'disable-btn': isNothingInput}"
+    <button mat-button class="filter-item" [ngClass]="{'disable-btn': isNothingInput}" [disabled]="isNothingInput"
       (click)="onApply()">Apply</button>
   </div>
 </div>

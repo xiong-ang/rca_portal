@@ -4,7 +4,7 @@
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-rows: 70px 200px 150px auto;
+    grid-template-rows: 70px 200px 100px auto;
     justify-content: stretch;
 }
 
@@ -42,7 +42,7 @@
 
 .notice-right{
     height: 100%;
-    background-color: gray; 
+    background-color: gray;
     background-image: linear-gradient(to right, grey , white);
     display: grid;
     justify-content: start;

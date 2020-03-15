@@ -2,15 +2,15 @@
     margin-top: 20px;
     margin-bottom: 20px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    /* grid-template-rows: 1fr 1fr; */
     justify-content: center;
     align-content: center;
     grid-column-gap: 30px;
 }
 
 .filter-item{
-    margin: 5px;
+    margin: 0px;
 }
 
 .btn-expend{
@@ -37,10 +37,8 @@
 }
 
 .apply-btn{
-    grid-column: 4;
-    grid-row: 2;
-    justify-self: end;
-    align-self: start;
+    justify-self: start;
+    align-self: center;
 }
 
 .detail-filter{
@@ -48,7 +46,7 @@
     width: 100%;
     padding: 15px;
     position: relative;
-    top: -70px;
+    top: -25px;
     border: 1px solid gray;
     background: white;
     display: grid;
@@ -96,4 +94,8 @@
 .disable-btn{
     cursor: not-allowed;
     color: gainsboro;
+}
+
+.highlight{
+  color:#2492FF;
 }

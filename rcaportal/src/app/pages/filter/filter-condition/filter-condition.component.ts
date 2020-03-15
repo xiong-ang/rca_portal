@@ -79,11 +79,11 @@ export class FilterConditionComponent implements OnInit {
   get isNothingInput() {
     return !this.inputID &&
       !this.selectedProductID &&
-      this.selectedVersionID &&
-      this.selectedComponentID &&
+      !this.selectedVersionID &&
+      !this.selectedComponentID &&
       !this.inputSubmitter &&
       !this.inputRootCauseCR &&
-      this.selectedreadoutLevelID &&
+      !this.selectedreadoutLevelID &&
       this.inputKeywords.length == 0 &&
       !this.inputQuickSearch;
   }
