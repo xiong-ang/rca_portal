@@ -151,6 +151,7 @@ export class HomeFilterComponent implements OnInit {
 
   onCancel() {
     this.isDetailFilterPanelOpen = false;
+    this.clear();
   }
 
   onApply() {

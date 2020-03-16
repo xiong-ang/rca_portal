@@ -92,8 +92,8 @@ export class FilterCondition {
         !this.ComponentID &&
         !this.Submitter &&
         !this.RootCauseCR &&
-        this.ReadoutLevel &&
-        this.ReadoutLevelID &&
+        !this.ReadoutLevel &&
+        !this.ReadoutLevelID &&
         this.Keywords.length == 0;
     }
 }
