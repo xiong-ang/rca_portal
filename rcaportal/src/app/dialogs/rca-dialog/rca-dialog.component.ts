@@ -308,33 +308,63 @@ export class RcaDialogComponent implements OnInit {
       body.RootCauseCR = newOne.RootCauseCR;
     }
     if (newOne.RootCauseAnalyze !== oldOne.RootCauseAnalyze) {
+      if (newOne.RootCauseAnalyze === null) {
+        newOne.RootCauseAnalyze = '';
+      }
       body.RootCauseAnalyze = newOne.RootCauseAnalyze;
     }
     if (newOne.RequirementCorrectAndPrevention.RootCause !== oldOne.RequirementCorrectAndPrevention.RootCause) {
+      if (newOne.RequirementCorrectAndPrevention.RootCause === null) {
+        newOne.RequirementCorrectAndPrevention.RootCause = '';
+      }
       body.RequirementRootCause = newOne.RequirementCorrectAndPrevention.RootCause;
     }
     if (newOne.RequirementCorrectAndPrevention.Correction !== oldOne.RequirementCorrectAndPrevention.Correction) {
+      if (newOne.RequirementCorrectAndPrevention.Correction === null) {
+        newOne.RequirementCorrectAndPrevention.Correction = '';
+      }
       body.RequirementCorrection = newOne.RequirementCorrectAndPrevention.Correction;
     }
     if (newOne.RequirementCorrectAndPrevention.Prevention !== oldOne.RequirementCorrectAndPrevention.Prevention) {
+      if (newOne.RequirementCorrectAndPrevention.Prevention === null) {
+        newOne.RequirementCorrectAndPrevention.Prevention = '';
+      }
       body.RequirementPrevention = newOne.RequirementCorrectAndPrevention.Prevention;
     }
     if (newOne.DevCorrectAndPrevention.RootCause !== oldOne.DevCorrectAndPrevention.RootCause) {
+      if (newOne.DevCorrectAndPrevention.RootCause === null) {
+        newOne.DevCorrectAndPrevention.RootCause = '';
+      }
       body.DevRootCause = newOne.DevCorrectAndPrevention.RootCause;
     }
     if (newOne.DevCorrectAndPrevention.Correction !== oldOne.DevCorrectAndPrevention.Correction) {
+      if (newOne.DevCorrectAndPrevention.Correction === null) {
+        newOne.DevCorrectAndPrevention.Correction = '';
+      }
       body.DevCorrection = newOne.DevCorrectAndPrevention.Correction;
     }
     if (newOne.DevCorrectAndPrevention.Prevention !== oldOne.DevCorrectAndPrevention.Prevention) {
+      if (newOne.DevCorrectAndPrevention.Prevention === null) {
+        newOne.DevCorrectAndPrevention.Prevention = '';
+      }
       body.DevPrevention = newOne.DevCorrectAndPrevention.Prevention;
     }
     if (newOne.TestCorrectAndPrevention.RootCause !== oldOne.TestCorrectAndPrevention.RootCause) {
+      if (newOne.TestCorrectAndPrevention.RootCause === null) {
+        newOne.TestCorrectAndPrevention.RootCause = '';
+      }
       body.TestRootCause = newOne.TestCorrectAndPrevention.RootCause;
     }
     if (newOne.TestCorrectAndPrevention.Correction !== oldOne.TestCorrectAndPrevention.Correction) {
+      if (newOne.TestCorrectAndPrevention.Correction === null) {
+        newOne.TestCorrectAndPrevention.Correction = '';
+      }
       body.TestCorrection = newOne.TestCorrectAndPrevention.Correction;
     }
     if (newOne.TestCorrectAndPrevention.Prevention !== oldOne.TestCorrectAndPrevention.Prevention) {
+      if (newOne.TestCorrectAndPrevention.Prevention === null) {
+        newOne.TestCorrectAndPrevention.Prevention = '';
+      }
       body.TestPrevention = newOne.TestCorrectAndPrevention.Prevention;
     }
     return body;
