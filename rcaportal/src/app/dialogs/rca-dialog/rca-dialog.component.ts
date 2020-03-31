@@ -256,6 +256,10 @@ export class RcaDialogComponent implements OnInit {
   }
 
   onCreateClick(): void {
+    this.rcaData.RCAID = this.rcaData.RCAID && this.rcaData.RCAID.trim();
+    this.rcaData.Header = this.rcaData.Header && this.rcaData.Header.trim();
+    this.rcaData.RootCauseCR = this.rcaData.RootCauseCR && this.rcaData.RootCauseCR.trim();
+    this.rcaData.Submitter = this.rcaData.Submitter && this.rcaData.Submitter.trim();
     this.requestProxyService.CreateRCA(this.rcaData).then(
       () => {
         this.dialogRef.close();
@@ -269,7 +273,10 @@ export class RcaDialogComponent implements OnInit {
   }
 
   onUpdateClick(): void {
-
+    this.rcaData.RCAID = this.rcaData.RCAID && this.rcaData.RCAID.trim();
+    this.rcaData.Header = this.rcaData.Header && this.rcaData.Header.trim();
+    this.rcaData.RootCauseCR = this.rcaData.RootCauseCR && this.rcaData.RootCauseCR.trim();
+    this.rcaData.Submitter = this.rcaData.Submitter && this.rcaData.Submitter.trim();
     this.requestProxyService.UpdateRCA(this.rcaData.ID, this.FindUpdate(this.rcaData, this.oldRcaData)).then(
       () => {
         this.dialogRef.close();

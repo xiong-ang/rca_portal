@@ -20,8 +20,16 @@ export class FilterConditionComponent implements OnInit {
   componentList: ComponentInfo[] = [];
   readoutLevelList: ReadoutInfo[] = [];
 
+  public inputQuickSearch: string = '';
 
   public inputID: string = '';
+
+  public selectedVersionID = null;
+  public selectedComponentID = null;
+  public inputSubmitter: string = '';
+  public inputRootCauseCR: string = '';
+
+  public selectedreadoutLevelID = null;
   private _selectedProduct = null;
   get selectedProductID() { return this._selectedProduct; }
   set selectedProductID(value) {
@@ -33,13 +41,6 @@ export class FilterConditionComponent implements OnInit {
 
     }
   }
-  public selectedVersionID = null;
-  public selectedComponentID = null;
-  public inputSubmitter: string = '';
-  public inputRootCauseCR: string = '';
-
-  public selectedreadoutLevelID = null;
-
 
   public inputKeywords: string[] = [];
   public Keyword_tips: string[] = [];
@@ -160,7 +161,7 @@ export class FilterConditionComponent implements OnInit {
     this.isDetailFilterPanelOpen = false;
 
     let filterCondition = new FilterCondition();
-    filterCondition.RCAID = this.inputID;
+    filterCondition.RCAID = this.inputID && this.inputID.trim();
 
     filterCondition.ImpactedProductID = this.selectedProductID;
     let ProductInfo = this.impactedProducts && this.impactedProducts.find(x => x.ID == this.selectedProductID);
@@ -179,9 +180,9 @@ export class FilterConditionComponent implements OnInit {
     filterCondition.ReadoutLevel = ReadoutInfo && ReadoutInfo.ReadoutLevel;
 
     filterCondition.Keywords = this.inputKeywords;
-    filterCondition.RootCauseCR = this.inputRootCauseCR;
-    filterCondition.Submitter = this.inputSubmitter;
-    filterCondition.QuickSearch = this.inputQuickSearch;
+    filterCondition.RootCauseCR = this.inputRootCauseCR && this.inputRootCauseCR.trim();
+    filterCondition.Submitter = this.inputSubmitter && this.inputSubmitter.trim();
+    filterCondition.QuickSearch = this.inputQuickSearch && this.inputQuickSearch.trim();
 
     //this.clear();
 
@@ -322,7 +323,6 @@ export class FilterConditionComponent implements OnInit {
     }
   }
 
-  inputQuickSearch: string = '';
   quickSearch(): void {
 
     if ((this.inputQuickSearch || '').trim()) {

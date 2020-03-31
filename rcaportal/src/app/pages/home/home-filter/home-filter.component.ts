@@ -157,7 +157,7 @@ export class HomeFilterComponent implements OnInit {
   onApply() {
     this.isDetailFilterPanelOpen = false;
     let filterCondition = new FilterCondition();
-    filterCondition.RCAID = this.inputID;
+    filterCondition.RCAID = this.inputID && this.inputID.trim();
 
     filterCondition.ImpactedProductID = this.selectedProductID;
     let ProductInfo = this.impactedProducts && this.impactedProducts.find(x => x.ID == this.selectedProductID);
@@ -177,8 +177,8 @@ export class HomeFilterComponent implements OnInit {
 
 
     filterCondition.Keywords = this.inputKeywords;
-    filterCondition.RootCauseCR = this.inputRootCauseCR;
-    filterCondition.Submitter = this.inputSubmitter;
+    filterCondition.RootCauseCR = this.inputRootCauseCR && this.inputRootCauseCR.trim();
+    filterCondition.Submitter = this.inputSubmitter && this.inputSubmitter.trim();
 
     //this.clear();
 
