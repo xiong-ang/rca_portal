@@ -90,6 +90,7 @@ export class RcaDialogComponent implements OnInit {
     });
   } else {
     this.rcaData.Submitter = this.authenticationService.currentUserValue;
+    this.rcaData.ReadoutLevelID = '84688BFC-C622-4499-BC3D-334F00646969';
   }
 
   }
