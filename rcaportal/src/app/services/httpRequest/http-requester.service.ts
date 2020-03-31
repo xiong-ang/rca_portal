@@ -384,16 +384,20 @@ export class HttpRequesterService implements IHttpRequester {
         if (res && res.status) {
           const HotKeywords: HotKeyword[] = [];
           if (res.data) {
-            const maxQueriedTime = res.data[0].ReferenceTimes;
-            res.data.forEach(KeywordItem => {
-              const hotkeyword = new HotKeyword();
-              hotkeyword.ID = KeywordItem.ID;
-              hotkeyword.KeywordValue = KeywordItem.Keyword;
-              hotkeyword.HotValue = KeywordItem.QueriedTimes;
-              hotkeyword.RCACount = KeywordItem.ReferenceTimes;
-              hotkeyword.HotProp = 100 * KeywordItem.QueriedTimes / maxQueriedTime;
-              HotKeywords.push(hotkeyword);
-            });
+            try {
+              const maxQueriedTime = res.data[0].ReferenceTimes;
+              res.data.forEach(KeywordItem => {
+                const hotkeyword = new HotKeyword();
+                hotkeyword.ID = KeywordItem.ID;
+                hotkeyword.KeywordValue = KeywordItem.Keyword;
+                hotkeyword.HotValue = KeywordItem.QueriedTimes;
+                hotkeyword.RCACount = KeywordItem.ReferenceTimes;
+                hotkeyword.HotProp = 100 * KeywordItem.QueriedTimes / maxQueriedTime;
+                HotKeywords.push(hotkeyword);
+              });
+            } catch (err) {
+              console.log('catch error:', err);
+            }
           }
           resolve(HotKeywords);
         } else {
