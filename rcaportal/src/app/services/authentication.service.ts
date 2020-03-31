@@ -8,13 +8,17 @@ import { environment } from '@environments/environment';
 import { User } from '@app/entities/user';
 import { ResPackage } from '@app/entities/ResPackage';
 import { CookieService } from 'ngx-cookie-service';
+import { RcaDialogService } from "@app/services/rca-dialog.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<string>;
-  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {
+  constructor(private http: HttpClient,
+              private cookieService: CookieService,
+              private router: Router,
+              private rcaDialogService: RcaDialogService) {
     this.currentUserSubject = new BehaviorSubject<string>(cookieService.get('userName'));
   }
 
@@ -63,9 +67,11 @@ export class AuthenticationService {
     });
   }
 
-  logoutFontend () {
+  logoutFontend() {
     this.cookieService.delete('userName');
     this.currentUserSubject.next(null);
+    this.rcaDialogService.closeAllDialog();
     this.router.navigate(['/login']);
   }
 }
+
