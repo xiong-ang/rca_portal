@@ -100,6 +100,7 @@ export class RcaDialogComponent implements OnInit {
       this.rcaData.Header.length !== 0 &&
       this.rcaData.Submitter.length !== 0 &&
       this.rcaData.KeyWords.length !== 0 &&
+      this.rcaData.RootCauseAnalyze &&
       this.rcaData.RootCauseAnalyze.length !== 0 &&
       this.rcaData.FixVersionID.length !== 0 &&
       this.rcaData.ImpactedProductID.length !== 0 &&
@@ -108,7 +109,7 @@ export class RcaDialogComponent implements OnInit {
   }
 
   get isAllowUpdate() {
-    return JSON.stringify(this.rcaData) !== JSON.stringify(this.oldRcaData);
+    return JSON.stringify(this.rcaData) !== JSON.stringify(this.oldRcaData) && this.isAllowCreate;
     //To do
   }
 
