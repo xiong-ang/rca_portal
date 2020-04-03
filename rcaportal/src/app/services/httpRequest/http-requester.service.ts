@@ -212,7 +212,7 @@ export class HttpRequesterService implements IHttpRequester {
           RCA.ID = rcaID;
           RCA.Header = res.data[0].Header;
           RCA.RCAID = res.data[0].RCAID;
-          RCA.Submitter = res.data[0].Sumbmiter;
+          RCA.Submitter = res.data[0].Submitter;
           RCA.ImpactedProduct = res.data[0].ImpactedProduct;
           RCA.ImpactedProductID = res.data[0].ImpactedProductID;
           RCA.FixVersion = res.data[0].FixVersion;
@@ -289,7 +289,7 @@ export class HttpRequesterService implements IHttpRequester {
             RCA.ID = rcaobj.ID;
             RCA.Header = rcaobj.Header;
             RCA.RCAID = rcaobj.RCAID;
-            RCA.Submitter = rcaobj.Sumbmiter;
+            RCA.Submitter = rcaobj.Submitter;
             RCA.ImpactedProduct = rcaobj.ImpactedProduct;
             RCA.ImpactedProductID = rcaobj.ImpactedProductID;
             RCA.FixVersion = rcaobj.FixVersion;
@@ -338,7 +338,7 @@ export class HttpRequesterService implements IHttpRequester {
               RCA.ID = rcaobj.ID;
               RCA.Header = rcaobj.Header;
               RCA.RCAID = rcaobj.RCAID;
-              RCA.Submitter = rcaobj.Sumbmiter;
+              RCA.Submitter = rcaobj.Submitter;
               RCA.ImpactedProduct = rcaobj.ImpactedProduct;
               RCA.ImpactedProductID = rcaobj.ImpactedProductID;
               RCA.FixVersion = rcaobj.FixVersion;

@@ -144,7 +144,7 @@ export class HttpRequesterMockService implements IHttpRequester {
         "status": true, "message": "OK", "data": [{
           "ID": "D68F1347-1FB3-49EF-A762-64AE17E4717D",
           "Header": "Dennis change this headerby postman", "RCAID": "FTVIEWSE-1100", "FixVersion": "12.0", "FixVersionID": "E94262C9-32EF-4FFE-86D1-A0A0CA1851BF",
-          "Sumbmiter": "Dennis Liansheng Lv", "Fixer": "Dennis LianshengLv", "Component": "Data Grid", "ComponentID": "80A1C11A-EA9C-4FE5-9DEC-016A5BCBD03D",
+          "Submitter": "Dennis Liansheng Lv", "Fixer": "Dennis LianshengLv", "Component": "Data Grid", "ComponentID": "80A1C11A-EA9C-4FE5-9DEC-016A5BCBD03D",
           "ImpactedProduct": "FTView SE", "ImpactedProductID": "237D13B0-C71E-4F9E-9CE5-764B58098634", "Keywords": "Crash", "ReadoutLevel": "Sprint Review", "ReadoutLevelID": "20A2CDDB-0DB8-404E-A4D7-26FB98742004",
           "RootCauseAnalyze": "how towrite a testanalysis", "RootCauseCR": "23456", "Requirement_RootCause": "",
           "Requirement_Correction": "", "Requirement_Prevention": "", "Dev_RootCause": "qwerfghj sedefdrrgrgd",
@@ -158,7 +158,7 @@ export class HttpRequesterMockService implements IHttpRequester {
         RCA.ID = rcaID;
         RCA.Header = res.data[0].Header;
         RCA.RCAID = res.data[0].RCAID;
-        RCA.Submitter = res.data[0].Sumbmiter;
+        RCA.Submitter = res.data[0].Submitter;
         RCA.ImpactedProduct = res.data[0].ImpactedProduct;
         RCA.ImpactedProductID = res.data[0].ImpactedProductID;
         RCA.FixVersion = res.data[0].FixVersion;
@@ -195,7 +195,7 @@ export class HttpRequesterMockService implements IHttpRequester {
           "status": true, "message": "OK", "data": [{
             "RowNum": "1", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
             "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
             "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
             "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
             "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -206,7 +206,7 @@ export class HttpRequesterMockService implements IHttpRequester {
           {
             "RowNum": "2", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
             "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
             "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
             "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
             "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -217,7 +217,7 @@ export class HttpRequesterMockService implements IHttpRequester {
           {
             "RowNum": "3", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
             "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
             "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
             "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
             "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -228,7 +228,7 @@ export class HttpRequesterMockService implements IHttpRequester {
           {
             "RowNum": "4", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
             "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
             "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
             "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
             "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -239,7 +239,7 @@ export class HttpRequesterMockService implements IHttpRequester {
           {
             "RowNum": "5", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
             "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
             "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
             "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
             "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -250,7 +250,7 @@ export class HttpRequesterMockService implements IHttpRequester {
           {
             "RowNum": "6", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
             "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
             "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
             "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
             "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -261,7 +261,7 @@ export class HttpRequesterMockService implements IHttpRequester {
           {
             "RowNum": "7", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
             "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
             "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
             "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
             "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -272,7 +272,7 @@ export class HttpRequesterMockService implements IHttpRequester {
           {
             "RowNum": "8", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
             "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
             "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
             "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
             "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -283,7 +283,7 @@ export class HttpRequesterMockService implements IHttpRequester {
           {
             "RowNum": "9", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
             "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
             "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
             "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
             "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -294,7 +294,7 @@ export class HttpRequesterMockService implements IHttpRequester {
           {
             "RowNum": "10", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
             "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
             "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
             "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
             "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -305,7 +305,7 @@ export class HttpRequesterMockService implements IHttpRequester {
           {
             "RowNum": "11", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
             "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
             "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
             "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
             "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -316,7 +316,7 @@ export class HttpRequesterMockService implements IHttpRequester {
           {
             "RowNum": "12", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
             "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
             "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
             "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
             "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -327,7 +327,7 @@ export class HttpRequesterMockService implements IHttpRequester {
           {
             "RowNum": "13", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
             "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
             "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
             "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
             "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -338,7 +338,7 @@ export class HttpRequesterMockService implements IHttpRequester {
           {
             "RowNum": "14", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
             "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
             "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
             "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
             "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -349,7 +349,7 @@ export class HttpRequesterMockService implements IHttpRequester {
           {
             "RowNum": "15", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
             "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+            "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
             "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
             "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
             "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -366,7 +366,7 @@ export class HttpRequesterMockService implements IHttpRequester {
             RCA.ID = rcaobj.ID;
             RCA.Header = rcaobj.Header;
             RCA.RCAID = rcaobj.RCAID;
-            RCA.Submitter = rcaobj.Sumbmiter;
+            RCA.Submitter = rcaobj.Submitter;
             RCA.ImpactedProduct = rcaobj.ImpactedProduct;
             RCA.ImpactedProductID = rcaobj.ImpactedProductID;
             RCA.FixVersion = rcaobj.FixVersion;
@@ -404,7 +404,7 @@ export class HttpRequesterMockService implements IHttpRequester {
             "status": true, "message": "OK", "data": [{
               "RowNum": "1", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
               "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
               "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
               "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
               "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -415,7 +415,7 @@ export class HttpRequesterMockService implements IHttpRequester {
             {
               "RowNum": "2", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
               "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
               "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
               "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
               "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -426,7 +426,7 @@ export class HttpRequesterMockService implements IHttpRequester {
             {
               "RowNum": "3", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
               "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
               "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
               "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
               "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -437,7 +437,7 @@ export class HttpRequesterMockService implements IHttpRequester {
             {
               "RowNum": "4", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
               "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
               "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
               "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
               "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -448,7 +448,7 @@ export class HttpRequesterMockService implements IHttpRequester {
             {
               "RowNum": "5", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
               "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
               "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
               "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
               "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -459,7 +459,7 @@ export class HttpRequesterMockService implements IHttpRequester {
             {
               "RowNum": "6", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
               "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
               "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
               "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
               "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -470,7 +470,7 @@ export class HttpRequesterMockService implements IHttpRequester {
             {
               "RowNum": "7", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
               "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
               "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
               "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
               "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -481,7 +481,7 @@ export class HttpRequesterMockService implements IHttpRequester {
             {
               "RowNum": "8", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
               "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
               "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
               "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
               "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -492,7 +492,7 @@ export class HttpRequesterMockService implements IHttpRequester {
             {
               "RowNum": "9", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
               "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
               "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
               "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
               "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -503,7 +503,7 @@ export class HttpRequesterMockService implements IHttpRequester {
             {
               "RowNum": "10", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
               "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
               "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
               "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
               "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -514,7 +514,7 @@ export class HttpRequesterMockService implements IHttpRequester {
             {
               "RowNum": "11", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
               "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
               "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
               "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
               "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -525,7 +525,7 @@ export class HttpRequesterMockService implements IHttpRequester {
             {
               "RowNum": "12", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
               "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
               "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
               "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
               "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -536,7 +536,7 @@ export class HttpRequesterMockService implements IHttpRequester {
             {
               "RowNum": "13", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
               "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
               "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
               "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
               "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -547,7 +547,7 @@ export class HttpRequesterMockService implements IHttpRequester {
             {
               "RowNum": "14", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
               "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
               "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
               "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
               "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -558,7 +558,7 @@ export class HttpRequesterMockService implements IHttpRequester {
             {
               "RowNum": "15", "ID": "88FFCF7A-3AD4-45AF-9744-11480A7F2DE0",
               "Header": "Simulator is not switch to program mode after 10 minutes if simulator is in remote runmode",
-              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Sumbmiter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
+              "RCAID": "APBCCCWART-2676", "FixVersion": "CCW R12", "FixVersionID": "32A8B371-D764-47A4-B26B-1E8D3C00785F", "Submitter": "Emma Xiaobin Ma", "Fixer": "Emma XiaobinMa",
               "Component": "R12_Micro800_Simulator_StandAlone", "ComponentID": "974E9DA7-0EBC-4A8A-B890-2F17E70F0586",
               "ImpactedProduct": "CCW", "ImpactedProductID": "B7F59EFE-5579-4281-B05C-388D24EA4BBB",
               "Keywords": "Simulator,change mode", "ReadoutLevel": "Internal Share", "ReadoutLevelID": "3A0258ED-A92C-4D89-B916-44D46B421969",
@@ -575,7 +575,7 @@ export class HttpRequesterMockService implements IHttpRequester {
               RCA.ID = rcaobj.ID;
               RCA.Header = rcaobj.Header;
               RCA.RCAID = rcaobj.RCAID;
-              RCA.Submitter = rcaobj.Sumbmiter;
+              RCA.Submitter = rcaobj.Submitter;
               RCA.ImpactedProduct = rcaobj.ImpactedProduct;
               RCA.ImpactedProductID = rcaobj.ImpactedProductID;
               RCA.FixVersion = rcaobj.FixVersion;
