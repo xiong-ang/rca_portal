@@ -71,9 +71,6 @@ export class RcaDialogComponent implements OnInit {
     private requestProxyService: RequestProxyService,
     @Inject(MAT_DIALOG_DATA) public data: RCADialogData,
     private authenticationService: AuthenticationService) {
-    this.filteredKeyWords = this.keyWordCtrl.valueChanges.pipe(
-      startWith(null),
-      map((keyWord: string | null) => keyWord ? this._filter(keyWord) : this.allKeywords.slice()));
   }
 
   ngOnInit() {
@@ -165,6 +162,9 @@ export class RcaDialogComponent implements OnInit {
       this.allKeywords.sort((a, b) => {
         return a.toLowerCase().localeCompare(b.toLowerCase());
       });
+      this.filteredKeyWords = this.keyWordCtrl.valueChanges.pipe(
+        startWith(null),
+        map((keyWord: string | null) => keyWord ? this._filter(keyWord) : this.allKeywords.slice()));
       this.isKeywordLoading = false;
     },
       (error) => {
@@ -203,24 +203,20 @@ export class RcaDialogComponent implements OnInit {
     this.isAttachmentLoading = false;
   }
 
-  add(event: MatChipInputEvent): void {
-    // Add keyword only when MatAutocomplete is not open
+  endInput(event: MatChipInputEvent): void {
+    // Clear input only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
     if (!this.matAutocomplete.isOpen) {
       const input = event.input;
       const value = event.value;
-
-      // Add our keyword
-      if ((value || '').trim()) {
-        this.rcaData.KeyWords.push(value.trim());
-      }
-
+      
+ 
+      this.keyWordCtrl.setValue('');
       // Reset the input value
       if (input) {
         input.value = '';
       }
 
-      this.keyWordCtrl.setValue('');
     }
   }
 
@@ -233,10 +229,11 @@ export class RcaDialogComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.rcaData.KeyWords.push(event.option.viewValue);
-    this.keyWordInput.nativeElement.value = '';
-    this.keyWordCtrl.setValue('');
+    this.addKeyWord(event.option.viewValue);
 
+    this.keyWordCtrl.setValue(''); // filter
+    this.keyWordInput.nativeElement.value = ''; 
+    this.keyWordInput.nativeElement.blur();
   }
 
   private _filter(value: string): string[] {
@@ -246,10 +243,20 @@ export class RcaDialogComponent implements OnInit {
   }
 
   OnClickKeyWordTip(keyWord: string) {
-    this.rcaData.KeyWords.push(keyWord);
+    this.addKeyWord(keyWord);
   }
 
-
+  addKeyWord(keyWord: string): void {
+    if(this.rcaData.KeyWords.includes(keyWord)) {
+        alert("Duplicate keyword!");
+        return;
+    } else if (!(this.rcaData.KeyWords.length <3)){
+        alert("max keyword number is 3!");
+        return;
+    } else {
+      this.rcaData.KeyWords.push(keyWord);
+    }
+  }
 
   onCancelClick(): void {
     this.dialogRef.close();
