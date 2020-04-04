@@ -4,48 +4,48 @@
 <div class="load-parent">
 <mat-dialog-content class="dialog-content">
   <mat-form-field class="one-line-item full-width" >
-    <mat-label><span class="input-label">Header</span></mat-label>
+    <mat-label class="input-label"><span>Header</span></mat-label>
     <textarea  matInput name="Head" [(ngModel)]="rcaData.Header" required></textarea>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label><span class="input-label">ID</span><mat-icon>bug_report</mat-icon></mat-label>
+    <mat-label class="input-label"><span>ID</span><mat-icon>bug_report</mat-icon></mat-label>
     <input matInput name="Id" [(ngModel)]="rcaData.RCAID" required>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label><span class="input-label">RootCauseCR </span><mat-icon>bug_report</mat-icon></mat-label>
+    <mat-label  class="input-label"><span>RootCauseCR </span><mat-icon>bug_report</mat-icon></mat-label>
     <input matInput name="RootCauseCR" [(ngModel)]="rcaData.RootCauseCR">
   </mat-form-field >
 
   <mat-form-field class="one-line-item">
-    <mat-label><span class="input-label">Submitter</span></mat-label>
-    <input matInput name="Submitter" [(ngModel)]="rcaData.Submitter" required>
+    <mat-label class="input-label"><span >Submitter</span></mat-label>
+    <input matInput name="Submitter" [(ngModel)]="rcaData.Submitter" [disabled]="true" required>
   </mat-form-field>
 
   <mat-form-field class="one-line-item">
-    <mat-label><span class="input-label">Impacted Product</span></mat-label>
+    <mat-label class="input-label"><span>Impacted Product</span></mat-label>
     <mat-select name="ImpactedProduct" [(value)]="selectedProductID" required>
       <mat-option *ngFor="let impactedProduct of impactedProducts" [value]="impactedProduct.ID">{{impactedProduct.ProductName}}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="one-line-item">
-    <mat-label><span class="input-label">Fix Version</span></mat-label>
+    <mat-label class="input-label"><span>Fix Version</span></mat-label>
     <mat-select name="FixVersion" [disabled]="!isFixVersionListReady" [(value)]="rcaData.FixVersionID" required>
       <mat-option *ngFor="let fixVersion of fixVersionList" [value]="fixVersion.ID">{{fixVersion.Version}}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="one-line-item">
-    <mat-label><span class="input-label">Component </span><mat-icon>extension</mat-icon></mat-label>
+    <mat-label  class="input-label"><span>Component </span><mat-icon>extension</mat-icon></mat-label>
     <mat-select name="Component" [disabled]="!isComponentListReady" [(value)]="rcaData.ComponentID" required>
       <mat-option *ngFor="let component of componentList" [value]="component.ID">{{component.ComponentName}}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field class="one-line-item">
-    <mat-label><span class="input-label">Readout Level</span></mat-label>
+    <mat-label  class="input-label"><span>Readout Level</span></mat-label>
     <mat-select name="ReadoutLevel" [(value)]="rcaData.ReadoutLevelID" required>
       <mat-option *ngFor="let readoutLevel of readoutLevels" [value]="readoutLevel.ID">{{readoutLevel.ReadoutLevel}}</mat-option>
     </mat-select>
@@ -53,7 +53,7 @@
 
   <mat-form-field class="one-line-item full-width">
     <mat-label class="input-label"><span>Key Word</span><mat-icon>vpn_key</mat-icon></mat-label>
-    <mat-chip-list #chipList aria-label="Key Word">
+    <mat-chip-list #chipList aria-label="Key Word" required>
       <mat-chip
         *ngFor="let keyWord of rcaData.KeyWords"
         [selectable]="selectable"
@@ -83,8 +83,8 @@
   </mat-form-field>
 
   <div class="one-line-item full-width" style="margin: 6px 0 0 0;">
-    <label ><span class="input-label">Root Cause Analyze</span></label>
-    <quill-editor [(ngModel)]="rcaData.RootCauseAnalyze" [styles]="{height: '100px'}" >
+    <label class="input-label"><span >Root Cause Analyze*</span></label>
+    <quill-editor [(ngModel)]="rcaData.RootCauseAnalyze" [styles]="{height: '100px'}" [required]="true">
     </quill-editor>
   </div>
 

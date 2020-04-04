@@ -116,6 +116,8 @@ export class RcaDialogComponent implements OnInit {
     if (value != this.rcaData.ImpactedProductID) {
       this.isComponentListReady = false;
       this.isFixVersionListReady = false;
+      this.rcaData.FixVersionID = '';
+      this.rcaData.ComponentID = '';
       this.rcaData.ImpactedProductID = value;
       if(this.selectedProductID){
         this.loadVersionsAndComponents();
