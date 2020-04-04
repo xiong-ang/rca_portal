@@ -212,13 +212,11 @@ export class RcaDialogComponent implements OnInit {
       const input = event.input;
       const value = event.value;
       
- 
       this.keyWordCtrl.setValue('');
       // Reset the input value
       if (input) {
         input.value = '';
       }
-
     }
   }
 
@@ -240,7 +238,6 @@ export class RcaDialogComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
     return this.allKeywords.filter(keyword => keyword.toLowerCase().indexOf(filterValue) === 0);
   }
 

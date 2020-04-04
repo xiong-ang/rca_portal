@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FilterService } from 'src/app/services/filter.service';
 import { FilterCondition } from '@app/entities/filterCondition';
 import { RequestProxyService } from '@app/services/httpRequest/request-proxy.service';
 import { MatChipInputEvent } from '@angular/material';
+import { FormControl } from '@angular/forms';
 import { ProductInfo } from '@app/entities/productInfo';
 import { VersionInfo } from '@app/entities/versionInfo';
 import { ComponentInfo } from '@app/entities/componentInfo';
 import { ReadoutInfo } from '@app/entities/readoutInfo';
 import { copyArrayItem } from '@angular/cdk/drag-drop';
+import { Observable, of } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
 @Component({
   selector: 'app-home-filter',
   templateUrl: './home-filter.component.html',
@@ -33,9 +37,11 @@ export class HomeFilterComponent implements OnInit {
   set selectedProductID(value) {
     if (value != this._selectedProduct) {
       this._selectedProduct = value;
+      this.clearVersAndCompInfo();
       if (this.selectedProductID) {
         this.requestProxyService.GetProductVersions(this.selectedProductID).then(versions => {
           this.fixVersionList = versions;
+          this.isFixVersionListReady = true;
         },
         (error) => {
           if (error) {
@@ -44,6 +50,7 @@ export class HomeFilterComponent implements OnInit {
         });
         this.requestProxyService.GetProductComponents(this.selectedProductID).then(components => {
           this.componentList = components;
+          this.isComponentListReady = true;
         },
         (error) => {
           if (error) {
@@ -53,29 +60,34 @@ export class HomeFilterComponent implements OnInit {
       }
     }
   }
+
+  @ViewChild('keyWordInput', { static: false }) keyWordInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
+  keyWordCtrl = new FormControl();
+  filteredKeyWords: Observable<string[]>;
+  public inputKeywords: string[] = [];
+  public keyWordTips: string[] = [];
+  public allKeywords: string[] = [];
+
   public selectedVersionID = null;
   public selectedComponentID = null;
   public inputSubmitter: string = '';
   public inputRootCauseCR: string = '';
+  public isComponentListReady = false;
+  public isFixVersionListReady = false;
 
   public selectedreadoutLevelID = null;
 
-  public inputKeywords: string[] = [];
-  public Keyword_tips: string[] = [];
-  addKeyword(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-
-    // Add our fruit
-    if ((value || '').trim() &&
-      !this.inputKeywords.includes(value) &&
-      this.inputKeywords.length < 3) {
-      this.inputKeywords.push(value.trim());
-    }
-
-    // Reset the input value
-    if (input) {
-      input.value = '';
+  endInput(event: MatChipInputEvent): void {
+    if (!this.matAutocomplete.isOpen) {
+      const input = event.input;
+      const value = event.value;
+      
+      this.keyWordCtrl.setValue('');
+      // Reset the input value
+      if (input) {
+        input.value = '';
+      }
     }
   }
 
@@ -88,11 +100,21 @@ export class HomeFilterComponent implements OnInit {
   }
 
   keyword_tip_click(keywordTip: string) {
-    if ((keywordTip || '').trim() &&
-      !this.inputKeywords.includes(keywordTip) &&
-      this.inputKeywords.length < 3) {
-      this.inputKeywords.push(keywordTip.trim());
+    if(this.isInputIDEmpty ) {
+      this.addKeyWord(keywordTip);
     }
+  }
+
+  get isInputIDEmpty() {
+    return (this.inputID || '').length == 0;
+  }
+
+  get isVersionEnable() {
+    return this.isFixVersionListReady && this.isInputIDEmpty;
+  }
+
+  get isComponentEnable() {
+    return this.isComponentListReady && this.isInputIDEmpty;
   }
 
   get isNothingInput() {
@@ -120,6 +142,15 @@ export class HomeFilterComponent implements OnInit {
     });
   }
 
+  clearVersAndCompInfo(){
+    this.fixVersionList = [];
+    this.componentList = [];
+    this.selectedComponentID = null;
+    this.selectedVersionID = null;
+    this.isFixVersionListReady = false;
+    this.isComponentListReady =  false;
+  }
+
   loadReadoutLevelInfo() {
     this.requestProxyService.GetReadOutLevels().then(readoutLevels => {
       this.readoutLevelList = readoutLevels;
@@ -131,12 +162,22 @@ export class HomeFilterComponent implements OnInit {
     });
   }
 
-  loadKeyowrdTips() {
-    this.Keyword_tips = [];
-    this.requestProxyService.GetHotKeywords(1, 10).then(hotKeywords => {
-      hotKeywords.forEach(keyword => {
-        this.Keyword_tips.push(keyword.KeywordValue);
+  loadKeywordAndTips() {
+    this.allKeywords = [];
+    this.keyWordTips = [];
+    this.requestProxyService.GetHotKeywords(1, -1).then(hotKeywords => {
+      hotKeywords.forEach((keyword, index) => {
+        this.allKeywords.push(keyword.KeywordValue);
+        if (index < 10) {
+          this.keyWordTips.push(keyword.KeywordValue);
+        }
       });
+      this.allKeywords.sort((a, b) => {
+        return a.toLowerCase().localeCompare(b.toLowerCase());
+      });
+      this.filteredKeyWords = this.keyWordCtrl.valueChanges.pipe(
+        startWith(null),
+        map((keyWord: string | null) => keyWord ? this._filter(keyWord) : this.allKeywords.slice()));
     },
     (error) => {
       if (error) {
@@ -144,6 +185,27 @@ export class HomeFilterComponent implements OnInit {
         }
     });
   }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.allKeywords.filter(keyword => keyword.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.addKeyWord(event.option.viewValue);
+    this.keyWordCtrl.setValue(''); // filter
+    this.keyWordInput.nativeElement.value = ''; 
+    this.keyWordInput.nativeElement.blur();
+  }
+
+  addKeyWord(keyWord: string): void {
+    if (this.isInputIDEmpty && (keyWord || '').trim() &&
+      !this.inputKeywords.includes(keyWord) &&
+      this.inputKeywords.length < 3) {
+      this.inputKeywords.push(keyWord.trim());
+    }
+  }
+
 
   triggerDetailFilterPanel() {
     this.isDetailFilterPanelOpen = !this.isDetailFilterPanelOpen;
@@ -199,6 +261,6 @@ export class HomeFilterComponent implements OnInit {
   ngOnInit() {
     this.loadProductInfo();
     this.loadReadoutLevelInfo();
-    this.loadKeyowrdTips();
+    this.loadKeywordAndTips();
   }
 }

@@ -103,10 +103,14 @@
 }
 
 .keyword-tip-item{
-    cursor: pointer;
-    color: rgb(0, 119, 255);
+    color: #085394;
     padding-right: 10px;
-    font-size: small;
+    font-size: smaller;
+}
+
+.keyword-tip-item:hover{
+    cursor: pointer;
+    color: #2492FF;
 }
 
 .oper-btn{
@@ -115,3 +119,18 @@
     justify-self: end;
     align-self: center;
 }
+
+.id-quickapply{
+    display: flex;
+    align-items: center;
+}
+
+.quick-apply{
+    color:#2492FF;
+}
+
+.quick-apply:hover{
+    cursor: pointer;
+    color:  gainsboro;
+}
+
