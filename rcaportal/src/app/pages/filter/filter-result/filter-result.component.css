@@ -15,3 +15,7 @@
     background: rgb(255, 252, 252);
     text-align: center;
 }
+
+.result-item{
+    border-bottom: 1px solid gainsboro;
+}

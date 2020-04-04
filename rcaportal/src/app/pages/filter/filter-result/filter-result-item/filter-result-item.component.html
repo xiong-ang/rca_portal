@@ -9,11 +9,11 @@
   <div class="rca-desc link-item" (click)="openRCADetail()">{{RCAResult.Header}}</div>
   <div class="rca-keywords">
     <i class="material-icons key-icon">vpn_key</i>
-    <span>{{RCAResult.KeyWords}}</span>
+    <span *ngFor="let keyword of RCAResult.KeyWords;let i=index;">&lt;{{keyword}}&gt;&nbsp;</span>
   </div>
   <div class="rca-others">
+    <span class="rca-id">{{RCAResult.RCAID}}</span>
     <i class="material-icons delete-btn link-item" *ngIf="RCAResult.IsManagable" (click)="deleteRCA()">delete</i>
     <i class="material-icons edit-btn link-item" *ngIf="RCAResult.IsManagable" (click)="updateRCA()">edit</i>
-    <span class="rca-id">{{RCAResult.RCAID}}</span>
   </div>
 </div>
