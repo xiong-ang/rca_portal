@@ -22,7 +22,7 @@ export class FilterHeaderComponent implements OnInit {
 
 
   ngOnInit() {
-    this.currentUser = this.authenticationService.currentUserValue;
+    this.currentUser = this.authenticationService.currentUserName;
   }
 
   onHomeClick(){

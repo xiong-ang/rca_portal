@@ -9,21 +9,33 @@ import { User } from '@app/entities/user';
 import { ResPackage } from '@app/entities/ResPackage';
 import { CookieService } from 'ngx-cookie-service';
 import { RcaDialogService } from "@app/services/rca-dialog.service";
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<string>;
+export class AuthenticationService{
+  private userName: string;
+  private userID: string;
+  private userRole: string;
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private router: Router,
-              private rcaDialogService: RcaDialogService) {
-    this.currentUserSubject = new BehaviorSubject<string>(cookieService.get('userName'));
-  }
+              private dialog: MatDialog,
+              ) {
+                this.userName = this.cookieService.get('userName');
+                this.userID = this.cookieService.get('userID');
+                this.userRole = this.cookieService.get('userRole');
+              }
 
-  public get currentUserValue(): string {
-    return this.currentUserSubject.value;
+  public get currentUserName(): string {
+    return this.userName;
+  }
+  public get currentUserID(): string {
+    return this.userID;
+  }
+  public get currentUserRole(): string {
+    return this.userRole;
   }
 
   login(username: string, password: string, isremeber: boolean): Promise<boolean> {
@@ -32,7 +44,9 @@ export class AuthenticationService {
       .toPromise()
       .then(res => {
         if (res && res.status) {
-          this.currentUserSubject.next(this.cookieService.get('userName'));
+          this.userName = this.cookieService.get('userName');
+          this.userID = this.cookieService.get('userID');
+          this.userRole = this.cookieService.get('userRole');
           if (!isremeber) {
             this.cookieService.set('userName', this.cookieService.get('userName'), 0);
           }
@@ -56,7 +70,7 @@ export class AuthenticationService {
       .toPromise()
       .then(res => {
         if (res && res.status) {
-          this.currentUserSubject.next(null);
+          this.userName = null;
           this.router.navigate(['/login']);
           resolve(true);
         } else {
@@ -69,9 +83,22 @@ export class AuthenticationService {
 
   logoutFontend() {
     this.cookieService.delete('userName');
-    this.currentUserSubject.next(null);
-    this.rcaDialogService.closeAllDialog();
+    this.cookieService.delete('userID');
+    this.cookieService.delete('userRole');
+    this.userName = null;
+    this.dialog.closeAll();
     this.router.navigate(['/login']);
+  }
+
+  isHasAccessRight(submitterID: string): boolean {
+    if(this.userRole == "SuperAdmin") {
+      return true;
+    }
+    if((submitterID ||'').toLowerCase() == (this.userID || '').toLowerCase()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 

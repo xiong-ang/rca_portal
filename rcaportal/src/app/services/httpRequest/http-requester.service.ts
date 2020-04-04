@@ -9,13 +9,15 @@ import { VersionInfo } from '@app/entities/versionInfo';
 import { ComponentInfo } from '@app/entities/componentInfo';
 import { ReadoutInfo } from '@app/entities/readoutInfo';
 import { HotKeyword } from '@app/entities/hotKeyword';
-import { CookieService } from 'ngx-cookie-service';
-import { MatCalendarBody } from '@angular/material';
+import { AuthenticationService } from "@app/services/authentication.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpRequesterService implements IHttpRequester {
+
+  constructor(private http: HttpClient,
+    private authenticationService: AuthenticationService ) { }
 
   GetProducts(): Promise<ProductInfo[]> {
     return new Promise((resolve, reject) => {
@@ -233,7 +235,7 @@ export class HttpRequesterService implements IHttpRequester {
           RCA.TestCorrectAndPrevention.RootCause = res.data[0].TestRootCause;
           RCA.TestCorrectAndPrevention.Correction = res.data[0].TestCorrection;
           RCA.TestCorrectAndPrevention.Prevention = res.data[0].TestPrevention;
-          RCA.IsManagable = true;
+          RCA.IsManagable = this.authenticationService.isHasAccessRight(res.data[0].SubmitterID);
           resolve(RCA);
         } else {
           reject(res && res.message);
@@ -263,8 +265,8 @@ export class HttpRequesterService implements IHttpRequester {
       if (filterCondition.ComponentID) {
         body.ComponentID = filterCondition.ComponentID;
       }
-      if (filterCondition.Submitter == this.cookieService.get('userName')) {
-        body.SubmittedbyUserId = this.cookieService.get('userID');
+      if (filterCondition.Submitter == this.authenticationService.currentUserName) {
+        body.SubmittedbyUserId = this.authenticationService.currentUserID;
       }
       if (filterCondition.RootCauseCR) {
         body.RootCauseCR = filterCondition.RootCauseCR;
@@ -310,7 +312,7 @@ export class HttpRequesterService implements IHttpRequester {
             RCA.TestCorrectAndPrevention.RootCause = rcaobj.TestRootCause;
             RCA.TestCorrectAndPrevention.Correction = rcaobj.TestCorrection;
             RCA.TestCorrectAndPrevention.Prevention = rcaobj.TestPrevention;
-            RCA.IsManagable = true;
+            RCA.IsManagable = this.authenticationService.isHasAccessRight(rcaobj.SubmitterID);
             RCArray.push(RCA);
           });
           resolve(RCArray);
@@ -359,7 +361,7 @@ export class HttpRequesterService implements IHttpRequester {
               RCA.TestCorrectAndPrevention.RootCause = rcaobj.TestRootCause;
               RCA.TestCorrectAndPrevention.Correction = rcaobj.TestCorrection;
               RCA.TestCorrectAndPrevention.Prevention = rcaobj.TestPrevention;
-              RCA.IsManagable = true;
+              RCA.IsManagable = this.authenticationService.isHasAccessRight(rcaobj.SubmitterID);
               RCArray.push(RCA);
             });
             resolve(RCArray);
@@ -416,5 +418,5 @@ export class HttpRequesterService implements IHttpRequester {
     console.error('An error occured', error);
     return Promise.reject(error.message || error);
   }
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
+
 }

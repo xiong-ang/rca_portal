@@ -21,7 +21,7 @@ export class HomeHeaderComponent implements OnInit {
   constructor(private router: Router, private rcaDialogSrv: RcaDialogService, private filterSrv: FilterService, private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
-    this.currentUser = this.authenticationService.currentUserValue;
+    this.currentUser = this.authenticationService.currentUserName;
   }
 
   onHomeClick(){

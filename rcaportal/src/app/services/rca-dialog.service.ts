@@ -118,8 +118,4 @@ export class RcaDialogService {
       minHeight: '600px'
     });
   }
-
-  closeAllDialog(): void {
-    this.dialog.closeAll();
-  }
 }
