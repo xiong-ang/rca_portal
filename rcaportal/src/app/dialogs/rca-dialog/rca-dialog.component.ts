@@ -5,7 +5,7 @@ import { RequestProxyService } from '@app/services/httpRequest/request-proxy.ser
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { FormControl } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject} from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ProductInfo } from '@app/entities/productInfo';
@@ -13,6 +13,9 @@ import { VersionInfo } from '@app/entities/versionInfo';
 import { ComponentInfo } from '@app/entities/componentInfo';
 import { ReadoutInfo } from '@app/entities/readoutInfo';
 import { AuthenticationService } from '@app/services/authentication.service';
+import { RcaDialogService } from 'src/app/services/rca-dialog.service';
+import { RcaDetailService } from 'src/app/services/rca-detail.service';
+
 export interface RCADialogData {
   type: string;
   rcaID: string;
@@ -53,7 +56,11 @@ export class RcaDialogComponent implements OnInit {
   isKeywordLoading = true;
   isProductLoading = true;
   isAttachmentLoading = false;
+  isAttachmentModified = false;
   isReadOutLevelLoading = true;
+
+  isCreating = false;
+  isUpdating = false;
 
   filteredKeyWords: Observable<string[]>;
   visible = true;
@@ -66,7 +73,11 @@ export class RcaDialogComponent implements OnInit {
   @ViewChild('keyWordInput', { static: false }) keyWordInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
+  public applyAttachmentChangeSubject: Subject<string> = new Subject<string>();
+
   constructor(
+    private rcaDialogSrv: RcaDialogService,
+    private rcaDetailSrv: RcaDetailService,
     public dialogRef: MatDialogRef<RcaDialogComponent>,
     private requestProxyService: RequestProxyService,
     @Inject(MAT_DIALOG_DATA) public data: RCADialogData,
@@ -106,7 +117,7 @@ export class RcaDialogComponent implements OnInit {
   }
 
   get isAllowUpdate() {
-    return JSON.stringify(this.rcaData) !== JSON.stringify(this.oldRcaData) && this.isAllowCreate;
+    return (JSON.stringify(this.rcaData) !== JSON.stringify(this.oldRcaData) || this.isAttachmentModified) && this.isAllowCreate;
     //To do
   }
 
@@ -205,13 +216,33 @@ export class RcaDialogComponent implements OnInit {
     this.isAttachmentLoading = false;
   }
 
+  AttachmentApplyDone() {
+    this.isCreating = false;
+    this.isUpdating = false;
+
+    if (this.isCreateMode) {
+      this.rcaDialogSrv.openMsgDialog('info', `Create ${this.rcaData.RCAID} successfully, Do you want to view it now?`).then((bOk) => {
+        if (bOk) {
+          this.rcaDetailSrv.openRCADetail(this.rcaData.ID);
+        }
+      });
+    }
+
+    this.dialogRef.close();
+    this.data.okAction();
+  }
+
+  AttachmentModified(bModified: boolean) {
+    this.isAttachmentModified = bModified;
+  }
+
   endInput(event: MatChipInputEvent): void {
     // Clear input only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
     if (!this.matAutocomplete.isOpen) {
       const input = event.input;
       const value = event.value;
-      
+
       this.keyWordCtrl.setValue('');
       // Reset the input value
       if (input) {
@@ -232,7 +263,7 @@ export class RcaDialogComponent implements OnInit {
     this.addKeyWord(event.option.viewValue);
 
     this.keyWordCtrl.setValue(''); // filter
-    this.keyWordInput.nativeElement.value = ''; 
+    this.keyWordInput.nativeElement.value = '';
     this.keyWordInput.nativeElement.blur();
   }
 
@@ -247,10 +278,10 @@ export class RcaDialogComponent implements OnInit {
 
   addKeyWord(keyWord: string): void {
     if(this.rcaData.KeyWords.includes(keyWord)) {
-        alert("Duplicate keyword!");
+        this.rcaDialogSrv.openMsgDialog('warning', 'Duplicate keyword!', false);
         return;
-    } else if (!(this.rcaData.KeyWords.length <3)){
-        alert("max keyword number is 3!");
+    } else if (!(this.rcaData.KeyWords.length < 3)){
+        this.rcaDialogSrv.openMsgDialog('warning', 'The number of keywords cannot exceed 3!', false);
         return;
     } else {
       this.rcaData.KeyWords.push(keyWord);
@@ -263,14 +294,19 @@ export class RcaDialogComponent implements OnInit {
   }
 
   onCreateClick(): void {
+    this.isCreating = true;
     this.rcaData.RCAID = this.rcaData.RCAID && this.rcaData.RCAID.trim();
     this.rcaData.Header = this.rcaData.Header && this.rcaData.Header.trim();
     this.rcaData.RootCauseCR = this.rcaData.RootCauseCR && this.rcaData.RootCauseCR.trim();
     this.rcaData.Submitter = this.rcaData.Submitter && this.rcaData.Submitter.trim();
     this.requestProxyService.CreateRCA(this.rcaData).then(
-      () => {
-        this.dialogRef.close();
-        this.data.okAction();
+      (ID) => {
+        this.rcaData.ID = ID;
+        if (this.isAttachmentModified) {
+          this.applyAttachmentChangeSubject.next(ID);
+        } else {
+          this.AttachmentApplyDone();
+        }
       },
       (error) => {
         if (error) {
@@ -280,14 +316,26 @@ export class RcaDialogComponent implements OnInit {
   }
 
   onUpdateClick(): void {
+    this.rcaDialogSrv.openMsgDialog('warning', 'Do you want to apply the changes?').then((bOk) => {
+      if (bOk) {
+        this.doUpdate();
+      }
+    });
+  }
+
+  doUpdate(): void {
+    this.isUpdating = true;
     this.rcaData.RCAID = this.rcaData.RCAID && this.rcaData.RCAID.trim();
     this.rcaData.Header = this.rcaData.Header && this.rcaData.Header.trim();
     this.rcaData.RootCauseCR = this.rcaData.RootCauseCR && this.rcaData.RootCauseCR.trim();
     this.rcaData.Submitter = this.rcaData.Submitter && this.rcaData.Submitter.trim();
     this.requestProxyService.UpdateRCA(this.rcaData.ID, this.FindUpdate(this.rcaData, this.oldRcaData)).then(
       () => {
-        this.dialogRef.close();
-        this.data.okAction();
+        if (this.isAttachmentModified) {
+          this.applyAttachmentChangeSubject.next(this.rcaData.ID);
+        } else {
+          this.AttachmentApplyDone();
+        }
       },
       (error) => {
         if (error) {

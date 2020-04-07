@@ -83,12 +83,10 @@ export class RcaDialogService {
       if (this.deleteDialogOpen) {
         resolve();
       }
-      const dialogRef = this.dialog.open(MsgDialogComponent, {
-        disableClose: true,
-        data: {
-          type: 'warning',
-          msg: `Do you want to delete RCA ${RCAID} ?`,
-          okAction: () => {
+      this.openMsgDialog('warning', `Do you want to delete RCA ${RCAID} ?`).then(
+        (bOk) => {
+          this.deleteDialogOpen = false;
+          if (bOk) {
             this.requestProxyService.DeleteRCA(rcaID).then((successed) => {
               resolve(true);
             },
@@ -97,17 +95,12 @@ export class RcaDialogService {
                   alert(error);
                 }
               });
-          },
-          cancelAction: () => {
+          } else {
             resolve(false);
-
           }
         }
-      });
+      );
       this.deleteDialogOpen = true;
-      dialogRef.afterClosed().subscribe(() => {
-        this.deleteDialogOpen = false;
-      });
     });
   }
 
@@ -116,6 +109,26 @@ export class RcaDialogService {
       disableClose: true,
       width: '800px',
       minHeight: '600px'
+    });
+  }
+
+  openMsgDialog(dialogType: string, dialogMsg: string, bAllowCancel: boolean = true): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.dialog.open(MsgDialogComponent, {
+        disableClose: true,
+        data: {
+          type: dialogType,
+          msg: dialogMsg,
+          okAction: () => {
+            resolve(true);
+          },
+          cancelAction: () => {
+            resolve(false);
+          },
+          isAllowCancel: bAllowCancel
+          }
+        }
+       );
     });
   }
 }

@@ -16,7 +16,7 @@ export interface IHttpRequester {
     GetAttachments(rcaID: string): Promise<Attachment[]>;
     DeleteAttachment(rcaID: string, attachmentID: string): Promise<boolean>;
 
-    CreateRCA(newRCA: RCAItem): Promise<boolean>;
+    CreateRCA(newRCA: RCAItem): Promise<string>;
     DeleteRCA(rcaID: string): Promise<boolean>;
     UpdateRCA(rcaID: string, updateRCA: any): Promise<boolean>;
     GetRCA(rcaID: string): Promise<RCAItem>;

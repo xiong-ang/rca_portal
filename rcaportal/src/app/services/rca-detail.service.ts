@@ -18,7 +18,7 @@ export class RcaDetailService {
     this.requestProxyService.GetRCA(RCAID).then(
       RCAData => {
         this.currentRCAItem = RCAData;
-        this.router.navigateByUrl('/rca');
+        this.redirectTo('/rca');
       },
       (error) => {
         if (error) {
@@ -26,4 +26,10 @@ export class RcaDetailService {
         }
       });
   }
+
+  redirectTo(uri: string){
+    // Force refresh when url don't change.
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+    this.router.navigate([uri]));
+ }
 }

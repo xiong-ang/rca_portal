@@ -46,7 +46,7 @@ export class RequestProxyService implements IHttpRequester{
   GetAttachment( path: string): Promise<any> {
     return this.requestService.GetAttachment(path);
   }
-  CreateRCA(newRCA: RCAItem): Promise<boolean> {
+  CreateRCA(newRCA: RCAItem): Promise<string> {
     return this.requestService.CreateRCA(newRCA);
   }
   DeleteRCA(RCAID: string): Promise<boolean> {

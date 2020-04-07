@@ -148,15 +148,30 @@
     </div>
   </div>
 
-  <div *ngIf="!isCreateMode" class="one-line-item full-width">
+  <div class="one-line-item full-width">
     <div class="attachment-icon" >
       <span>Attachment</span><mat-icon>attachment</mat-icon>
     </div>
-    <app-attachment [RCAID]="data.rcaID" [IsReadOnly]="false" (Loaded)=AttachmentLoaded()></app-attachment>
+    <app-attachment
+      [RCAID]="data.rcaID"
+      [IsReadOnly]="false"
+      (Loaded)=AttachmentLoaded()
+      [applyEvent]="applyAttachmentChangeSubject.asObservable()"
+      (ApplyDone)=AttachmentApplyDone()
+      (Modified)=AttachmentModified($event)>
+    </app-attachment>
   </div>
   <div class="first-loading" *ngIf="isFirstLoading">
     Loading...
   </div>
+  <div class="operating" *ngIf="isCreating">
+    Creating...
+  </div>
+  <div class="operating" *ngIf="isUpdating">
+    Updating...
+  </div>
+
+
 
 </mat-dialog-content>
 </div>

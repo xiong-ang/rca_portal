@@ -128,3 +128,21 @@ quill-editor {
   background-color: white;
   z-index: 1;
 }
+
+.operating{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  font-style: italic;
+  font-weight: bold;
+  color: gainsboro;
+  background-color: rgba(255, 255, 255, 0.503);
+  z-index: 1;
+}

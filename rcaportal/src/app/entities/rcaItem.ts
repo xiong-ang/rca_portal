@@ -33,3 +33,8 @@ export class Attachment{
     public Type = '';
     public Name = '';
 }
+
+export class LocalAttachment{
+  public file: File;
+  public url: any;
+}

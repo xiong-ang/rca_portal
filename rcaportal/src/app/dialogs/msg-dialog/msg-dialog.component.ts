@@ -6,6 +6,7 @@ export interface RCADialogData {
   msg: string;
   okAction: any;
   cancelAction: any;
+  isAllowCancel: boolean;
 }
 
 @Component({

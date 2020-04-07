@@ -113,11 +113,11 @@ export class HttpRequesterMockService implements IHttpRequester {
     });
   }
 
-  CreateRCA(newRCA: RCAItem): Promise<boolean> {
+  CreateRCA(newRCA: RCAItem): Promise<string> {
     return new Promise((reslove, reject) => {
       setTimeout(() => {
         alert('CreateRCA with data:\n' + JSON.stringify(newRCA));
-        reslove(true);
+        reslove('');
       }, 1000);
     });
   }

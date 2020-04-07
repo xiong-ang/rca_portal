@@ -9,7 +9,7 @@
 
 <div mat-dialog-actions class="dialog-actions">
   <div>
-    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button *ngIf='data.isAllowCancel' mat-button (click)="onCancelClick()">Cancel</button>
     <button mat-button (click)="onOKClick()">OK</button>
   </div>
 </div>

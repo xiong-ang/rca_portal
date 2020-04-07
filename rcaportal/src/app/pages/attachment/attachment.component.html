@@ -2,13 +2,21 @@
 
   <div class="attachments">
     <div class="attachmentItem" *ngFor="let attachment of attchmentArrays" (click)=onPreview(attachment)>
-
       <div class="attachmentItemImage">
         <img  height="100%" width="100%" [src]="'api/' + attachment.Type +'/' + attachment.Name">
         <mat-icon class="delete-btn" (click)=onDelete($event,attachment) *ngIf= '!IsReadOnly'>delete</mat-icon>
       </div>
       <div class="attachmentItemName" [title]="attachment.Name">
         <span>{{attachment.Name}}</span>
+      </div>
+    </div>
+    <div class="attachmentItem" *ngFor="let UploadAttachment of localUploadAttachments" (click)=onPreviewLocalUrl(UploadAttachment.url)>
+      <div class="attachmentItemImage">
+        <img  height="100%" width="100%" [src]="UploadAttachment.url">
+        <mat-icon class="delete-btn" (click)=onDeleteLocal($event,UploadAttachment) *ngIf= '!IsReadOnly'>delete</mat-icon>
+      </div>
+      <div class="attachmentItemName" [title]="UploadAttachment.file.name">
+        <span>{{UploadAttachment.file.name}}</span>
       </div>
     </div>
   </div>

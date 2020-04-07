@@ -140,7 +140,7 @@ export class HttpRequesterService implements IHttpRequester {
       .catch(this.handleError);
     });
   }
-  CreateRCA(newRCA: RCAItem): Promise<boolean> {
+  CreateRCA(newRCA: RCAItem): Promise<string> {
     return new Promise((resolve, reject) => {
       const body = {
         RCAID: newRCA.RCAID,
@@ -166,7 +166,13 @@ export class HttpRequesterService implements IHttpRequester {
       .toPromise()
       .then(res => {
         if (res && res.status) {
-          resolve(true);
+          let ID = '';
+          try {
+            ID = res.data[0].id;
+          } catch (err) {
+            console.log('catch error:' + err);
+          }
+          resolve(ID);
         } else {
           reject(res && res.message);
         }
