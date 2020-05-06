@@ -11,7 +11,13 @@
       <mat-option *ngFor="let subType of subTypeList" [value]="subType.ID">{{subType.Name}}</mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field *ngIf="this.preventionItem.SubTypeID" class="details-item">
+  <mat-form-field *ngIf="this.preventionItem.SubTypeID">
+    <mat-label class="input-label"><span>Status:</span></mat-label>
+    <mat-select name="Status" [(value)]="this.preventionItem.StatusID" (selectionChange)="changePreventionItem()" required>
+      <mat-option *ngFor="let status of statusList" [value]="status.ID">{{status.Name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field *ngIf="this.preventionItem.StatusID" class="details-item">
     <mat-label class="input-label"><span>Details</span></mat-label>
     <textarea  matInput name="Details" [(ngModel)]="this.preventionItem.Details" (ngModelChange)="changePreventionItem()" required></textarea>
   </mat-form-field>
@@ -25,6 +31,10 @@
   <div>
     <span  class="display-label">Sub type:&nbsp;</span>
     <p class="inline-item" *ngIf="IsReadOnly">{{selectSubTypeName}}</p>
+  </div>
+  <div>
+    <span  class="display-label">Status:&nbsp;</span>
+    <p class="inline-item" *ngIf="IsReadOnly">{{selectStatusName}}</p>
   </div>
   <div class="details-item">
     <span  class="display-label">Details:&nbsp;</span>

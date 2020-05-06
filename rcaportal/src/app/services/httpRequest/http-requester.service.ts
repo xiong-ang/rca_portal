@@ -10,7 +10,7 @@ import { ComponentInfo } from '@app/entities/componentInfo';
 import { ReadoutInfo } from '@app/entities/readoutInfo';
 import { HotKeyword } from '@app/entities/hotKeyword';
 import { AuthenticationService } from '@app/services/authentication.service';
-import { PreventionType, PreventionItem, MainTypeInfo, SubTypeInfo} from '@app/entities/prevention';
+import { PreventionType, PreventionItem, MainTypeInfo, SubTypeInfo, PreventionStatus} from '@app/entities/prevention';
 
 
 @Injectable({
@@ -485,6 +485,28 @@ export class HttpRequesterService implements IHttpRequester {
     });
   }
 
+  GetPreventionStatuses(): Promise<PreventionStatus[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get<ResPackage>('/api/v1/PreventionStatus/any')
+      .toPromise()
+      .then(res => {
+        if (res && res.status) {
+          const PreventionStatuses: PreventionStatus[] = [];
+          res.data.forEach( StatusItem => {
+            const preventionStatus = new PreventionStatus();
+            preventionStatus.ID = StatusItem.ID;
+            preventionStatus.Name = StatusItem.Name;
+            PreventionStatuses.push(preventionStatus);
+          });
+          resolve(PreventionStatuses);
+        } else {
+          reject(res && res.message);
+        }
+      })
+      .catch(this.handleError);
+    });
+  }
+
   GetPrevention(rcaID: string, typeID: string): Promise<PreventionItem[]> {
     return new Promise((resolve, reject) => {
       this.http.get<ResPackage>('/api/v1/Prevention/any/' + rcaID)
@@ -499,6 +521,7 @@ export class HttpRequesterService implements IHttpRequester {
               preventionItem.MainTypeID = Item.MainTypeID;
               preventionItem.SubTypeID =  Item.SubTypeID;
               preventionItem.Details = Item.Details;
+              preventionItem.StatusID = Item.PreventionStatusID;
               preventionItems.push(preventionItem);
             }
           });
@@ -517,6 +540,7 @@ export class HttpRequesterService implements IHttpRequester {
         MainTypeID: preventionItem.MainTypeID,
         SubTypeID: preventionItem.SubTypeID,
         Details: preventionItem.Details,
+        PreventionStatusID: preventionItem.StatusID,
         PreventionTypeID: typeID
       };
       this.http.post<ResPackage>('/api/v1/Prevention/one/' + rcaID, body)

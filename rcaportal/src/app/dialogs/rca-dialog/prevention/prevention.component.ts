@@ -85,7 +85,10 @@ export class PreventionComponent implements OnInit, OnDestroy {
         }
       );
     } else {
-      this.isLoadedChange.emit(true);
+      setTimeout(() => {
+        this.isLoadedChange.emit(true);
+      });
+
     }
   }
 
@@ -259,6 +262,9 @@ export class PreventionComponent implements OnInit, OnDestroy {
     }
     if (newOne.Details !== oldOne.Details) {
       body.Details = newOne.Details;
+    }
+    if (newOne.StatusID !== oldOne.StatusID) {
+      body.PreventionStatusID = newOne.StatusID;
     }
     return body;
   }

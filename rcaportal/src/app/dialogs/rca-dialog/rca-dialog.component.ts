@@ -58,7 +58,7 @@ export class RcaDialogComponent implements OnInit {
 
   isKeywordLoading = true;
   isProductLoading = true;
-  isAttachmentLoading = false;
+  isAttachmentLoading = true;
   isAttachmentModified = false;
   isAttachmentApplayDone = false;
   isReadOutLevelLoading = true;

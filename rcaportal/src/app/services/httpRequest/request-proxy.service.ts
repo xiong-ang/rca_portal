@@ -9,7 +9,7 @@ import { ProductInfo } from '@app/entities/productInfo';
 import { VersionInfo } from '@app/entities/versionInfo';
 import { ComponentInfo } from '@app/entities/componentInfo';
 import { ReadoutInfo } from '@app/entities/readoutInfo';
-import { PreventionType, PreventionItem, MainTypeInfo, SubTypeInfo} from '@app/entities/prevention';
+import { PreventionType, PreventionItem, MainTypeInfo, SubTypeInfo, PreventionStatus} from '@app/entities/prevention';
 
 @Injectable({
   providedIn: 'root'
@@ -80,6 +80,9 @@ export class RequestProxyService implements IHttpRequester{
   }
   GetPreventionSubTypes(): Promise<SubTypeInfo[]> {
     return this.requestService.GetPreventionSubTypes();
+  }
+  GetPreventionStatuses(): Promise<PreventionStatus[]> {
+    return this.requestService.GetPreventionStatuses();
   }
   GetPrevention(rcaID: string, typeID: string): Promise<PreventionItem[]> {
     return this.requestService.GetPrevention(rcaID,typeID);

@@ -10,7 +10,7 @@ import { ProductInfo } from '@app/entities/productInfo';
 import { VersionInfo } from '@app/entities/versionInfo';
 import { ComponentInfo } from '@app/entities/componentInfo';
 import { ReadoutInfo } from '@app/entities/readoutInfo';
-import { PreventionType, PreventionItem, MainTypeInfo, SubTypeInfo} from '@app/entities/prevention';
+import { PreventionType, PreventionItem, MainTypeInfo, SubTypeInfo, PreventionStatus} from '@app/entities/prevention';
 
 @Injectable({
   providedIn: 'root'
@@ -136,6 +136,15 @@ export class HttpRequesterMockService implements IHttpRequester {
     return new Promise((reslove, reject) => {
       setTimeout(() => {
         alert('GetPreventionSubTypes');
+        reslove(null);
+      }, 1000);
+    });
+  }
+
+  GetPreventionStatuses(): Promise<PreventionStatus[]> {
+    return new Promise((reslove, reject) => {
+      setTimeout(() => {
+        alert('GetPreventionStatuses');
         reslove(null);
       }, 1000);
     });

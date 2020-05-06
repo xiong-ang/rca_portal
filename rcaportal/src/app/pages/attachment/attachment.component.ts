@@ -58,6 +58,8 @@ export class AttachmentComponent implements OnInit, OnDestroy {
           this.Loaded.emit();
         }
       );
+    } else {
+      this.Loaded.emit();
     }
   }
 

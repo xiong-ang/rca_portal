@@ -5,7 +5,7 @@ import { ProductInfo } from '@app/entities/productInfo';
 import { VersionInfo } from '@app/entities/versionInfo';
 import { ComponentInfo } from '@app/entities/componentInfo';
 import { ReadoutInfo } from '@app/entities/readoutInfo';
-import { PreventionType, PreventionItem, MainTypeInfo, SubTypeInfo} from '@app/entities/prevention';
+import { PreventionType, PreventionItem, MainTypeInfo, SubTypeInfo, PreventionStatus} from '@app/entities/prevention';
 
 export interface IHttpRequester {
     GetProducts(): Promise<Array<ProductInfo>>;
@@ -30,6 +30,7 @@ export interface IHttpRequester {
     GetPrevetionTypes(): Promise<PreventionType[]>;
     GetPreventionMainTypes(): Promise<MainTypeInfo[]>;
     GetPreventionSubTypes(): Promise<SubTypeInfo[]>;
+    GetPreventionStatuses(): Promise<PreventionStatus[]>;
     GetPrevention(rcaID: string, typeID: string): Promise<PreventionItem[]>;
     AddPrevention(rcaID: string, preventionItem: PreventionItem, typeID: string): Promise<boolean>;
     DeletePrevention(rcaID: string, preventionID: string): Promise<boolean>;

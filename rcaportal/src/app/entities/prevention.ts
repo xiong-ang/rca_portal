@@ -3,6 +3,7 @@ export class PreventionItem {
   MainTypeID: string = '';
   SubTypeID: string = '';
   Details: string = '';
+  StatusID: string = '';
 }
 
 export class MainTypeInfo {
@@ -21,3 +22,7 @@ export class PreventionType {
   Name: string;
 }
 
+export class PreventionStatus {
+  ID: string;
+  Name: string;
+}

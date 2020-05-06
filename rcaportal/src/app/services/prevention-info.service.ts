@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { MainTypeInfo, SubTypeInfo} from '@app/entities/prevention';
+import { MainTypeInfo, SubTypeInfo, PreventionStatus} from '@app/entities/prevention';
 import { RequestProxyService } from '@app/services/httpRequest/request-proxy.service';
 import { PreventionType } from '@app/entities/prevention';
 
@@ -24,11 +24,17 @@ constructor( private requestProxyService: RequestProxyService) {
     PreventionTypes => {
       this.preventionTypeList = PreventionTypes;
     }
-  )
+  );
+  requestProxyService.GetPreventionStatuses().then(
+    Statuses => {
+      this.preventionStatusList = Statuses;
+    }
+  );
 }
 
 private typeList: MainTypeInfo[] = [];
 private subTypeList: SubTypeInfo[] = [];
+private preventionStatusList: PreventionStatus[] = [];
 private preventionTypeList: PreventionType[] = [];
 
 getTypeList() {
@@ -42,4 +48,9 @@ getSubTypeList(mainType: string) {
 getPreventionTypeID(typeName: string) {
   return this.preventionTypeList.find(x => x.Name == typeName) ? this.preventionTypeList.find(x => x.Name == typeName).ID : '';
 }
+
+getPreventionStatuses() {
+  return this.preventionStatusList;
+}
+
 }

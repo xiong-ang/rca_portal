@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { PreventionInfoService } from '@app/services/prevention-info.service';
-import { PreventionItem, MainTypeInfo, SubTypeInfo} from '@app/entities/prevention';
+import { PreventionItem, MainTypeInfo, SubTypeInfo, PreventionStatus} from '@app/entities/prevention';
 
 
 
@@ -20,16 +20,19 @@ export class PreventionItemComponent implements OnInit {
 
   public typeList: MainTypeInfo[] = [];
   public subTypeList: SubTypeInfo[] = [];
+  public statusList: PreventionStatus[] = [];
   public oldPrevetionItem: PreventionItem;
 
   public selectMainTypeName: string;
   public selectSubTypeName: string;
+  public selectStatusName: string;
 
   constructor(private preventionInfoService: PreventionInfoService) { }
 
   ngOnInit() {
     this.oldPrevetionItem = JSON.parse(JSON.stringify(this.preventionItem));
     this.typeList = this.preventionInfoService.getTypeList();
+    this.statusList = this.preventionInfoService.getPreventionStatuses();
     this.loadSubType(this.preventionItem.MainTypeID);
     this.transIDToName();
   }
@@ -53,6 +56,10 @@ export class PreventionItemComponent implements OnInit {
     if (this.preventionItem.SubTypeID) {
       const selectSubType = this.subTypeList.find(x => x.ID == this.preventionItem.SubTypeID);
       this.selectSubTypeName =  selectSubType ? selectSubType.Name : '';
+    }
+    if (this.preventionItem.StatusID) {
+      const selectStatus = this.statusList.find(x => x.ID == this.preventionItem.StatusID);
+      this.selectStatusName =  selectStatus ? selectStatus.Name : '';
     }
   }
 
