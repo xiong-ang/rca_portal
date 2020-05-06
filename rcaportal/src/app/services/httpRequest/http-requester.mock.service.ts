@@ -10,6 +10,7 @@ import { ProductInfo } from '@app/entities/productInfo';
 import { VersionInfo } from '@app/entities/versionInfo';
 import { ComponentInfo } from '@app/entities/componentInfo';
 import { ReadoutInfo } from '@app/entities/readoutInfo';
+import { PreventionType, PreventionItem, MainTypeInfo, SubTypeInfo} from '@app/entities/prevention';
 
 @Injectable({
   providedIn: 'root'
@@ -108,6 +109,69 @@ export class HttpRequesterMockService implements IHttpRequester {
     return new Promise((reslove, reject) => {
       setTimeout(() => {
         alert('GetAttachments');
+        reslove(null);
+      }, 1000);
+    });
+  }
+
+  GetPrevetionTypes(): Promise<PreventionType[]> {
+    return new Promise((reslove, reject) => {
+      setTimeout(() => {
+        alert('GetPrevetionTypes');
+        reslove(null);
+      }, 1000);
+    });
+  }
+
+  GetPreventionMainTypes(): Promise<MainTypeInfo[]> {
+    return new Promise((reslove, reject) => {
+      setTimeout(() => {
+        alert('GetPreventionMainTypes');
+        reslove(null);
+      }, 1000);
+    });
+  }
+
+  GetPreventionSubTypes(): Promise<SubTypeInfo[]> {
+    return new Promise((reslove, reject) => {
+      setTimeout(() => {
+        alert('GetPreventionSubTypes');
+        reslove(null);
+      }, 1000);
+    });
+  }
+
+  GetPrevention(rcaID: string, typeID: string): Promise<PreventionItem[]> {
+    return new Promise((reslove, reject) => {
+      setTimeout(() => {
+        alert('GetPrevention');
+        reslove(null);
+      }, 1000);
+    });
+  }
+
+  AddPrevention(rcaID: string, preventionItem: PreventionItem, typeID: string): Promise<boolean> {
+    return new Promise((reslove, reject) => {
+      setTimeout(() => {
+        alert('AddPrevention');
+        reslove(null);
+      }, 1000);
+    });
+  }
+
+  DeletePrevention(rcaID: string, preventionID: string): Promise<boolean> {
+    return new Promise((reslove, reject) => {
+      setTimeout(() => {
+        alert('DeletePrevention');
+        reslove(null);
+      }, 1000);
+    });
+  }
+
+  UpdatePrevention(rcaID: string, preventionID: string, updateBody: any): Promise<boolean> {
+    return new Promise((reslove, reject) => {
+      setTimeout(() => {
+        alert('UpdatePrevention');
         reslove(null);
       }, 1000);
     });

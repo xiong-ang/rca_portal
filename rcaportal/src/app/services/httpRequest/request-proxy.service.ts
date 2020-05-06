@@ -9,6 +9,7 @@ import { ProductInfo } from '@app/entities/productInfo';
 import { VersionInfo } from '@app/entities/versionInfo';
 import { ComponentInfo } from '@app/entities/componentInfo';
 import { ReadoutInfo } from '@app/entities/readoutInfo';
+import { PreventionType, PreventionItem, MainTypeInfo, SubTypeInfo} from '@app/entities/prevention';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +70,28 @@ export class RequestProxyService implements IHttpRequester{
   }
   PostRCAClickEvent(RCAID: string): Promise<boolean> {
     return this.requestService.PostRCAClickEvent(RCAID);
+  }
+
+  GetPrevetionTypes(): Promise<PreventionType[]> {
+    return this.requestService.GetPrevetionTypes();
+  }
+  GetPreventionMainTypes(): Promise<MainTypeInfo[]> {
+    return this.requestService.GetPreventionMainTypes();
+  }
+  GetPreventionSubTypes(): Promise<SubTypeInfo[]> {
+    return this.requestService.GetPreventionSubTypes();
+  }
+  GetPrevention(rcaID: string, typeID: string): Promise<PreventionItem[]> {
+    return this.requestService.GetPrevention(rcaID,typeID);
+  }
+  AddPrevention(rcaID: string, preventionItem: PreventionItem, typeID: string): Promise<boolean> {
+    return this.requestService.AddPrevention(rcaID, preventionItem, typeID);
+  }
+  DeletePrevention(rcaID: string, preventionID: string): Promise<boolean> {
+    return this.requestService.DeletePrevention(rcaID, preventionID);
+  }
+  UpdatePrevention(rcaID: string, preventionID: string, updateBody: any): Promise<boolean> {
+    return this.requestService.UpdatePrevention(rcaID, preventionID, updateBody);
   }
 
 }

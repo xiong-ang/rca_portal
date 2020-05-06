@@ -9,7 +9,9 @@ import { VersionInfo } from '@app/entities/versionInfo';
 import { ComponentInfo } from '@app/entities/componentInfo';
 import { ReadoutInfo } from '@app/entities/readoutInfo';
 import { HotKeyword } from '@app/entities/hotKeyword';
-import { AuthenticationService } from "@app/services/authentication.service";
+import { AuthenticationService } from '@app/services/authentication.service';
+import { PreventionType, PreventionItem, MainTypeInfo, SubTypeInfo} from '@app/entities/prevention';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,7 @@ import { AuthenticationService } from "@app/services/authentication.service";
 export class HttpRequesterService implements IHttpRequester {
 
   constructor(private http: HttpClient,
-    private authenticationService: AuthenticationService ) { }
+              private authenticationService: AuthenticationService ) { }
 
   GetProducts(): Promise<ProductInfo[]> {
     return new Promise((resolve, reject) => {
@@ -408,6 +410,150 @@ export class HttpRequesterService implements IHttpRequester {
             }
           }
           resolve(HotKeywords);
+        } else {
+          reject(res && res.message);
+        }
+      })
+      .catch(this.handleError);
+    });
+  }
+
+  GetPrevetionTypes(): Promise<PreventionType[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get<ResPackage>('/api/v1/PreventType/any')
+      .toPromise()
+      .then(res => {
+        if (res && res.status) {
+          const prevetionTypes: PreventionType[] = [];
+          res.data.forEach( TypeItem => {
+            const prevetionType = new PreventionType();
+            prevetionType.ID = TypeItem.ID;
+            prevetionType.Name = TypeItem.TypeName;
+            prevetionTypes.push(prevetionType);
+          });
+          resolve(prevetionTypes);
+        } else {
+          reject(res && res.message);
+        }
+      })
+      .catch(this.handleError);
+    });
+  }
+
+  GetPreventionMainTypes(): Promise<MainTypeInfo[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get<ResPackage>('/api/v1/PreventMainType/any')
+      .toPromise()
+      .then(res => {
+        if (res && res.status) {
+          const mainTypeInfos: MainTypeInfo[] = [];
+          res.data.forEach( TypeItem => {
+            const mainTypeInfo = new MainTypeInfo();
+            mainTypeInfo.ID = TypeItem.ID;
+            mainTypeInfo.Name = TypeItem.TypeName;
+            mainTypeInfos.push(mainTypeInfo);
+          });
+          resolve(mainTypeInfos);
+        } else {
+          reject(res && res.message);
+        }
+      })
+      .catch(this.handleError);
+    });
+  }
+
+  GetPreventionSubTypes(): Promise<SubTypeInfo[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get<ResPackage>('/api/v1/PreventSubType/any')
+      .toPromise()
+      .then(res => {
+        if (res && res.status) {
+          const subTypeInfos: SubTypeInfo[] = [];
+          res.data.forEach( TypeItem => {
+            const subTypeInfo = new SubTypeInfo();
+            subTypeInfo.ID = TypeItem.ID;
+            subTypeInfo.Name = TypeItem.SubTypeName;
+            subTypeInfo.MainTypeID = TypeItem.MainID;
+            subTypeInfos.push(subTypeInfo);
+          });
+          resolve(subTypeInfos);
+        } else {
+          reject(res && res.message);
+        }
+      })
+      .catch(this.handleError);
+    });
+  }
+
+  GetPrevention(rcaID: string, typeID: string): Promise<PreventionItem[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get<ResPackage>('/api/v1/Prevention/any/' + rcaID)
+      .toPromise()
+      .then(res => {
+        if (res && res.status) {
+          const preventionItems: PreventionItem[] = [];
+          res.data.forEach( Item => {
+            if (Item.PreventionTypeID == typeID) {
+              const preventionItem = new PreventionItem();
+              preventionItem.ID = Item.ID;
+              preventionItem.MainTypeID = Item.MainTypeID;
+              preventionItem.SubTypeID =  Item.SubTypeID;
+              preventionItem.Details = Item.Details;
+              preventionItems.push(preventionItem);
+            }
+          });
+          resolve(preventionItems);
+        } else {
+          reject(res && res.message);
+        }
+      })
+      .catch(this.handleError);
+    });
+  }
+
+  AddPrevention(rcaID: string, preventionItem: PreventionItem, typeID: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const body = {
+        MainTypeID: preventionItem.MainTypeID,
+        SubTypeID: preventionItem.SubTypeID,
+        Details: preventionItem.Details,
+        PreventionTypeID: typeID
+      };
+      this.http.post<ResPackage>('/api/v1/Prevention/one/' + rcaID, body)
+      .toPromise()
+      .then(res => {
+        if (res && res.status) {
+          resolve(true);
+        } else {
+          reject(res && res.message);
+        }
+      })
+      .catch(this.handleError);
+    });
+  }
+
+  DeletePrevention(rcaID: string, preventionID: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.http.delete<ResPackage>('api/v1/Prevention/one/' + rcaID + '/' + preventionID)
+      .toPromise()
+      .then(res => {
+        if (res && res.status) {
+          resolve(true);
+        } else {
+          reject(res && res.message);
+        }
+      })
+      .catch(this.handleError);
+    });
+  }
+
+  UpdatePrevention(rcaID: string, preventionID: string, updateBody: any): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.http.put<ResPackage>('/api/v1/Prevention/one/' + rcaID + '/' + preventionID, updateBody)
+      .toPromise()
+      .then(res => {
+        if (res && res.status) {
+          resolve(true);
         } else {
           reject(res && res.message);
         }

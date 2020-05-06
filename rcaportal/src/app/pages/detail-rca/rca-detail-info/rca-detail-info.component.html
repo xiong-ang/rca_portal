@@ -72,8 +72,17 @@
     </div>
 
     <div class="rca-prop left-margin">
-      <div class="rca-prop-key">Prevention</div>
+      <div class="rca-prop-key">Prevention<span style="color:red">(Old)</span></div>
       <div class="rca-prop-value"><quill-view [content]="RCADetail.RequirementCorrectAndPrevention.Prevention"></quill-view></div>
+    </div>
+
+    <div class="rca-prop left-margin">
+      <div class="rca-prop-key">Prevention</div>
+      <app-prevention
+      [RCAID]="RCADetail.ID"
+      preventionType="Requirement"
+      [IsReadOnly]="true"
+      [refreshEvent]="updateAttachmentSubject.asObservable()"></app-prevention>
     </div>
 
     <div class="rca-prop-group-label">
@@ -90,9 +99,19 @@
     </div>
 
     <div class="rca-prop left-margin">
-      <div class="rca-prop-key">Prevention</div>
+      <div class="rca-prop-key">Prevention<span style="color:red">(Old)</span></div>
       <div class="rca-prop-value"><quill-view [content]="RCADetail.DevCorrectAndPrevention.Prevention"></quill-view></div>
+
     </div>
+    <div class="rca-prop left-margin">
+      <div class="rca-prop-key">Prevention</div>
+        <app-prevention
+        [RCAID]="RCADetail.ID"
+        preventionType="Dev"
+        [IsReadOnly]="true"
+        [refreshEvent]="updateAttachmentSubject.asObservable()"></app-prevention>
+    </div>
+
 
     <div class="rca-prop-group-label">
       <div class="rca-prop-key test-color">Test</div>
@@ -108,10 +127,19 @@
     </div>
 
     <div class="rca-prop left-margin">
-      <div class="rca-prop-key">Prevention</div>
+      <div class="rca-prop-key">Prevention<span style="color:red">(Old)</span></div>
       <div class="rca-prop-value"><quill-view [content]="RCADetail.TestCorrectAndPrevention.Prevention"></quill-view></div>
     </div>
+    <div class="rca-prop left-margin">
+      <div class="rca-prop-key">Prevention</div>
+      <app-prevention
+      [RCAID]="RCADetail.ID"
+      preventionType="Test"
+      [IsReadOnly]="true"
+      [refreshEvent]="updateAttachmentSubject.asObservable()"></app-prevention>
+    </div>
   </div>
+
   <div class="rca-prop-group-label">
     <div class="rca-prop-key rca-icon">Attachments<mat-icon  class="Component-icon">attachment</mat-icon></div>
   </div>

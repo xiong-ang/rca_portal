@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { PreventionInfoService } from '@app/services/prevention-info.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  // preventionInfoService initial.
+  constructor( private preventionInfoService: PreventionInfoService) { }
 
   ngOnInit() {
   }

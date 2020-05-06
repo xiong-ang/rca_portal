@@ -1,0 +1,31 @@
+.prevention-item{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr auto;
+  column-gap: 10px;
+  row-gap: 3px;
+  align-items: center;
+}
+
+.input-label {
+  color: gray;
+}
+
+.details-item {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 2;
+}
+
+
+.display-label {
+  color: gray;
+}
+
+.inline-item {
+  display:inline;
+}
+
+.auto-break {
+  word-break: break-all;
+}

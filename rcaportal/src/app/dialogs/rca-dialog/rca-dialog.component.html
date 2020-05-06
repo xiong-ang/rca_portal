@@ -95,16 +95,25 @@
     <i class="material-icons" *ngIf="!isRequirementPanelOpen">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="isRequirementPanelOpen">keyboard_arrow_up</i>
     </div>
-    <div class="expand-panel full-width" *ngIf="isRequirementPanelOpen">
+    <div class="expand-panel full-width" [hidden]="!isRequirementPanelOpen">
       <label class="requirement-color label-margin">Root Cause</label>
       <quill-editor [(ngModel)]="rcaData.RequirementCorrectAndPrevention.RootCause" [styles]="{height: '100px'}">
       </quill-editor>
       <label class="requirement-color label-margin">Correction</label>
       <quill-editor [(ngModel)]="rcaData.RequirementCorrectAndPrevention.Correction" [styles]="{height: '100px'}">
       </quill-editor>
-      <label class="requirement-color label-margin">Prevention</label>
+      <label class="requirement-color label-margin">Prevention<span style="color:red">(Old)</span></label>
       <quill-editor [(ngModel)]="rcaData.RequirementCorrectAndPrevention.Prevention" [styles]="{height: '100px'}">
       </quill-editor>
+      <label class="requirement-color label-margin">Prevention</label>
+      <app-prevention
+      [RCAID]="rcaData.ID"
+      preventionType="Requirement"
+      [(isLoaded)]='isReqPreventionLoaded'
+      (ApplyDone)='ReqPreventionApplyDone()'
+      [(isModified)]='isReqPreventionModified'
+      [(isDataLegal)] = "isReqPreventionLegal"
+      [Apply]='isReqPreventionApply'></app-prevention>
     </div>
   </div>
 
@@ -115,16 +124,25 @@
     <i class="material-icons" *ngIf="!isDevPanelOpen">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="isDevPanelOpen">keyboard_arrow_up</i>
     </div>
-    <div class="full-width expand-panel" *ngIf="isDevPanelOpen">
+    <div class="full-width expand-panel" [hidden]="!isDevPanelOpen">
       <label class="dev-color label-margin">Root Cause</label>
       <quill-editor [(ngModel)]="rcaData.DevCorrectAndPrevention.RootCause" [styles]="{height: '100px'}">
       </quill-editor>
       <label class="dev-color label-margin">Correction</label>
       <quill-editor [(ngModel)]="rcaData.DevCorrectAndPrevention.Correction" [styles]="{height: '100px'}">
       </quill-editor>
-      <label class="dev-color label-margin">Prevention</label>
+      <label class="dev-color label-margin">Prevention<span style="color:red">(Old)</span></label>
       <quill-editor [(ngModel)]="rcaData.DevCorrectAndPrevention.Prevention" [styles]="{height: '100px'}">
       </quill-editor>
+      <label class="dev-color label-margin">Prevention</label>
+      <app-prevention
+      [RCAID]="rcaData.ID"
+      preventionType="Dev"
+      [(isLoaded)]='isDevPreventionLoaded'
+      (ApplyDone)='DevPreventionApplyDone()'
+      [(isModified)]='isDevPreventionModified'
+      [(isDataLegal)] = "isDevPreventionLegal"
+      [Apply]='isDevPreventionApply'></app-prevention>
     </div>
   </div>
 
@@ -135,16 +153,25 @@
     <i class="material-icons" *ngIf="!isTestPanelOpen">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="isTestPanelOpen">keyboard_arrow_up</i>
     </div>
-    <div class="full-width expand-panel" *ngIf="isTestPanelOpen">
+    <div class="full-width expand-panel" [hidden]="!isTestPanelOpen">
       <label class="test-color label-margin">Root Cause</label>
       <quill-editor [(ngModel)]="rcaData.TestCorrectAndPrevention.RootCause" [styles]="{height: '100px'}">
       </quill-editor>
       <label class="test-color label-margin">Correction</label>
       <quill-editor [(ngModel)]="rcaData.TestCorrectAndPrevention.Correction" [styles]="{height: '100px'}">
       </quill-editor>
-      <label class="test-color label-margin">Prevention</label>
+      <label class="test-color label-margin">Prevention <span  style="color:red">(Old)</span></label>
       <quill-editor [(ngModel)]="rcaData.TestCorrectAndPrevention.Prevention" [styles]="{height: '100px'}">
       </quill-editor>
+      <label class="test-color label-margin">Prevention</label>
+      <app-prevention
+      [RCAID]="rcaData.ID"
+      preventionType="Test"
+      [(isLoaded)]='isTestPreventionLoaded'
+      (ApplyDone)='TestPreventionApplyDone()'
+      [(isModified)]='isTestPreventionModified'
+      [(isDataLegal)] = "isTestPreventionLegal"
+      [Apply]='isTestPreventionApply'></app-prevention>
     </div>
   </div>
 

@@ -71,6 +71,8 @@ import { HomeRcaItemComponent } from './pages/home/home-rank/home-rca-rank/home-
 import { RcaDetailInfoComponent } from './pages/detail-rca/rca-detail-info/rca-detail-info.component';
 import { DetailRcaComponent } from './pages/detail-rca/detail-rca.component';
 import { AttachmentComponent } from './pages/attachment/attachment.component';
+import { PreventionComponent } from './dialogs/rca-dialog/prevention/prevention.component';
+import { PreventionItemComponent } from './dialogs/rca-dialog/prevention-item/prevention-item.component';
 
 // used to create fake backend
 import { fakeBackendProvider } from './utils/fake-backend';
@@ -105,6 +107,8 @@ import { CookieService } from 'ngx-cookie-service';
       ProgressBarColor,
       MsgDialogComponent,
       AttachmentComponent,
+      PreventionComponent,
+      PreventionItemComponent
    ],
    imports: [
       BrowserModule,

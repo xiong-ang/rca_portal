@@ -35,6 +35,9 @@ export class RcaDialogComponent implements OnInit {
   public get isFirstLoading(): boolean {
     return this.isKeywordLoading ||
       this.isProductLoading ||
+      !this.isDevPreventionLoaded ||
+      !this.isTestPreventionLoaded ||
+      !this.isReqPreventionLoaded ||
       this.isAttachmentLoading ||
       this.isReadOutLevelLoading;
   }
@@ -57,10 +60,28 @@ export class RcaDialogComponent implements OnInit {
   isProductLoading = true;
   isAttachmentLoading = false;
   isAttachmentModified = false;
+  isAttachmentApplayDone = false;
   isReadOutLevelLoading = true;
+
+  isDevPreventionLoaded = false;
+  isDevPreventionModified = false;
+  isDevPreventionLegal = true;
+  isDevPreventionApply = false;
+  isDevPreventionApplyDone = false;
+  isReqPreventionLoaded = false;
+  isReqPreventionModified = false;
+  isReqPreventionLegal = true;
+  isReqPreventionApply = false;
+  isReqPreventionApplyDone = false;
+  isTestPreventionLoaded = false;
+  isTestPreventionModified = false;
+  isTestPreventionLegal = true;
+  isTestPreventionApply = false;
+  isTestPreventionApplyDone = false;
 
   isCreating = false;
   isUpdating = false;
+  isUpdatingRCA = false;// Only RCA not Extend.
 
   filteredKeyWords: Observable<string[]>;
   visible = true;
@@ -90,6 +111,7 @@ export class RcaDialogComponent implements OnInit {
     this.loadReadOutInfo();
 
     if (this.data.type === 'Update') {
+      this.rcaData.ID = this.data.rcaID;
       this.isAttachmentLoading = true;
       this.requestProxyService.GetRCA(this.data.rcaID).then(rcaInfo => {
       this.rcaData = rcaInfo;
@@ -112,12 +134,17 @@ export class RcaDialogComponent implements OnInit {
       this.rcaData.RootCauseAnalyze.length !== 0 &&
       this.rcaData.FixVersionID.length !== 0 &&
       this.rcaData.ImpactedProductID.length !== 0 &&
-      this.rcaData.ComponentID.length !== 0;
+      this.rcaData.ComponentID.length !== 0 &&
+      this.isDevPreventionLegal &&
+      this.isTestPreventionLegal &&
+      this.isReqPreventionLegal;
     //To do
   }
 
   get isAllowUpdate() {
-    return (JSON.stringify(this.rcaData) !== JSON.stringify(this.oldRcaData) || this.isAttachmentModified) && this.isAllowCreate;
+    return (JSON.stringify(this.rcaData) !== JSON.stringify(this.oldRcaData) ||
+      this.isAttachmentModified || this.isDevPreventionModified || this.isReqPreventionModified ||
+      this.isTestPreventionModified) && this.isAllowCreate;
     //To do
   }
 
@@ -217,23 +244,27 @@ export class RcaDialogComponent implements OnInit {
   }
 
   AttachmentApplyDone() {
-    this.isCreating = false;
-    this.isUpdating = false;
-
-    if (this.isCreateMode) {
-      this.rcaDialogSrv.openMsgDialog('info', `Create ${this.rcaData.RCAID} successfully, Do you want to view it now?`).then((bOk) => {
-        if (bOk) {
-          this.rcaDetailSrv.openRCADetail(this.rcaData.ID);
-        }
-      });
-    }
-
-    this.dialogRef.close();
-    this.data.okAction();
+    this.isAttachmentApplayDone = true;
+    this.checkApplyResult();
   }
 
   AttachmentModified(bModified: boolean) {
     this.isAttachmentModified = bModified;
+  }
+
+  DevPreventionApplyDone() {
+    this.isDevPreventionApplyDone = true;
+    this.checkApplyResult();
+  }
+
+  ReqPreventionApplyDone() {
+    this.isReqPreventionApplyDone = true;
+    this.checkApplyResult();
+  }
+
+  TestPreventionApplyDone() {
+    this.isTestPreventionApplyDone = true;
+    this.checkApplyResult();
   }
 
   endInput(event: MatChipInputEvent): void {
@@ -293,20 +324,49 @@ export class RcaDialogComponent implements OnInit {
     this.data.cancelAction();
   }
 
+  checkApplyResult() {
+    if ((!this.isDevPreventionModified || this.isDevPreventionApplyDone) &&
+        (!this.isReqPreventionModified || this.isReqPreventionApplyDone) &&
+        (!this.isTestPreventionModified || this.isTestPreventionApplyDone) &&
+        (!this.isAttachmentModified || this.isAttachmentApplayDone &&
+          !this.isUpdatingRCA)) {
+      this.isCreating = false;
+      this.isUpdating = false;
+
+      if (this.isCreateMode) {
+        this.rcaDialogSrv.openMsgDialog('info', `Create ${this.rcaData.RCAID} successfully, Do you want to view it now?`).then((bOk) => {
+          if (bOk) {
+            this.rcaDetailSrv.openRCADetail(this.rcaData.ID);
+          }
+        });
+      }
+      this.dialogRef.close();
+      this.data.okAction();
+    }
+  }
+
   onCreateClick(): void {
     this.isCreating = true;
     this.rcaData.RCAID = this.rcaData.RCAID && this.rcaData.RCAID.trim();
     this.rcaData.Header = this.rcaData.Header && this.rcaData.Header.trim();
     this.rcaData.RootCauseCR = this.rcaData.RootCauseCR && this.rcaData.RootCauseCR.trim();
     this.rcaData.Submitter = this.rcaData.Submitter && this.rcaData.Submitter.trim();
-    this.requestProxyService.CreateRCA(this.rcaData).then(
+    this.requestProxyService.CreateRCA(this.FixQuillEditorNull(this.rcaData)).then(
       (ID) => {
         this.rcaData.ID = ID;
         if (this.isAttachmentModified) {
           this.applyAttachmentChangeSubject.next(ID);
-        } else {
-          this.AttachmentApplyDone();
         }
+        if (this.isDevPreventionModified) {
+          this.isDevPreventionApply = true;
+        }
+        if (this.isTestPreventionModified) {
+          this.isTestPreventionApply = true;
+        }
+        if (this.isReqPreventionModified) {
+          this.isReqPreventionApply = true;
+        }
+        this.checkApplyResult();
       },
       (error) => {
         if (error) {
@@ -325,23 +385,36 @@ export class RcaDialogComponent implements OnInit {
 
   doUpdate(): void {
     this.isUpdating = true;
-    this.rcaData.RCAID = this.rcaData.RCAID && this.rcaData.RCAID.trim();
-    this.rcaData.Header = this.rcaData.Header && this.rcaData.Header.trim();
-    this.rcaData.RootCauseCR = this.rcaData.RootCauseCR && this.rcaData.RootCauseCR.trim();
-    this.rcaData.Submitter = this.rcaData.Submitter && this.rcaData.Submitter.trim();
-    this.requestProxyService.UpdateRCA(this.rcaData.ID, this.FindUpdate(this.rcaData, this.oldRcaData)).then(
-      () => {
-        if (this.isAttachmentModified) {
-          this.applyAttachmentChangeSubject.next(this.rcaData.ID);
-        } else {
-          this.AttachmentApplyDone();
-        }
-      },
-      (error) => {
-        if (error) {
-          alert(error);
-        }
-      });
+    if(JSON.stringify(this.rcaData) !== JSON.stringify(this.oldRcaData) ) {
+      this.isUpdatingRCA = true;
+      this.rcaData.RCAID = this.rcaData.RCAID && this.rcaData.RCAID.trim();
+      this.rcaData.Header = this.rcaData.Header && this.rcaData.Header.trim();
+      this.rcaData.RootCauseCR = this.rcaData.RootCauseCR && this.rcaData.RootCauseCR.trim();
+      this.rcaData.Submitter = this.rcaData.Submitter && this.rcaData.Submitter.trim();
+      this.requestProxyService.UpdateRCA(this.rcaData.ID, this.FindUpdate(this.rcaData, this.oldRcaData)).then(
+        () => {
+          this.isUpdatingRCA = false;
+          this.checkApplyResult();
+        },
+        (error) => {
+          if (error) {
+            alert(error);
+          }
+        });
+    }
+
+    if (this.isAttachmentModified) {
+      this.applyAttachmentChangeSubject.next(this.rcaData.ID);
+    }
+    if (this.isDevPreventionModified) {
+      this.isDevPreventionApply = true;
+    }
+    if (this.isTestPreventionModified) {
+      this.isTestPreventionApply = true;
+    }
+    if (this.isReqPreventionModified) {
+      this.isReqPreventionApply = true;
+    }
   }
 
   FindUpdate(newOne: RCAItem, oldOne: RCAItem) {
@@ -431,6 +504,51 @@ export class RcaDialogComponent implements OnInit {
       body.TestPrevention = newOne.TestCorrectAndPrevention.Prevention;
     }
     return body;
+  }
+
+  FixQuillEditorNull(rca: RCAItem) {
+    // This function fix quill edit bug.
+    if(rca.RootCauseAnalyze === null) {
+      rca.RootCauseAnalyze = '';
+    }
+
+    if (rca.RequirementCorrectAndPrevention.Correction === null) {
+      rca.RequirementCorrectAndPrevention.Correction = '';
+    }
+
+    if (rca.RequirementCorrectAndPrevention.RootCause === null) {
+      rca.RequirementCorrectAndPrevention.RootCause = '';
+    }
+
+    if (rca.RequirementCorrectAndPrevention.Prevention === null) {
+      rca.RequirementCorrectAndPrevention.Prevention = '';
+    }
+
+    if (rca.TestCorrectAndPrevention.Correction === null) {
+      rca.TestCorrectAndPrevention.Correction = '';
+    }
+
+    if (rca.TestCorrectAndPrevention.RootCause === null) {
+      rca.TestCorrectAndPrevention.RootCause = '';
+    }
+
+    if (rca.TestCorrectAndPrevention.Prevention === null) {
+      rca.TestCorrectAndPrevention.Prevention = '';
+    }
+
+    if (rca.DevCorrectAndPrevention.Correction === null) {
+      rca.DevCorrectAndPrevention.Correction = '';
+    }
+
+    if (rca.DevCorrectAndPrevention.RootCause === null) {
+      rca.DevCorrectAndPrevention.RootCause = '';
+    }
+
+    if (rca.DevCorrectAndPrevention.Prevention === null) {
+      rca.DevCorrectAndPrevention.Prevention = '';
+    }
+
+    return rca;
   }
 
 }

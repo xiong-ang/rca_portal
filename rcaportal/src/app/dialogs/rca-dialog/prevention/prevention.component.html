@@ -1,0 +1,13 @@
+<div class="prevention-list">
+  <div class="prevention-item" *ngFor="let prevention of preventionList;let index = index" [ngClass]="{'item-del-hover': delHoverIndex==index}" >
+    <app-prevention-item [(preventionItem)]="preventionList[index]" [IsReadOnly]="IsReadOnly" [(isModified)]="modifyFlagList[index]" (preventionItemChange)="onChange()" ></app-prevention-item>
+    <mat-icon *ngIf="!IsReadOnly" class="del-icon" (mouseenter)="mouseEnterDel(index)" (mouseleave)="mouseLeaveDel(index)" (click)="onDelete(index)">delete</mat-icon>
+  </div>
+  <div class="prevention-item" *ngFor="let prevention of addList;let index = index" [ngClass]="{'item-del-hover': delHoverIndexLocal==index}" >
+    <app-prevention-item [(preventionItem)]="addList[index]" [IsReadOnly]="IsReadOnly" (preventionItemChange)="onChange()"></app-prevention-item>
+    <mat-icon class="del-icon" (mouseenter)="mouseEnterDelLocal(index)" (mouseleave)="mouseLeaveDelLocal(index)" (click)="onDeleteLocal(index)">delete</mat-icon>
+  </div>
+  <div *ngIf="!IsReadOnly" (click)="isAllowAddNew && onAdd()" [ngClass]="{'diable-add': !isAllowAddNew, 'add-prevention':isAllowAddNew}">
+    <mat-icon>add</mat-icon><span>Add a new prevention</span>
+  </div>
+</div>

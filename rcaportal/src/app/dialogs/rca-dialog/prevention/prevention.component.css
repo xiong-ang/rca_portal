@@ -1,0 +1,48 @@
+.prevention-list{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.prevention-item{
+  border-style: solid;
+  border-color: #dedede;
+  border-width: thin;
+  padding: 5px;
+  margin-bottom: 5px;
+  display: grid;
+  grid-template-columns: auto 30px;
+}
+
+.item-del-hover{
+  border-style: solid;
+  border-color: #2492FF;
+}
+
+.add-prevention{
+  display: grid;
+  grid-template-columns: 23px auto;
+  align-items: center;
+}
+
+.add-prevention:hover{
+  cursor: pointer;
+  color:#2492FF;
+}
+
+.del-icon{
+  color:red;
+}
+
+.del-icon:hover{
+  cursor: pointer;
+  color: gray;
+}
+
+.diable-add {
+  display: grid;
+  grid-template-columns: 23px auto;
+  align-items: center;
+  color: gray;
+}
