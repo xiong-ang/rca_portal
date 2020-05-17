@@ -97,4 +97,18 @@ export class RequestProxyService implements IHttpRequester{
     return this.requestService.UpdatePrevention(rcaID, preventionID, updateBody);
   }
 
+  // Add
+  AddKeyword(keyWord: string): Promise<boolean> {
+    return this.requestService.AddKeyword(keyWord);
+  }
+  AddProduct(productName: string): Promise<boolean> {
+    return this.requestService.AddProduct(productName);
+  }
+  AddComponent(productID: string, componentName: string): Promise<boolean> {
+    return this.requestService.AddComponent(productID, componentName);
+  }
+  AddVersion(productID: string, versionName: string): Promise<boolean> {
+    return this.requestService.AddVersion(productID, versionName);
+  }
+
 }

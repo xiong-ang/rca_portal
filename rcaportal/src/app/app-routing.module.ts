@@ -5,6 +5,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './pages/notFound/notFound.component';
 import { DetailRcaComponent } from './pages/detail-rca/detail-rca.component';
+import { AdminComponent } from "./pages/admin/admin.component";
 
 import { AuthGuard } from './utils/auth.guard';
 
@@ -33,6 +34,11 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '**',

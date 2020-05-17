@@ -1,0 +1,10 @@
+<div mat-dialog-content>
+  <p>{{msgShow}}</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="newValue">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="newValue" cdkFocusInitial>Ok</button>
+</div>

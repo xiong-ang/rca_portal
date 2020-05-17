@@ -712,6 +712,43 @@ export class HttpRequesterMockService implements IHttpRequester {
 
     }
 
+  // Add
+  AddKeyword(keyWord: string): Promise<boolean> {
+    return new Promise((reslove, reject) => {
+      setTimeout(() => {
+        alert('AddKeyword');
+        reslove(null);
+      }, 1000);
+    });
+  }
+
+  AddProduct(productName: string): Promise<boolean> {
+    return new Promise((reslove, reject) => {
+      setTimeout(() => {
+        alert('AddProduct');
+        reslove(null);
+      }, 1000);
+    });
+  }
+
+  AddComponent(productID: string, componentName: string): Promise<boolean> {
+    return new Promise((reslove, reject) => {
+      setTimeout(() => {
+        alert('AddComponent');
+        reslove(null);
+      }, 1000);
+    });
+  }
+
+  AddVersion(productID: string, versionName: string): Promise<boolean> {
+    return new Promise((reslove, reject) => {
+      setTimeout(() => {
+        alert('AddVersion');
+        reslove(null);
+      }, 1000);
+    });
+  }
+
     PostRCAClickEvent(RCAID: string): Promise < boolean > {
       return new Promise((reslove, reject) => {
         setTimeout(() => {

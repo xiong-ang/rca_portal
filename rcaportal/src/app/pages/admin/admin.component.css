@@ -1,0 +1,46 @@
+.admin-page {
+  display: grid;
+  grid-template-columns: 1fr 13fr;
+}
+
+.comp-ver-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr auto;
+  padding: 15px;
+}
+
+.one-line-item {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  }
+
+.flex-container {
+  display:flex;
+  flex-direction: column;
+  align-items:flex-start;
+  padding: 15px;
+}
+
+.button-item {
+ color: rgb(0, 221, 255);
+}
+
+.com-ver-label {
+  color: gray;
+}
+
+.link-item {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.link-item:hover {
+  cursor: pointer;
+  color: gray;
+}
+
+.home-font {
+  font-weight: 600;
+}

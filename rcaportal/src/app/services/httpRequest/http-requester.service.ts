@@ -586,6 +586,81 @@ export class HttpRequesterService implements IHttpRequester {
     });
   }
 
+  // Add
+  AddKeyword(keyWord: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const body = {
+        Keyword: keyWord
+      };
+      this.http.post<ResPackage>('/api/v1/Keyword/one', body)
+      .toPromise()
+      .then(res => {
+        if (res && res.status) {
+          resolve(true);
+        } else {
+          reject(res && res.message);
+        }
+      })
+      .catch(this.handleError);
+    });
+  }
+
+  AddProduct(productName: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const body = {
+        ProductName: productName
+      };
+      this.http.post<ResPackage>('/api/v1/Products/one', body)
+      .toPromise()
+      .then(res => {
+        if (res && res.status) {
+          resolve(true);
+        } else {
+          reject(res && res.message);
+        }
+      })
+      .catch(this.handleError);
+    });
+  }
+
+  AddComponent(productID: string, componentName: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const body = {
+        ProductID: productID,
+        ComponentName: componentName
+      };
+      this.http.post<ResPackage>('/api/v1/Component/one', body)
+      .toPromise()
+      .then(res => {
+        if (res && res.status) {
+          resolve(true);
+        } else {
+          reject(res && res.message);
+        }
+      })
+      .catch(this.handleError);
+    });
+  }
+
+  AddVersion(productID: string, versionName: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const body = {
+        ProductID: productID,
+        Version: versionName
+      };
+      this.http.post<ResPackage>('/api/v1/Version/one', body)
+      .toPromise()
+      .then(res => {
+        if (res && res.status) {
+          resolve(true);
+        } else {
+          reject(res && res.message);
+        }
+      })
+      .catch(this.handleError);
+    });
+  }
+
   PostRCAClickEvent(RCAID: string): Promise<boolean> {
     throw new Error("Method not implemented.");
   }

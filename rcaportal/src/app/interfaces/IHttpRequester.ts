@@ -36,5 +36,12 @@ export interface IHttpRequester {
     DeletePrevention(rcaID: string, preventionID: string): Promise<boolean>;
     UpdatePrevention(rcaID: string, preventionID: string, updateBody: any): Promise<boolean>;
 
+
+    // Add
+    AddKeyword(keyWord: string): Promise<boolean>;
+    AddProduct(productName: string): Promise<boolean>;
+    AddComponent(productID: string, componentName: string): Promise<boolean>;
+    AddVersion(productID: string, versionName: string): Promise<boolean>;
+
     PostRCAClickEvent(rcaID: string): Promise<boolean>; // For hot value
 }

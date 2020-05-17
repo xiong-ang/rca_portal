@@ -1,0 +1,51 @@
+<div class="admin-page">
+  <div>
+    <div class="link-item" (click)="onHomeClick()">
+      <mat-icon>home</mat-icon><span class="home-font">Home</span>
+    </div>
+  </div>
+  <mat-tab-group animationDuration="0ms">
+    <mat-tab label="Product">
+      <div class="flex-container">
+        <mat-list>
+          <mat-list-item *ngFor="let product of productList">{{product.Name}}</mat-list-item>
+        </mat-list>
+        <button mat-raised-button (click)="AddProduct()" class="button-item"><mat-icon>add</mat-icon>Add one</button>
+      </div>
+    </mat-tab>
+    <mat-tab label="Component/Version">
+      <div class="comp-ver-container">
+        <div class="one-line-item">
+          <mat-form-field >
+            <mat-label class="input-label"><span>Select a Product</span></mat-label>
+            <mat-select name="ImpactedProduct" [(value)]="selectedProductID" required>
+              <mat-option *ngFor="let product of productList" (click)="onProductOptionClick(product.Name)" [value]="product.ID">{{product.Name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div *ngIf="selectedProductID" class="flex-container">
+          <p class="com-ver-label">Component:</p>
+          <mat-list>
+            <mat-list-item *ngFor="let component of componentList">{{component.Name}}</mat-list-item>
+          </mat-list>
+          <button mat-raised-button (click)="AddComponent()" class="button-item"><mat-icon>add</mat-icon>Add one</button>
+        </div>
+        <div *ngIf="selectedProductID" class="flex-container">
+          <p class="com-ver-label">Version:</p>
+          <mat-list>
+            <mat-list-item *ngFor="let version of versionList">{{version.Name}}</mat-list-item>
+          </mat-list>
+          <button mat-raised-button (click)="AddVersion()" class="button-item"><mat-icon>add</mat-icon>Add one</button>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Keyword">
+      <div class="flex-container">
+        <mat-list>
+          <mat-list-item *ngFor="let keyword of keywordList">{{keyword.Name}}</mat-list-item>
+        </mat-list>
+        <button mat-raised-button (click)="AddKeyword()" class="button-item"><mat-icon>add</mat-icon>Add one</button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -73,6 +73,7 @@ import { DetailRcaComponent } from './pages/detail-rca/detail-rca.component';
 import { AttachmentComponent } from './pages/attachment/attachment.component';
 import { PreventionComponent } from './dialogs/rca-dialog/prevention/prevention.component';
 import { PreventionItemComponent } from './dialogs/rca-dialog/prevention-item/prevention-item.component';
+import { AdminComponent, AdminAdddialog} from './pages/admin/admin.component';
 
 // used to create fake backend
 import { fakeBackendProvider } from './utils/fake-backend';
@@ -108,7 +109,9 @@ import { CookieService } from 'ngx-cookie-service';
       MsgDialogComponent,
       AttachmentComponent,
       PreventionComponent,
-      PreventionItemComponent
+      PreventionItemComponent,
+      AdminComponent,
+      AdminAdddialog
    ],
    imports: [
       BrowserModule,
@@ -184,7 +187,8 @@ import { CookieService } from 'ngx-cookie-service';
    entryComponents: [
       RcaDialogComponent,
       HotRCAsDialogComponent,
-      MsgDialogComponent
+      MsgDialogComponent,
+      AdminAdddialog
    ],
    providers: [
       { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
