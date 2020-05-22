@@ -65,8 +65,12 @@ export class PreventionComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.updateEventSubscription = this.refreshEvent.subscribe(() => this.refreshPrevention());
-    this.preventionTypeID = this.preventionInfoService.getPreventionTypeID(this.preventionType);
-    this.refreshPrevention();
+    this.preventionInfoService.getPreventionTypeID(this.preventionType).then(
+      (ID) => {
+        this.preventionTypeID = ID;
+        this.refreshPrevention();
+      }
+    );
   }
 
   ngOnDestroy(): void {

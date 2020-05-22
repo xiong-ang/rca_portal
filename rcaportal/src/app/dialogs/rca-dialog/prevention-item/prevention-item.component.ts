@@ -31,10 +31,25 @@ export class PreventionItemComponent implements OnInit {
 
   ngOnInit() {
     this.oldPrevetionItem = JSON.parse(JSON.stringify(this.preventionItem));
-    this.typeList = this.preventionInfoService.getTypeList();
-    this.statusList = this.preventionInfoService.getPreventionStatuses();
+    this.preventionInfoService.getTypeList().then(
+      (mainTypes) => {
+        this.typeList = mainTypes;
+        if (this.preventionItem.MainTypeID) {
+          const selectMainType = this.typeList.find(x => x.ID == this.preventionItem.MainTypeID);
+          this.selectMainTypeName =  selectMainType ? selectMainType.Name : '';
+        }
+      }
+    );
+    this.preventionInfoService.getPreventionStatuses().then(
+      (statuses) => {
+        this.statusList = statuses;
+        if (this.preventionItem.StatusID) {
+          const selectStatus = this.statusList.find(x => x.ID == this.preventionItem.StatusID);
+          this.selectStatusName =  selectStatus ? selectStatus.Name : '';
+        }
+      }
+    );
     this.loadSubType(this.preventionItem.MainTypeID);
-    this.transIDToName();
   }
 
   get selectedTypeID() {
@@ -48,24 +63,17 @@ export class PreventionItemComponent implements OnInit {
     }
   }
 
-  transIDToName() {
-    if (this.preventionItem.MainTypeID) {
-      const selectMainType = this.typeList.find(x => x.ID == this.preventionItem.MainTypeID);
-      this.selectMainTypeName =  selectMainType ? selectMainType.Name : '';
-    }
-    if (this.preventionItem.SubTypeID) {
-      const selectSubType = this.subTypeList.find(x => x.ID == this.preventionItem.SubTypeID);
-      this.selectSubTypeName =  selectSubType ? selectSubType.Name : '';
-    }
-    if (this.preventionItem.StatusID) {
-      const selectStatus = this.statusList.find(x => x.ID == this.preventionItem.StatusID);
-      this.selectStatusName =  selectStatus ? selectStatus.Name : '';
-    }
-  }
-
   loadSubType(typeID: string) {
     if (typeID) {
-      this.subTypeList = this.preventionInfoService.getSubTypeList(typeID);
+      this.preventionInfoService.getSubTypeList(typeID).then(
+        (subTypes) => {
+          this.subTypeList = subTypes;
+          if (this.preventionItem.SubTypeID) {
+            const selectSubType = this.subTypeList.find(x => x.ID == this.preventionItem.SubTypeID);
+            this.selectSubTypeName =  selectSubType ? selectSubType.Name : '';
+          }
+        }
+      );
    }
   }
 

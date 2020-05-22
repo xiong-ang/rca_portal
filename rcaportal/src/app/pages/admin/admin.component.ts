@@ -163,7 +163,6 @@ export class AdminComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       if (result) {
         this.requestProxyService.AddProduct(result).then(
           (bSuccess) => {
@@ -186,7 +185,6 @@ export class AdminComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       if (result) {
         this.requestProxyService.AddComponent(this.selectedProductID, result).then(
           (bSuccess) => {
